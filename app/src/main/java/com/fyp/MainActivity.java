@@ -9,10 +9,15 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.opencv.core.Core.ROTATE_180;
+import static org.opencv.core.Core.flip;
+import static org.opencv.core.Core.rotate;
 
 public class MainActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
     private JavaCameraView javaCameraView;
@@ -45,7 +50,9 @@ public class MainActivity extends CameraActivity implements CameraBridgeViewBase
         setContentView(R.layout.activity_main);
         javaCameraView = findViewById(R.id.javaCameraView);
         javaCameraView.setVisibility(SurfaceView.VISIBLE);
+        javaCameraView.setCameraIndex(1);
         javaCameraView.setCvCameraViewListener(this);
+
     }
 
     @Override
@@ -78,7 +85,19 @@ public class MainActivity extends CameraActivity implements CameraBridgeViewBase
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        return inputFrame.gray();
+
+        Mat rotatedFrame = new Mat();
+        Mat flippedFrame = new Mat();
+
+        //Rotate the frame by 180
+        rotate(inputFrame.rgba(), rotatedFrame, ROTATE_180);
+
+        //Flip the frame
+        flip(rotatedFrame, flippedFrame, 0);
+
+        //Final frame;
+        return flippedFrame;
+        //return inputFrame.rgba();
     }
 }
 
