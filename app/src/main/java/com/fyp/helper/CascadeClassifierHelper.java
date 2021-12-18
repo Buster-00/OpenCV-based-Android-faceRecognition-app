@@ -51,6 +51,9 @@ public class CascadeClassifierHelper {
             Log.e(TAG, "Failed to load cascade, exception throw: " + e);
         }
 
+        if (faceDetector == null){
+            Log.e(TAG, "cannot load");
+        }
         return faceDetector;
     }
 }
