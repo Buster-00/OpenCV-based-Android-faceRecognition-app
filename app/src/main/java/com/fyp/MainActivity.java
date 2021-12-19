@@ -8,6 +8,7 @@ import android.view.SurfaceView;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;
 import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.JavaCamera2View;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
@@ -17,6 +18,7 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class MainActivity extends CameraActivity implements CameraBridgeViewBase
 
     private JavaCameraView javaCameraView;
     private CascadeClassifier faceDetector;
-    private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 0);
+    private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 255, 0);
 
     private BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -60,9 +62,10 @@ public class MainActivity extends CameraActivity implements CameraBridgeViewBase
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        javaCameraView = findViewById(R.id.javaCameraView);
+        javaCameraView = (JavaCameraView)findViewById(R.id.javaCameraView);
         javaCameraView.setVisibility(SurfaceView.VISIBLE);
         javaCameraView.setCameraIndex(0);
+        javaCameraView.setCameraPermissionGranted();
         javaCameraView.setCvCameraViewListener(this);
 
         //initialize openCV
@@ -117,11 +120,12 @@ public class MainActivity extends CameraActivity implements CameraBridgeViewBase
         Rect[] faceArray = face_rec.toArray();
         //Render rectangle
         for(int i = 0; i < faceArray.length; i++){
-            rectangle(mRgba, faceArray[i], FACE_RECT_COLOR, 1);
+            Imgproc.circle(mRgba, faceArray[i].tl(),100, FACE_RECT_COLOR, 3);
             Log.e("Render",faceArray[i].tl().toString() + faceArray[i].br().toString()+ mRgba.rows() + mRgba.cols() );
 
         }
 
+        rectangle(mRgba, new Point(0 ,0),  new Point(mRgba.rows(), mRgba.cols()), new Scalar(255, 0, 0), -1);
         //Rotate the frame by 180
         rotate(inputFrame.rgba(), rotatedFrame, ROTATE_180);
 
