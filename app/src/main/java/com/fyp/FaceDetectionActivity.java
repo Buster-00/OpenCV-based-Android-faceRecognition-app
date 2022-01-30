@@ -1,5 +1,6 @@
 package com.fyp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -29,8 +30,16 @@ import static org.opencv.imgproc.Imgproc.rectangle;
 
 public class FaceDetectionActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
+    //Counter for detection times
+    int detect_counter = 0;
+
+    //widgets
     private JavaCamera2View javaCameraView;
+
+    //CascadeClassifier
     private CascadeClassifier faceDetector;
+
+    //Color
     private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 255, 0);
 
     //Load native library
@@ -131,6 +140,11 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         //Flip the frame
         flip(rotatedFrame, flippedFrame, 0);
 
+        //count the face detection times;
+        if(faceArray.length > 0){
+            detect_counter++;
+        }
+
         //Render rectangle
         for(int i = 0; i < faceArray.length; i++){
             //rectangle(temp, faceArray[i].tl(),  faceArray[i].br(), new Scalar(255, 0, 0), 1);
@@ -138,6 +152,11 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
                     new Point(flippedFrame.width()-(faceArray[i].x+faceArray[i].width), faceArray[i].y+faceArray[i].height) , new Scalar(255, 0, 0), 1);
             //line(mRgba, new Point(0.0, mRgba.height()), new Point(mRgba.width(), 0.0), new Scalar(255, 0, 0), 2);
             Log.e("Rendering",faceArray[i].tl().toString() + faceArray[i].br().toString()+ flippedFrame.rows() + flippedFrame.cols() );
+        }
+
+        //if detect face > 10 times, turn to another activity
+        if(detect_counter > 10){
+            startActivity(new Intent(FaceDetectionActivity.this, Success.class));
         }
 
         //Final frame;
