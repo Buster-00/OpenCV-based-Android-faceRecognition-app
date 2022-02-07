@@ -1,9 +1,12 @@
 package com.fyp;
 
 import android.content.Intent;
+import android.media.FaceDetector;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
+
+import com.fyp.helper.FaceDetectorHelper;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;
@@ -16,19 +19,29 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.engine.OpenCVEngineInterface;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
+import org.opencv.objdetect.FaceDetectorYN;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.fyp.helper.CascadeClassifierHelper.loadClassifier;
+import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
 import static org.opencv.core.Core.ROTATE_180;
 import static org.opencv.core.Core.flip;
 import static org.opencv.core.Core.rotate;
+import static org.opencv.imgproc.Imgproc.COLOR_RGBA2RGB;
+import static org.opencv.imgproc.Imgproc.COLOR_RGBA2YUV_I420;
 import static org.opencv.imgproc.Imgproc.line;
 import static org.opencv.imgproc.Imgproc.rectangle;
 
 public class FaceDetectionActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+
+    enum FACE_DETECT{CASCADE_DETECT, YN_DETECT}
+    private FACE_DETECT DETECT_METHOD;
+    private static final String TAG = "FaceDetectionActivity";
 
     //Counter for detection times
     int detect_counter = 0;
@@ -39,21 +52,24 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
     //CascadeClassifier
     private CascadeClassifier faceDetector;
 
+    //DNN face detector
+    private FaceDetectorYN faceDetectorYN;
+
     //Color
-    private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 255, 0);
+    private static final Scalar FACE_RECT_COLOR = new Scalar(0, 255, 255, 0);
 
     //Load native library
     static {
         System.loadLibrary("native-lib");
     }
 
-    public native String stringFromJNI();
-
     private BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS: {
+                    //Load OpenCV successfully
+                    Log.i(TAG, "OpenCV loaded successfully");
                     javaCameraView.enableView();
                 }
                 break;
@@ -75,6 +91,8 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_detection);
+
+        //Initialize javaCameraView
         javaCameraView = (JavaCamera2View)findViewById(R.id.javaCameraView);
         javaCameraView.setVisibility(SurfaceView.VISIBLE);
         javaCameraView.setCameraIndex(1);
@@ -87,8 +105,11 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         //Initialize face detector
         faceDetector = loadClassifier(this);
 
-        //Native Method detect
-        Log.e("Native method", stringFromJNI());
+        //Load FaceDetectorYN
+        faceDetectorYN = FaceDetectorHelper.LoadFaceDetectorYN(this, new Size(1600,720));
+
+        //Set detect method, cascade or DNN
+        DETECT_METHOD = FACE_DETECT.CASCADE_DETECT;
     }
 
     @Override
@@ -121,11 +142,34 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+        //Select detect method
+        if(DETECT_METHOD == FACE_DETECT.CASCADE_DETECT){
+            return CascadeFaceDetect(inputFrame);
+        }else if(DETECT_METHOD == FACE_DETECT.YN_DETECT){
+            return YNFaceDetect(inputFrame);
+        }else{
+            return inputFrame.rgba();
+        }
 
+    }
+
+    private void initOpenCV(){
+        boolean state = OpenCVLoader.initDebug();
+
+        if(state){
+            Log.i("OpenCV", "Load Successfully");
+        }else{
+            Log.i("OpenCV", "Load failed");
+        }
+    }
+
+    //Cascade detect method
+    private Mat CascadeFaceDetect(CameraBridgeViewBase.CvCameraViewFrame inputFrame){
         if(faceDetector.empty()){
             Log.e("error", "Classifier cannot be loaded");
         }
 
+        //detect the face
         MatOfRect face_rec = new MatOfRect();
         faceDetector.detectMultiScale(inputFrame.gray(), face_rec);
 
@@ -155,28 +199,79 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         }
 
         //if detect face > 10 times, turn to another activity
-        if(detect_counter > 10){
-            startActivity(new Intent(FaceDetectionActivity.this, Success.class));
-        }
+//        if(detect_counter > 10){
+//            startActivity(new Intent(FaceDetectionActivity.this, Success.class));
+//        }
 
         //Final frame;
         return flippedFrame;
         //return inputFrame.rgba();
     }
 
-    private void initOpenCV(){
-        boolean state = OpenCVLoader.initDebug();
+    //DNN detect method
+    private Mat YNFaceDetect(CameraBridgeViewBase.CvCameraViewFrame inputFrame){
 
-        if(state){
-            Log.i("OpenCV", "Load Successfully");
-        }else{
-            Log.i("OpenCV", "Load failed");
+        //detect the face
+        Mat faces = new Mat();
+        Mat rgb = new Mat();
+        Imgproc.cvtColor(inputFrame.rgba(), rgb, COLOR_RGBA2RGB);
+        faceDetectorYN.detect(rgb, faces);
+
+
+        Mat rotatedFrame = new Mat();
+        Mat flippedFrame = new Mat();
+
+
+        //Rotate the frame by 180
+        rotate(inputFrame.rgba(), rotatedFrame, ROTATE_180);
+
+        //Flip the frame
+        flip(rotatedFrame, flippedFrame, 0);
+
+        //count the face detection times;
+        if(faces.cols() > 0){
+            detect_counter++;
         }
-    }
 
-    //Temp method to test native library
-    private  void tempNativeTest(){
+//        //Render rectangle
+//        for(int i = 0; i < faces.cols(); i++){
+//
+////            int x[] = new int[0];
+////            int y[] = new int[0];
+////            faces.get(1, 1, x);
+////            faces.get(1, 2, y);
+//
+////            //rectangle(temp, faceArray[i].tl(),  faceArray[i].br(), new Scalar(255, 0, 0), 1);
+////            rectangle(flippedFrame, new Point(flippedFrame.width()-faces.get, faceArray[i].y),
+////                    new Point(flippedFrame.width()-(faceArray[i].x+faceArray[i].width), faceArray[i].y+faceArray[i].height) , new Scalar(255, 0, 0), 1);
+////            //line(mRgba, new Point(0.0, mRgba.height()), new Point(mRgba.width(), 0.0), new Scalar(255, 0, 0), 2);
+////            Log.e("Rendering",faceArray[i].tl().toString() + faceArray[i].br().toString()+ flippedFrame.rows() + flippedFrame.cols() );
+//        }
 
+//        if(faces.isContinuous()){
+//
+//            float[] x = new float[1];
+//            float[] y = new float[1];
+//            float[] w = new float[1];
+//            float[] h = new float[1];
+//
+//            for(int row = 0; row < faces.rows(); row++){
+//                faces.get(row, 1, x);
+//                faces.get(row, 2, y);
+//                faces.get(row, 3, w);
+//                faces.get(row, 4, h);
+//            }
+//        }
+
+
+        //if detect face > 10 times, turn to another activity
+//        if(detect_counter > 10){
+//            startActivity(new Intent(FaceDetectionActivity.this, Success.class));
+//        }
+
+        //Final frame;
+        return flippedFrame;
+        //return inputFrame.rgba();
     }
 
 }
