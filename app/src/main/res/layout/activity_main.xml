@@ -7,12 +7,11 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/btn_test"
+        android:id="@+id/btn_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="341dp"
-        android:text="Test"
+        android:layout_marginStart="132dp"
+        android:text="faceRegister"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="352dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

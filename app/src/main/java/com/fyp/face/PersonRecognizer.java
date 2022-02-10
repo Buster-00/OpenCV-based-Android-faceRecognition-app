@@ -138,7 +138,7 @@ public class PersonRecognizer {
         
         if(counter > 0){
             if(labelsFile.max() > 1){
-                faceRecognizer.train(images, labels);
+                //faceRecognizer.train(images, labels);
                 
             }
             labelsFile.Save();
@@ -164,7 +164,7 @@ public class PersonRecognizer {
         double p[] = new double[1];
         IplImage ipl = MatToIplImage(m, WIDTH, HEIGHT);
 
-        faceRecognizer.predict(ipl, n, p);
+        //faceRecognizer.predict(ipl, n, p);
 
         if(n[0] != -1)
             mProb = (int)p[0];

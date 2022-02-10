@@ -1,8 +1,10 @@
 package com.fyp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.FaceDetector;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceView;
 
@@ -14,6 +16,7 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCamera2View;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
@@ -25,6 +28,10 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.objdetect.FaceDetectorYN;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +69,12 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
     static {
         System.loadLibrary("native-lib");
     }
+
+    //path
+    String mPath;
+
+    //face description
+    String faceDescription;
 
     private BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -110,6 +123,20 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
 
         //Set detect method, cascade or DNN
         DETECT_METHOD = FACE_DETECT.CASCADE_DETECT;
+
+        //Initiate store path and make dir
+        mPath = getExternalCacheDir() + "/facerecOPCV/";
+        boolean success = (new File(mPath)).mkdirs();
+
+        //if create dir success
+        if(success)
+            Log.e("dir", "mkdir success" + mPath);
+        else
+            Log.e("dir", "mkdir failed" + mPath);
+
+        //Load face description from bundle
+        faceDescription = getIntent().getStringExtra("name");
+        Log.e("facedesctiption", faceDescription);
     }
 
     @Override
@@ -189,19 +216,23 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
             detect_counter++;
         }
 
+        // Rect to clip the face
+        Rect clipRect = null;
+
         //Render rectangle
         for(int i = 0; i < faceArray.length; i++){
             //rectangle(temp, faceArray[i].tl(),  faceArray[i].br(), new Scalar(255, 0, 0), 1);
-            rectangle(flippedFrame, new Point(flippedFrame.width()-faceArray[i].x, faceArray[i].y),
-                    new Point(flippedFrame.width()-(faceArray[i].x+faceArray[i].width), faceArray[i].y+faceArray[i].height) , new Scalar(255, 0, 0), 1);
+            clipRect = new Rect(new Point(flippedFrame.width()-faceArray[i].x, faceArray[i].y),new Point(flippedFrame.width()-(faceArray[i].x+faceArray[i].width), faceArray[i].y+faceArray[i].height));
+            rectangle(flippedFrame, clipRect, new Scalar(255, 0, 0), 1);
             //line(mRgba, new Point(0.0, mRgba.height()), new Point(mRgba.width(), 0.0), new Scalar(255, 0, 0), 2);
             Log.e("Rendering",faceArray[i].tl().toString() + faceArray[i].br().toString()+ flippedFrame.rows() + flippedFrame.cols() );
         }
 
         //if detect face > 10 times, turn to another activity
-//        if(detect_counter > 10){
-//            startActivity(new Intent(FaceDetectionActivity.this, Success.class));
-//        }
+       if(detect_counter > 10){
+           SaveFace(flippedFrame.submat(clipRect), faceDescription);
+           startActivity(new Intent(FaceDetectionActivity.this, Success.class));
+        }
 
         //Final frame;
         return flippedFrame;
@@ -274,5 +305,25 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         //return inputFrame.rgba();
     }
 
+    private void SaveFace(Mat face, String description){
+
+        //Create Bitmap
+        Bitmap bitmap = Bitmap.createBitmap(face.width(), face.height(), Bitmap.Config.ARGB_8888);
+
+        //Convert mat to bitmap
+        Utils.matToBitmap(face, bitmap);
+
+        FileOutputStream os;
+        try{
+            //store the bitmap as JPEG file
+            os = new FileOutputStream(mPath + description + "-" + ".jpg", true);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

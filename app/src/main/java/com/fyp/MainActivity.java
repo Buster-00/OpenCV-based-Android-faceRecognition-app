@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,7 +20,7 @@ import org.opencv.objdetect.FaceDetectorYN;
 public class MainActivity extends AppCompatActivity {
 
     //widget
-    Button btn_test;
+    Button btn_register;
 
     //handler
     private Handler mHandler;
@@ -29,18 +30,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //initialize widget
-        btn_test.setOnClickListener(new View.OnClickListener() {
+        btn_register = findViewById(R.id.btn_register);
+
+        btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btn_test_onClick();
+                setBtn_register();
             }
         });
 
 
     }
 
-    protected void btn_test_onClick(){
-
+    protected  void setBtn_register(){
+        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
     }
 }
