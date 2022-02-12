@@ -2,20 +2,11 @@ package com.fyp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.fyp.helper.FaceDetectorHelper;
-
-import org.opencv.objdetect.FaceDetectorYN;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +34,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected  void setBtn_register(){
-        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+        startActivity(new Intent(MainActivity.this, NameRegisterActivity.class));
     }
 }

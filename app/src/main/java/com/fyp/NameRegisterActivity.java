@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class RegisterActivity extends AppCompatActivity {
+public class NameRegisterActivity extends AppCompatActivity {
 
     Button btn_next;
     EditText tv_name;
@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         //create bundle to transform data
         Bundle bundle = new Bundle();
         bundle.putString("name", tv_name.getText().toString());
-        Intent intent = new Intent(RegisterActivity.this, FaceDetectionActivity.class);
+        Intent intent = new Intent(NameRegisterActivity.this, FaceDetectionActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }
