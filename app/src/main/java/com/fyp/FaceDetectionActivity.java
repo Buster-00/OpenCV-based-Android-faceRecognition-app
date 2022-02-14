@@ -231,7 +231,10 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         //if detect face > 10 times, turn to another activity
        if(detect_counter > 10){
            SaveFace(flippedFrame.submat(clipRect), faceDescription);
-           startActivity(new Intent(FaceDetectionActivity.this, Success.class));
+           Intent intent = new Intent(FaceDetectionActivity.this, Success.class);
+           Bundle bundle = new Bundle();
+           intent.putExtra("name", mPath + faceDescription + ".jpg");
+           startActivity(intent);
         }
 
         //Final frame;
@@ -316,7 +319,7 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         FileOutputStream os;
         try{
             //store the bitmap as JPEG file
-            os = new FileOutputStream(mPath + description + "-" + ".jpg", true);
+            os = new FileOutputStream(mPath + description + ".jpg", true);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
             os.close();
         } catch (FileNotFoundException e) {
