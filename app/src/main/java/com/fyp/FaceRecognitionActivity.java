@@ -21,6 +21,8 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.face.FaceRecognizer;
+import org.opencv.face.LBPHFaceRecognizer;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.util.ArrayList;
@@ -41,6 +43,9 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
     //Face Detector
     private CascadeClassifier faceDetector;
+
+    //Face Recognizer
+    private FaceRecognizer faceRecognizer;
 
     //BaseLoaderCallback
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -76,6 +81,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //Load cascade classifier
         faceDetector = loadClassifier(this);
+
     }
 
     @Override

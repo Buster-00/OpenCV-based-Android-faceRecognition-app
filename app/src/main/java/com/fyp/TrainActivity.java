@@ -8,37 +8,70 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fyp.face.PersonRecognizer;
 
-import org.bytedeco.opencv.opencv_core.MatVector;
-import org.bytedeco.opencv.opencv_face.FaceRecognizer;
-import org.bytedeco.opencv.opencv_face.LBPHFaceRecognizer;
+
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
+import org.opencv.face.FaceRecognizer;
+import org.opencv.face.LBPHFaceRecognizer;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+import static org.opencv.core.CvType.CV_32SC1;
+
 public class TrainActivity extends AppCompatActivity {
+
+    //Button
+    Button btn_test;
 
     //layout
     LinearLayoutCompat linearLayout;
 
     //faceRecognizer
-    FaceRecognizer faceRecognizer = LBPHFaceRecognizer.create();
+    FaceRecognizer faceRecognizer ;
 
     //path
     String mPath = new String();
+
+    //BaseLoadCallBack
+    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+        @Override
+        public void onManagerConnected(int status){
+            switch (status){
+                case BaseLoaderCallback.SUCCESS:{
+                    Log.i("OpenCV", "OpenCV loaded successfully");
+                }
+            }
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!OpenCVLoader.initDebug()) {
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION, this, mLoaderCallback);
+        } else {
+            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +80,16 @@ public class TrainActivity extends AppCompatActivity {
 
         mPath = getExternalCacheDir() + "/facerecOPCV/";
 
-        linearLayout = findViewById(R.id.linearLayout);
+        btn_test = findViewById(R.id.btn_test1);
 
-        //initiate OpenCV
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                train();
+            }
+        });
+
+        //initialize OpenCV
         OpenCVLoader.initDebug();
 
         //Retrieve all the image file
@@ -62,7 +102,7 @@ public class TrainActivity extends AppCompatActivity {
         };
 
         File[] imgFiles = root.listFiles(filenameFilter);
-        MatVector matVector = new MatVector();
+        Vector<Mat> matVector = new Vector<>();
         HashMap<String, Integer> hashMap = new HashMap<>();
         Mat labelsMat = new Mat();
         int counter = 0;
@@ -82,9 +122,9 @@ public class TrainActivity extends AppCompatActivity {
 
             //read image file
             Mat m = Imgcodecs.imread(file.getAbsolutePath());
-            matVector.push_back(m);
+            matVector.add(m);
 
-            if(!matVector.isNull()){
+            if(!matVector.isEmpty()){
                 temp += "add mat successfully!";
                 temp += matVector.size();
             }
@@ -98,7 +138,10 @@ public class TrainActivity extends AppCompatActivity {
 
         Vector<Bitmap> bitmaps = new Vector<>();
 
-        faceRecognizer.train(matVector, new org.bytedeco.opencv.opencv_core.Mat(labels));
 
+    }
+
+    void train(){
+        faceRecognizer = LBPHFaceRecognizer.create();
     }
 }

@@ -12,3 +12,7 @@ android {
     }
     ndkVersion '21.1.6352462'
 }
+
+dependencies {
+    implementation fileTree(dir: 'F:\\FYP-Project\\app\\libs', include: ['*.aar', '*.jar'], exclude: [])
+}
