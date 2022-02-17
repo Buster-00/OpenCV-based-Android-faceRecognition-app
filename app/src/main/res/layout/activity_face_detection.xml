@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <org.opencv.android.JavaCamera2View
-        android:id="@+id/javaCameraView"
+        android:id="@+id/javaCameraView_detection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:camera_id="back"

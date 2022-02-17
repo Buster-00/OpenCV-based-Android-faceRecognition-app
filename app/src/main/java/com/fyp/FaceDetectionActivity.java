@@ -2,9 +2,7 @@ package com.fyp;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.FaceDetector;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceView;
 
@@ -23,7 +21,6 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.engine.OpenCVEngineInterface;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.objdetect.FaceDetectorYN;
@@ -40,7 +37,6 @@ import static org.opencv.core.Core.ROTATE_180;
 import static org.opencv.core.Core.flip;
 import static org.opencv.core.Core.rotate;
 import static org.opencv.imgproc.Imgproc.COLOR_RGBA2RGB;
-import static org.opencv.imgproc.Imgproc.COLOR_RGBA2YUV_I420;
 import static org.opencv.imgproc.Imgproc.line;
 import static org.opencv.imgproc.Imgproc.rectangle;
 
@@ -106,7 +102,7 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         setContentView(R.layout.activity_face_detection);
 
         //Initialize javaCameraView
-        javaCameraView = (JavaCamera2View)findViewById(R.id.javaCameraView);
+        javaCameraView = (JavaCamera2View)findViewById(R.id.javaCameraView_detection);
         javaCameraView.setVisibility(SurfaceView.VISIBLE);
         javaCameraView.setCameraIndex(1);
         javaCameraView.setCameraPermissionGranted();
@@ -159,12 +155,12 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-
+        //TODO
     }
 
     @Override
     public void onCameraViewStopped() {
-
+        //TODO
     }
 
     @Override
@@ -231,9 +227,10 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         //if detect face > 10 times, turn to another activity
        if(detect_counter > 10){
            SaveFace(flippedFrame.submat(clipRect), faceDescription);
-           Intent intent = new Intent(FaceDetectionActivity.this, Success.class);
+           Intent intent = new Intent(FaceDetectionActivity.this, SuccessActivity.class);
            Bundle bundle = new Bundle();
            intent.putExtra("name", mPath + faceDescription + ".jpg");
+           intent.putExtra("mPath", mPath);
            startActivity(intent);
         }
 

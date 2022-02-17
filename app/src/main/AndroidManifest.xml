@@ -19,7 +19,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FYP">
-        <activity android:name=".NameRegisterActivity"></activity>
+        <activity android:name=".TrainActivity"></activity>
+        <activity
+            android:name=".FaceRecognitionActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".NameRegisterActivity" />
         <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Success" />
+        <activity android:name=".SuccessActivity" />
         <activity
             android:name=".FaceDetectionActivity"
             android:screenOrientation="landscape">

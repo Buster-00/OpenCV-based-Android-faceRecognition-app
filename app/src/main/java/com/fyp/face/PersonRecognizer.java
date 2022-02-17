@@ -1,29 +1,23 @@
 package com.fyp.face;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import org.bytedeco.javacv.FrameFilter;
 import org.bytedeco.opencv.opencv_core.IplImage;
 import org.bytedeco.opencv.opencv_core.MatVector;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.face.FaceRecognizer;
 import org.opencv.face.LBPHFaceRecognizer;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.objdetect.FaceRecognizerSF;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
-import java.security.spec.ECField;
-import java.util.List;
 import java.util.Vector;
 
 import static org.bytedeco.opencv.global.opencv_core.IPL_DEPTH_8U;
-import static org.bytedeco.opencv.global.opencv_core.doubleRand;
 import static org.bytedeco.opencv.global.opencv_imgproc.COLOR_BGR2GRAY;
 import static org.bytedeco.opencv.global.opencv_imgproc.cvCvtColor;
 import static org.bytedeco.opencv.helper.opencv_imgcodecs.cvLoadImage;
@@ -33,7 +27,7 @@ public class PersonRecognizer {
     private FaceRecognizer faceRecognizer;
     String mPath;
     int count = 0;
-    Lables labelsFile;
+    Labels labelsFile;
 
     static final int WIDTH = 128;
     static final int HEIGHT = 128;
@@ -48,7 +42,7 @@ public class PersonRecognizer {
         mPath = path;
 
         //create lable files
-        labelsFile = new Lables(mPath);
+        labelsFile = new Labels(mPath);
     }
 
     //store the photo
@@ -103,6 +97,7 @@ public class PersonRecognizer {
         int i1 = mPath.length();
         for(File image : imagesFiles){
             String p = image.getAbsolutePath();
+            Mat mat = Imgcodecs.imread(p);
             img = cvLoadImage(p);
 
             if(img==null){
@@ -138,13 +133,20 @@ public class PersonRecognizer {
         
         if(counter > 0){
             if(labelsFile.max() > 1){
-                //faceRecognizer.train(images, labels);
+                //faceRecognizer.train();
                 
             }
             labelsFile.Save();
         }
 
         return true;
+    }
+
+    //The train function which trains the matrix and output as xml file
+    public boolean train2(Vector<Mat> mats, Mat label){
+
+        faceRecognizer.train(mats, label);
+        return  true;
     }
 
     public boolean canPredict(){

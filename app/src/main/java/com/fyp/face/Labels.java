@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
-public class Lables {
+public class Labels {
 
     String mPath;
     ArrayList<label> theList = new ArrayList<>();
@@ -28,7 +28,7 @@ public class Lables {
         }
     }
 
-    public Lables(String mPath) {
+    public Labels(String mPath) {
         this.mPath = mPath;
     }
 
@@ -115,5 +115,14 @@ public class Lables {
             }
         }
         return m;
+    }
+
+    public String display(){
+        String temp = new String();
+        Read();
+        for(label l : theList){
+            temp += l.theLabel + ", " + l.num + "\n";
+        }
+        return temp;
     }
 }
