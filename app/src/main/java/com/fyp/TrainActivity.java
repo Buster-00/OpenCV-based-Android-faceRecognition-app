@@ -18,6 +18,9 @@ import android.widget.TextView;
 import com.fyp.face.PersonRecognizer;
 
 
+import org.bytedeco.javacpp.Loader;
+import org.bytedeco.opencv.opencv_java;
+import org.bytedeco.opencv.presets.opencv_core;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
@@ -90,7 +93,8 @@ public class TrainActivity extends AppCompatActivity {
         });
 
         //initialize OpenCV
-        OpenCVLoader.initDebug();
+        Loader.load(opencv_java.class);
+
 
         //Retrieve all the image file
         File root = new File(mPath);

@@ -1,6 +1,6 @@
 package com.fyp.face;
 
-import org.bytedeco.opencv.presets.opencv_core;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
