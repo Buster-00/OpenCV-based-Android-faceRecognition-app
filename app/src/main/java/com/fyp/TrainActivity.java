@@ -26,9 +26,11 @@ import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
 import org.opencv.face.FaceRecognizer;
 import org.opencv.face.LBPHFaceRecognizer;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -53,6 +55,10 @@ public class TrainActivity extends AppCompatActivity {
 
     //path
     String mPath = new String();
+
+    //data
+    Mat matOfLabels;
+    Vector<Mat> matVector;
 
     //BaseLoadCallBack
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
@@ -106,7 +112,7 @@ public class TrainActivity extends AppCompatActivity {
         };
 
         File[] imgFiles = root.listFiles(filenameFilter);
-        Vector<Mat> matVector = new Vector<>();
+        matVector = new Vector<>();
         HashMap<String, Integer> hashMap = new HashMap<>();
         Mat labelsMat = new Mat();
         int counter = 0;
@@ -126,7 +132,9 @@ public class TrainActivity extends AppCompatActivity {
 
             //read image file
             Mat m = Imgcodecs.imread(file.getAbsolutePath());
-            matVector.add(m);
+            Mat des = new Mat();
+            Imgproc.cvtColor(m, des, Imgproc.COLOR_BGR2GRAY);
+            matVector.add(des);
 
             if(!matVector.isEmpty()){
                 temp += "add mat successfully!";
@@ -136,16 +144,20 @@ public class TrainActivity extends AppCompatActivity {
 
         int[] labels = new int[(int)matVector.size()];
 
+
+
         for(int i = 0; i < labels.length; i++){
             labels[i] = i;
         }
 
-        Vector<Bitmap> bitmaps = new Vector<>();
+       matOfLabels = new MatOfInt(labels);
 
 
     }
 
     void train(){
         faceRecognizer = LBPHFaceRecognizer.create();
+        faceRecognizer.train(matVector, matOfLabels);
+        
     }
 }
