@@ -158,6 +158,6 @@ public class TrainActivity extends AppCompatActivity {
     void train(){
         faceRecognizer = LBPHFaceRecognizer.create();
         faceRecognizer.train(matVector, matOfLabels);
-        
+
     }
 }
