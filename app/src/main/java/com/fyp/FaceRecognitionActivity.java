@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Vector;
 
 import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
+import static com.fyp.helper.FrameFlipHelper.FlipRotateFrameHorizental;
 import static org.opencv.core.Core.ROTATE_180;
 import static org.opencv.core.Core.flip;
 import static org.opencv.core.Core.rotate;
@@ -108,9 +109,13 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //create PersonRecognizer
         faceRecognizer = LBPHFaceRecognizer.create(2,8,8,8,200);
+        faceRecognizer.read(mPath + "train.xml");
+
+        //Load map
+        loadMap();
 
         //train
-        train();
+        //train();
 
     }
 
@@ -144,7 +149,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
 
-        return detectFace(inputFrame);
+        return RecognizeFace(inputFrame);
     }
 
     private void initOpenCV(){
@@ -157,7 +162,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         }
     }
 
-    private Mat detectFace(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+    private Mat RecognizeFace(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         if (faceDetector.empty()) {
             Log.e("error", "Classifier cannot be loaded");
         }
@@ -166,16 +171,8 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         MatOfRect face_rec = new MatOfRect();
         faceDetector.detectMultiScale(inputFrame.gray(), face_rec);
 
-        Mat rotatedFrame = new Mat();
-        Mat flippedFrame = new Mat();
-
         Rect[] faceArray = face_rec.toArray();
-
-        //Rotate the frame by 180
-        rotate(inputFrame.gray(), rotatedFrame, ROTATE_180);
-
-        //Flip the frame
-        flip(rotatedFrame, flippedFrame, 0);
+        Mat flippedFrame = FlipRotateFrameHorizental(inputFrame.gray());
 
         // Rect to clip the face
         Rect clipRect = null;
@@ -245,5 +242,42 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //LBPH train
         faceRecognizer.train(matVector, matOfLabels);
+        faceRecognizer.write(mPath + "train.xml");
+    }
+
+    //TODO convert it to database
+    private void loadMap(){
+
+        //Retrieve all face image file
+        File root = new File(mPath);
+        FilenameFilter filenameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String name) {
+                return name.toLowerCase().endsWith(".jpg");
+            }
+        };
+
+        File[] imgFiles = root.listFiles(filenameFilter);
+        mapLabelName = new HashMap<>();
+        int counter = 0;
+
+        for(File file : imgFiles){
+
+            //map label and name
+            String fileName = file.getName();
+            int index = fileName.lastIndexOf('.');
+            String name = fileName.substring(0, index);
+            mapLabelName.put(counter, name);
+            counter++;
+
+        }
+
+        //Generate mat of labels
+        int[] labels = new int[imgFiles.length];
+        for(int i = 0; i < imgFiles.length; i++){
+            labels[i] = i;
+        }
+        Mat matOfLabels = new MatOfInt(labels);
+
     }
 }

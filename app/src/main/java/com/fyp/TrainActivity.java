@@ -160,19 +160,7 @@ public class TrainActivity extends AppCompatActivity {
     void train(){
         faceRecognizer = LBPHFaceRecognizer.create();
         faceRecognizer.train(matVector, matOfLabels);
-
-        File path = this.getFilesDir();
-        try {
-            File trainFile = new File(path.getAbsolutePath() + "/train.xml");
-            trainFile.createNewFile();
-            FileOutputStream fos = new FileOutputStream(path);
-            faceRecognizer.save(path.getAbsolutePath() + "/train.xml");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        faceRecognizer.write(mPath + "train.xml");
 
     }
 }
