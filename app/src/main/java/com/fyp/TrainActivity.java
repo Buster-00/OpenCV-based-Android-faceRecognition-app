@@ -33,7 +33,10 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,7 +122,6 @@ public class TrainActivity extends AppCompatActivity {
         String temp = new String();
 
 
-
         for(File file : imgFiles){
             String name = file.getName();
             int index_1 = name.lastIndexOf('.');
@@ -150,7 +152,7 @@ public class TrainActivity extends AppCompatActivity {
             labels[i] = i;
         }
 
-       matOfLabels = new MatOfInt(labels);
+        matOfLabels = new MatOfInt(labels);
 
 
     }
@@ -158,6 +160,19 @@ public class TrainActivity extends AppCompatActivity {
     void train(){
         faceRecognizer = LBPHFaceRecognizer.create();
         faceRecognizer.train(matVector, matOfLabels);
+
+        File path = this.getFilesDir();
+        try {
+            File trainFile = new File(path.getAbsolutePath() + "/train.xml");
+            trainFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(path);
+            faceRecognizer.save(path.getAbsolutePath() + "/train.xml");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

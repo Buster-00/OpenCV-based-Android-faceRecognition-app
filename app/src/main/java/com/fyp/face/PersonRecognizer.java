@@ -3,8 +3,10 @@ package com.fyp.face;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_core.IplImage;
 import org.bytedeco.opencv.opencv_core.MatVector;
+import org.bytedeco.opencv.opencv_java;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.face.FaceRecognizer;
@@ -34,6 +36,9 @@ public class PersonRecognizer {
     private int mProb = 999;
 
     public PersonRecognizer(String path){
+
+        //initiate javaCV
+        Loader.load(opencv_java.class);
 
         //Initiate LBPH face recognizer
         faceRecognizer = LBPHFaceRecognizer.create(2,8,8,8,200);
