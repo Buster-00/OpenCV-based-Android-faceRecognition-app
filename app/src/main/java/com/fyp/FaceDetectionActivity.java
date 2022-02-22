@@ -325,5 +325,6 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
             e.printStackTrace();
         }
     }
+
 }
 

@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
+import org.bytedeco.javacpp.Loader;
+import org.bytedeco.opencv.opencv_java;
+
 public class MainActivity extends AppCompatActivity {
 
     //widget
@@ -49,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //Initiate JavaCV
+        Loader.load(opencv_java.class);
     }
 
     protected void setBtn_register(){

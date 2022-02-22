@@ -102,7 +102,6 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //Initialize OpenCV library
         initOpenCV();
-        Loader.load(opencv_java.class);
 
         //Load cascade classifier
         faceDetector = loadClassifier(this);
@@ -113,9 +112,6 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //Load map
         loadMap();
-
-        //train
-        //train();
 
     }
 
@@ -201,49 +197,6 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         return flippedFrame;
     }
 
-    private void train(){
-        //Retrieve all face image file
-        File root = new File(mPath);
-        FilenameFilter filenameFilter = new FilenameFilter() {
-            @Override
-            public boolean accept(File file, String name) {
-                return name.toLowerCase().endsWith(".jpg");
-            }
-        };
-
-        File[] imgFiles = root.listFiles(filenameFilter);
-        matVector = new Vector<>();
-        mapLabelName = new HashMap<>();
-        int counter = 0;
-
-        for(File file : imgFiles){
-
-            //map label and name
-            String fileName = file.getName();
-            int index = fileName.lastIndexOf('.');
-            String name = fileName.substring(0, index);
-            mapLabelName.put(counter, name);
-            counter++;
-
-            //Load image
-            Mat m = Imgcodecs.imread(file.getAbsolutePath());
-            Mat des = new Mat();
-            Imgproc.cvtColor(m, des, COLOR_BGR2GRAY);
-            matVector.add(des);
-
-        }
-
-        //Generate mat of labels
-        int[] labels = new int[matVector.size()];
-        for(int i = 0; i < matVector.size(); i++){
-            labels[i] = i;
-        }
-        Mat matOfLabels = new MatOfInt(labels);
-
-        //LBPH train
-        faceRecognizer.train(matVector, matOfLabels);
-        faceRecognizer.write(mPath + "train.xml");
-    }
 
     //TODO convert it to database
     private void loadMap(){
