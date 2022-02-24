@@ -13,28 +13,33 @@ import java.util.HashMap;
 
 public class StudentAccountDB extends SQLiteOpenHelper {
 
+    private static final int version = 2;
+
     //Define names
     public static final String DB_NAME = "DB";
     public static final String TABLE_NAME = "studentAccount";
 
     //Define column NAME
+
     public static final String COLUMN_1 = "id";
     public static final String COLUMN_2 = "password";
     public static final String COLUMN_3 = "name";
+    public static final String COLUMN_4 = "label";
 
     public StudentAccountDB(@Nullable Context context) {
-        super(context, DB_NAME, null, 1);
+        super(context, DB_NAME, null, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_NAME + "(id TEXT primary key, password TEXT, name TEXT)");
+        sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_NAME + "(id TEXT UNIQUE, password TEXT, name TEXT, label INTEGER PRIMARY KEY AUTOINCREMENT); ");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE if EXISTS " + TABLE_NAME);
+
     }
+
 
     //Insert new student account
     public boolean insert(String col_1, String col_2, String col_3){
@@ -90,6 +95,39 @@ public class StudentAccountDB extends SQLiteOpenHelper {
 
             return false;
         }
+    }
+
+    public String ReadAll(){
+
+        //get database reference
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT " + "*" + " FROM " + TABLE_NAME, new String[]{});
+
+        String s = new String();
+        while(cursor.moveToNext()){
+            s += cursor.getString(cursor.getColumnIndex(COLUMN_1));
+            s += cursor.getString(cursor.getColumnIndex(COLUMN_4));
+        }
+        return s;
+    }
+
+    public int getLabelByID(String studentID){
+
+        //get database reference
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        //Retrieve data
+        Cursor cursor = DB.rawQuery("SELECT " + COLUMN_4 + " FROM " + TABLE_NAME +  " WHERE " + COLUMN_1 + "=?", new String[]{studentID});
+
+        if(cursor.moveToNext()){
+            return cursor.getInt(cursor.getColumnIndex(COLUMN_4));
+        }
+        else {
+            return -1;
+        }
+
+
     }
 
 }

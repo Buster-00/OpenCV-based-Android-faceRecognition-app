@@ -7,9 +7,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.fyp.databaseHelper.StudentAccountDB;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_register;
     Button btn_recognition;
     Button btn_train;
+    TextView tv_username;
 
     //handler
     private Handler mHandler;
@@ -26,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Initiate widgets
         btn_register = findViewById(R.id.btn_register);
         btn_recognition = findViewById(R.id.btn_recognition);
         btn_train = findViewById(R.id.btn_train);
+        tv_username = findViewById(R.id.tv_username);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 setBtn_train();
             }
         });
+
+        StudentAccountDB DB = new StudentAccountDB(this);
+        HashMap<String, String> hm = new HashMap<>();
+        tv_username.setText(DB.ReadAll());
 
 
         //Initiate JavaCV

@@ -120,6 +120,9 @@ public class SuccessActivity extends AppCompatActivity {
         //display
         tv_labels.setText(labels.display());
 
+        //
+        Loader.load(opencv_java.class);
+
         //create lbph face recognizer
         faceRecognizer = faceRecognizer = LBPHFaceRecognizer.create(2,8,8,8,200);
 
@@ -128,7 +131,12 @@ public class SuccessActivity extends AppCompatActivity {
     protected void setBtn_confirm(){
 
         //LBPH train
-        train_single();
+        if(new File(mPath + "train.xml").exists()){
+            train_single();
+        }
+        else{
+            train();
+        }
 
 
         Toast.makeText(SuccessActivity.this, "your registration is successed!", Toast.LENGTH_SHORT).show();
@@ -206,10 +214,11 @@ public class SuccessActivity extends AppCompatActivity {
 
 
         //Generate mat of labels
+        StudentAccountDB db = new StudentAccountDB(this);
         int[] label = new int[1];
-        label[0] = 4;
+        label[0] = db.getLabelByID(getIntent().getStringExtra("id"));
         Mat matOfLabels = new MatOfInt(label);
-
+        db.close();
         //LBPH train
 
         faceRecognizer.read(mPath + "train.xml");

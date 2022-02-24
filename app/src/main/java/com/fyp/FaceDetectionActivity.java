@@ -231,6 +231,7 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
            Bundle bundle = new Bundle();
            intent.putExtra("name", mPath + faceDescription + ".jpg");
            intent.putExtra("mPath", mPath);
+           intent.putExtra("id", getIntent().getStringExtra("id"));
            startActivity(intent);
         }
 
