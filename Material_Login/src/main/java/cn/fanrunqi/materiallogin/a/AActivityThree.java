@@ -1,8 +1,10 @@
 package cn.fanrunqi.materiallogin.a;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.transition.Explode;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import cn.fanrunqi.materiallogin.R;
 

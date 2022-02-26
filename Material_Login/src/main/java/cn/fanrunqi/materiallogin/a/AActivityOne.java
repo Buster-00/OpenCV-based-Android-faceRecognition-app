@@ -3,14 +3,17 @@ package cn.fanrunqi.materiallogin.a;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+
 import android.transition.Explode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import cn.fanrunqi.materiallogin.R;
 
