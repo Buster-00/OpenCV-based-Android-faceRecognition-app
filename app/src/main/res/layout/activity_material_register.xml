@@ -8,16 +8,16 @@
 
     <FrameLayout
         android:layout_centerInParent="true"
-        android:paddingTop="70dp"
+        android:paddingTop="0dp"
         android:layout_width="320dp"
-        android:layout_height="400dp">
+        android:layout_height="500dp">
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_add"
             app:cardBackgroundColor="#2ea67f"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="match_parent"
             app:cardCornerRadius="6dp"
             app:cardElevation="3dp"
             app:cardUseCompatPadding="true"
@@ -28,50 +28,74 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:layout_marginTop="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="60dp"
                     android:text="@string/register"
                     android:textColor="#fff"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_marginTop="10dp"
                     android:paddingStart="50dp"
                     android:paddingEnd="30dp"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="@dimen/myLayout_height">
                     <com.google.android.material.textfield.TextInputLayout
                         android:textColorHint="#f0f7f4"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
                         android:layout_width="match_parent"
-                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                         android:layout_height="wrap_content">
+
                         <EditText
-                            android:textSize="16sp"
-                            android:hint="@string/Username"
-                            android:textColor="#f0f7f4"
                             android:id="@+id/et_username"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPersonName"
                             android:background="@drawable/selector_bg_edit_2"
-                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                            android:hint="Student ID"
+                            android:inputType="textPersonName"
                             android:paddingBottom="2dp"
-                            />
+                            android:textColor="#f0f7f4"
+                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="0dp"
+                    android:paddingStart="50dp"
+                    android:paddingEnd="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/myLayout_height">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:textColorHint="#f0f7f4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/et_student_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/selector_bg_edit_2"
+                            android:hint="Student Name"
+                            android:inputType="textPersonName"
+                            android:paddingBottom="2dp"
+                            android:textColor="#f0f7f4"
+                            android:textCursorDrawable="@drawable/bg_input_cursor_2"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
                 <LinearLayout
                     android:paddingStart="50dp"
                     android:paddingEnd="30dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="@dimen/myLayout_height">
                     <com.google.android.material.textfield.TextInputLayout
 
                         android:textColorHint="#f0f7f4"
-                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <EditText
@@ -93,11 +117,10 @@
                     android:paddingEnd="30dp"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="@dimen/myLayout_height">
                     <com.google.android.material.textfield.TextInputLayout
 
                         android:textColorHint="#f0f7f4"
-                        android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <EditText
@@ -117,7 +140,7 @@
                 <Button
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center_horizontal"
-                    android:id="@+id/bt_go"
+                    android:id="@+id/btn_next"
                     android:background="@drawable/bt_shape_2"
                     android:stateListAnimator="@drawable/state_list_animator_z"
                     android:layout_width="150dp"

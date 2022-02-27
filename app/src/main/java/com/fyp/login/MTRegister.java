@@ -5,16 +5,20 @@ import androidx.cardview.widget.CardView;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fyp.R;
+import com.fyp.databaseHelper.StudentAccountDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -30,9 +34,12 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
 
         //Widget
         @NotEmpty
-        private EditText et_reg_username;
+        private EditText et_reg_student_name;
 
-        @Password(min = 6, scheme = Password.Scheme.ALPHA_MIXED_CASE)
+        @NotEmpty
+        private EditText et_reg_student_ID;
+
+        @Password(min = 6)
         private EditText et_reg_password;
 
         @ConfirmPassword
@@ -40,9 +47,11 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
 
         private FloatingActionButton fab;
         private CardView cvAdd;
+        private Button btn_next;
 
         //Validator
         Validator validator = new Validator(this);
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -51,27 +60,39 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
             ShowEnterAnimation();
             initView();
             initValidator();
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    validator.validate();
-                    animateRevealClose();
-                }
-            });
         }
 
     private void initValidator() {
             validator.setValidationListener(this);
-
     }
 
     private void initView() {
-            et_reg_username = findViewById(R.id.et_username);
-            et_reg_password = findViewById(R.id.et_password);
-            et_reg_repeatPassword = findViewById(R.id.et_repeatpassword);
-            fab = findViewById(R.id.fab);
-            cvAdd = findViewById(R.id.cv_add);
-        }
+        btn_next = findViewById(R.id.btn_next);
+        et_reg_student_name = findViewById(R.id.et_student_name);
+        et_reg_student_ID = findViewById(R.id.et_username);
+        et_reg_password = findViewById(R.id.et_password);
+        et_reg_repeatPassword = findViewById(R.id.et_repeatpassword);
+        fab = findViewById(R.id.fab);
+        cvAdd = findViewById(R.id.cv_add);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animateRevealClose();
+            }
+        });
+
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validator.validate();
+                if(validator.isValidating()){
+                    register();
+                }
+            }
+        });
+
+    }
 
         private void ShowEnterAnimation() {
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.fabtransition);
@@ -171,4 +192,22 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
             }
         }
     }
+
+    private void register(){
+        String studentID = et_reg_student_ID.getText().toString();
+        String password = et_reg_password.getText().toString();
+        String studentName = et_reg_student_name.getText().toString();
+
+        StudentAccountDB DB = new StudentAccountDB(this);
+
+        if(DB.insert(studentID, password, studentName)){
+            Toast.makeText(this, "Register successfully", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this, "Register failure, the account is already existed", Toast.LENGTH_SHORT).show();
+        }
+
+        DB.close();
+    }
+
 }

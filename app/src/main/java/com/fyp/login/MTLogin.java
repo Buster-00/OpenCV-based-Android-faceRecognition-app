@@ -13,16 +13,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fyp.MainActivity;
 import com.fyp.R;
+import com.fyp.databaseHelper.StudentAccountDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
+import java.util.HashMap;
 import java.util.List;
 
 import cn.fanrunqi.materiallogin.a.AActivityOne;
@@ -31,16 +34,18 @@ import cn.fanrunqi.materiallogin.a.AActivityTwo;
 
 public class MTLogin extends AppCompatActivity implements Validator.ValidationListener {
 
+    //Widget
     @NotEmpty
-    protected EditText etUsername;
+    protected EditText etStudentID;
 
-    @Password(min = 6, scheme = Password.Scheme.ALPHA_MIXED_CASE)
+    @NotEmpty
     protected EditText etPassword;
 
     protected Button btGo;
     protected CardView cv;
     protected FloatingActionButton fab;
 
+    //Validator
     Validator validator;
 
     @Override
@@ -48,13 +53,18 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material_login);
         initView();
+        initValidator();
         setListener();
+
+    }
+
+    private void initValidator() {
         validator = new Validator(this);
         validator.setValidationListener(this);
     }
 
     private void initView() {
-        etUsername = findViewById(R.id.et_username);
+        etStudentID = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
         btGo = findViewById(R.id.bt_go);
         cv = findViewById(R.id.cv);
@@ -68,17 +78,6 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
 
                 //validate input
                 validator.validate();
-
-                if(validator.isValidating()){
-                    Explode explode = new Explode();
-                    explode.setDuration(500);
-
-                    getWindow().setExitTransition(explode);
-                    getWindow().setEnterTransition(explode);
-                    ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(MTLogin.this);
-                    Intent i2 = new Intent(MTLogin.this, MainActivity.class);
-                    startActivity(i2, oc2.toBundle());
-                }
 
             }
         });
@@ -110,8 +109,18 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
 
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
-        Log.e("validator", "true");
+        //Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+        //validate password and account
+        Login();
+
+        /*Explode explode = new Explode();
+        explode.setDuration(500);
+
+        getWindow().setExitTransition(explode);
+        getWindow().setEnterTransition(explode);
+        ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(MTLogin.this);
+        Intent i2 = new Intent(MTLogin.this, MainActivity.class);
+        startActivity(i2, oc2.toBundle());*/
     }
 
     @Override
@@ -129,5 +138,29 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
             }
 
         }
+    }
+
+    private void Login(){
+        String studentID = etStudentID.getText().toString();
+        String password = etStudentID.getText().toString();
+
+        StudentAccountDB DB = new StudentAccountDB(this);
+        HashMap<String, String> hashMap = new HashMap<>();
+
+        if(DB.readById(studentID, hashMap)){
+            String DB_password = hashMap.get("password");
+
+            if(DB_password.equals(password)){
+                Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "The password is incorrect, please enter again", Toast.LENGTH_SHORT).show();
+                etPassword.setText("", TextView.BufferType.EDITABLE);
+            }
+        }
+        else{
+            Toast.makeText(this, "cannot find account", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
