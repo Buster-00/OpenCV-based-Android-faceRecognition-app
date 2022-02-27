@@ -19,9 +19,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        tools:replace="android:theme"
-        android:theme="@style/Theme.FYP">
-        <activity android:name=".TrainActivity"></activity>
+        android:theme="@style/Theme.FYP"
+        tools:replace="android:theme">
+        <activity android:name=".login.MTRegister"></activity>
+        <activity android:name=".TrainActivity" />
         <activity
             android:name=".FaceRecognitionActivity"
             android:screenOrientation="landscape" />
@@ -50,12 +51,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="cn.fanrunqi.materiallogin.a.AActivityOne">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".login.MTLogin">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

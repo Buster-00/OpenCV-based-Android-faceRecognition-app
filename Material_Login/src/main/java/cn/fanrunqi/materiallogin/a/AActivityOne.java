@@ -1,5 +1,6 @@
 package cn.fanrunqi.materiallogin.a;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,11 +20,11 @@ import cn.fanrunqi.materiallogin.R;
 
 public class AActivityOne extends AppCompatActivity {
 
-    private EditText etUsername;
-    private EditText etPassword;
-    private Button btGo;
-    private CardView cv;
-    private FloatingActionButton fab;
+    protected EditText etUsername;
+    protected EditText etPassword;
+    protected Button btGo;
+    protected CardView cv;
+    protected FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +67,14 @@ public class AActivityOne extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onRestart() {
         super.onRestart();
         fab.setVisibility(View.GONE);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onResume() {
         super.onResume();
