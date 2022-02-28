@@ -28,7 +28,6 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
-import cn.fanrunqi.materiallogin.a.AActivityTwo;
 
 public class MTRegister extends AppCompatActivity implements Validator.ValidationListener {
 
@@ -39,7 +38,7 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
         @NotEmpty
         private EditText et_reg_student_ID;
 
-        @Password(min = 6)
+        @Password(min = 3)
         private EditText et_reg_password;
 
         @ConfirmPassword
@@ -86,9 +85,6 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
             @Override
             public void onClick(View view) {
                 validator.validate();
-                if(validator.isValidating()){
-                    register();
-                }
             }
         });
 
@@ -175,7 +171,7 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
 
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(this, "Register successfully", Toast.LENGTH_SHORT).show();
+        register();
     }
 
     @Override
@@ -202,6 +198,7 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
 
         if(DB.insert(studentID, password, studentName)){
             Toast.makeText(this, "Register successfully", Toast.LENGTH_SHORT).show();
+            animateRevealClose();
         }
         else {
             Toast.makeText(this, "Register failure, the account is already existed", Toast.LENGTH_SHORT).show();

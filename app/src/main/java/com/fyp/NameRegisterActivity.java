@@ -52,7 +52,7 @@ public class NameRegisterActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("id", tv_ID.getText().toString());
         bundle.putString("name", tv_name.getText().toString());
-        Intent intent = new Intent(NameRegisterActivity.this, FaceDetectionActivity.class);
+        Intent intent = new Intent(NameRegisterActivity.this, FaceRegisterActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
     }

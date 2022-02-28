@@ -1,5 +1,7 @@
 package com.fyp;
 
+import static com.fyp.databaseHelper.UserManager.getCurrentUser;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -216,7 +218,7 @@ public class SuccessActivity extends AppCompatActivity {
         //Generate mat of labels
         StudentAccountDB db = new StudentAccountDB(this);
         int[] label = new int[1];
-        label[0] = db.getLabelByID(getIntent().getStringExtra("id"));
+        label[0] = getCurrentUser().getLabel();
         Mat matOfLabels = new MatOfInt(label);
         db.close();
         //LBPH train

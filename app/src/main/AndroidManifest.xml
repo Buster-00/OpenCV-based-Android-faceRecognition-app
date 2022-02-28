@@ -43,7 +43,7 @@
         </activity>
         <activity android:name=".SuccessActivity" />
         <activity
-            android:name=".FaceDetectionActivity"
+            android:name=".FaceRegisterActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

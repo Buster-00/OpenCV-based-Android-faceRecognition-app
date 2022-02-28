@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
 import static org.opencv.core.Core.ROTATE_180;
 import static org.opencv.core.Core.flip;
@@ -41,7 +42,7 @@ import static org.opencv.imgproc.Imgproc.COLOR_RGBA2RGB;
 import static org.opencv.imgproc.Imgproc.line;
 import static org.opencv.imgproc.Imgproc.rectangle;
 
-public class FaceDetectionActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class FaceRegisterActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     enum FACE_DETECT{CASCADE_DETECT, YN_DETECT}
     private FACE_DETECT DETECT_METHOD;
@@ -131,9 +132,9 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         else
             Log.e("dir", "mkdir failed" + mPath);
 
-        //Load face description from bundle
-        faceDescription = getIntent().getStringExtra("name");
-        Log.e("facedesctiption", faceDescription);
+        //Load face description from User
+        faceDescription = getCurrentUser().getName();
+        Log.e("faceDescription", faceDescription);
     }
 
     @Override
@@ -228,22 +229,23 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
         //if detect face > 10 times, turn to another activity
        if(detect_counter > 10){
            SaveFace(flippedFrame.submat(clipRect), faceDescription);
-           Intent intent = new Intent(FaceDetectionActivity.this, SuccessActivity.class);
+           Intent intent = new Intent(FaceRegisterActivity.this, SuccessActivity.class);
            Bundle bundle = new Bundle();
+
            intent.putExtra("name", mPath + faceDescription + ".jpg");
            intent.putExtra("mPath", mPath);
-           intent.putExtra("id", getIntent().getStringExtra("id"));
+           intent.putExtra("id", getCurrentUser().getID());
            startActivity(intent);
         }
 
         //Final frame;
         return flippedFrame;
-        //return inputFrame.rgba();
     }
 
     //DNN detect method
     private Mat YNFaceDetect(CameraBridgeViewBase.CvCameraViewFrame inputFrame){
 
+        /*
         //detect the face
         Mat faces = new Mat();
         Mat rgb = new Mat();
@@ -266,45 +268,48 @@ public class FaceDetectionActivity extends CameraActivity implements CameraBridg
             detect_counter++;
         }
 
-//        //Render rectangle
-//        for(int i = 0; i < faces.cols(); i++){
-//
-////            int x[] = new int[0];
-////            int y[] = new int[0];
-////            faces.get(1, 1, x);
-////            faces.get(1, 2, y);
-//
-////            //rectangle(temp, faceArray[i].tl(),  faceArray[i].br(), new Scalar(255, 0, 0), 1);
-////            rectangle(flippedFrame, new Point(flippedFrame.width()-faces.get, faceArray[i].y),
-////                    new Point(flippedFrame.width()-(faceArray[i].x+faceArray[i].width), faceArray[i].y+faceArray[i].height) , new Scalar(255, 0, 0), 1);
-////            //line(mRgba, new Point(0.0, mRgba.height()), new Point(mRgba.width(), 0.0), new Scalar(255, 0, 0), 2);
-////            Log.e("Rendering",faceArray[i].tl().toString() + faceArray[i].br().toString()+ flippedFrame.rows() + flippedFrame.cols() );
-//        }
+        //Render rectangle
+        for(int i = 0; i < faces.cols(); i++){
 
-//        if(faces.isContinuous()){
-//
-//            float[] x = new float[1];
-//            float[] y = new float[1];
-//            float[] w = new float[1];
-//            float[] h = new float[1];
-//
-//            for(int row = 0; row < faces.rows(); row++){
-//                faces.get(row, 1, x);
-//                faces.get(row, 2, y);
-//                faces.get(row, 3, w);
-//                faces.get(row, 4, h);
-//            }
-//        }
+            int x[] = new int[0];
+            int y[] = new int[0];
+           faces.get(1, 1, x);
+            faces.get(1, 2, y);
+
+            //rectangle(temp, faceArray[i].tl(),  faceArray[i].br(), new Scalar(255, 0, 0), 1);
+            rectangle(flippedFrame, new Point(flippedFrame.width()-faces.get, faceArray[i].y),
+                    new Point(flippedFrame.width()-(faceArray[i].x+faceArray[i].width), faceArray[i].y+faceArray[i].height) , new Scalar(255, 0, 0), 1);
+            //line(mRgba, new Point(0.0, mRgba.height()), new Point(mRgba.width(), 0.0), new Scalar(255, 0, 0), 2);
+            Log.e("Rendering",faceArray[i].tl().toString() + faceArray[i].br().toString()+ flippedFrame.rows() + flippedFrame.cols() );
+        }
+
+        if(faces.isContinuous()){
+
+            float[] x = new float[1];
+            float[] y = new float[1];
+            float[] w = new float[1];
+            float[] h = new float[1];
+
+            for(int row = 0; row < faces.rows(); row++){
+                faces.get(row, 1, x);
+                faces.get(row, 2, y);
+                faces.get(row, 3, w);
+                faces.get(row, 4, h);
+            }
+        }
 
 
-        //if detect face > 10 times, turn to another activity
-//        if(detect_counter > 10){
-//            startActivity(new Intent(FaceDetectionActivity.this, Success.class));
-//        }
+        if detect face > 10 times, turn to another activity
+        if(detect_counter > 10){
+            startActivity(new Intent(FaceDetectionActivity.this, Success.class));
+        }
 
         //Final frame;
         return flippedFrame;
         //return inputFrame.rgba();
+        */
+
+        return new Mat();
     }
 
     private void SaveFace(Mat face, String description){

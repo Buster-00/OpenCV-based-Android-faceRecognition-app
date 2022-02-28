@@ -1,5 +1,7 @@
 package com.fyp.login;
 
+import static com.fyp.databaseHelper.UserManager.initUser;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
@@ -28,9 +30,6 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.fanrunqi.materiallogin.a.AActivityOne;
-import cn.fanrunqi.materiallogin.a.AActivityThree;
-import cn.fanrunqi.materiallogin.a.AActivityTwo;
 
 public class MTLogin extends AppCompatActivity implements Validator.ValidationListener {
 
@@ -109,18 +108,21 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
 
     @Override
     public void onValidationSucceeded() {
-        //Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+
         //validate password and account
-        Login();
+        if(Login()){
 
-        /*Explode explode = new Explode();
-        explode.setDuration(500);
+            Explode explode = new Explode();
+            explode.setDuration(500);
 
-        getWindow().setExitTransition(explode);
-        getWindow().setEnterTransition(explode);
-        ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(MTLogin.this);
-        Intent i2 = new Intent(MTLogin.this, MainActivity.class);
-        startActivity(i2, oc2.toBundle());*/
+            getWindow().setExitTransition(explode);
+            getWindow().setEnterTransition(explode);
+            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(MTLogin.this);
+            Intent i2 = new Intent(MTLogin.this, MainActivity.class);
+            i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(i2, oc2.toBundle());
+        }
+
     }
 
     @Override
@@ -140,9 +142,9 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
         }
     }
 
-    private void Login(){
+    private boolean Login(){
         String studentID = etStudentID.getText().toString();
-        String password = etStudentID.getText().toString();
+        String password = etPassword.getText().toString();
 
         StudentAccountDB DB = new StudentAccountDB(this);
         HashMap<String, String> hashMap = new HashMap<>();
@@ -150,16 +152,22 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
         if(DB.readById(studentID, hashMap)){
             String DB_password = hashMap.get("password");
 
+            //password current
             if(DB_password.equals(password)){
                 Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();
+                initUser(studentID, DB);
+                return true;
             }
+            //password inCurrent
             else{
                 Toast.makeText(this, "The password is incorrect, please enter again", Toast.LENGTH_SHORT).show();
                 etPassword.setText("", TextView.BufferType.EDITABLE);
+                return false;
             }
         }
         else{
             Toast.makeText(this, "cannot find account", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
     }

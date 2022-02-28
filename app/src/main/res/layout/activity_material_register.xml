@@ -100,7 +100,7 @@
                         android:layout_height="wrap_content">
                         <EditText
                             android:textSize="16sp"
-                            android:hint="@string/Password"
+                            android:hint="Password"
                             android:textColor="#f0f7f4"
                             android:id="@+id/et_password"
                             android:layout_width="match_parent"

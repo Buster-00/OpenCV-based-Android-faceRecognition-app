@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content">
                     <EditText
                         android:textSize="18sp"
-                        android:hint="@string/Password"
+                        android:hint="Password"
                         android:textColor="#2fa881"
                         android:id="@+id/et_password"
                         android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                 android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/forgot_your_password"
+                android:text="forgot_your_password"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

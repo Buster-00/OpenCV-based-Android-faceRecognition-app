@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     //widget
     Button btn_register;
     Button btn_recognition;
-    Button btn_train;
     TextView tv_username;
 
     //handler
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         //Initiate widgets
         btn_register = findViewById(R.id.btn_register);
         btn_recognition = findViewById(R.id.btn_recognition);
-        btn_train = findViewById(R.id.btn_train);
         tv_username = findViewById(R.id.tv_username);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -52,13 +50,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_train.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setBtn_train();
-            }
-        });
-
         StudentAccountDB DB = new StudentAccountDB(this);
         HashMap<String, String> hm = new HashMap<>();
         tv_username.setText(DB.ReadAll());
@@ -69,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void setBtn_register(){
-        startActivity(new Intent(MainActivity.this, NameRegisterActivity.class));
+        startActivity(new Intent(MainActivity.this, FaceRegisterActivity.class));
     }
 
     protected void setBtn_recognition(){

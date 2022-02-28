@@ -1,4 +1,3 @@
-include ':Material_Login'
 include ':app'
 rootProject.name = "FYP"
 include ':OpenCV'
