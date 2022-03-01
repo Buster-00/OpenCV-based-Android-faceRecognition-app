@@ -101,7 +101,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         mPath = getExternalCacheDir()  + "/facerecOPCV/";
 
         //Initialize OpenCV library
-        initOpenCV();
+        //initOpenCV();
 
         //Load cascade classifier
         faceDetector = loadClassifier(this);

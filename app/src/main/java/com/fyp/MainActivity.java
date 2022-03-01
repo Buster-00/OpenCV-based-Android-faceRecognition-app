@@ -13,6 +13,7 @@ import com.fyp.databaseHelper.StudentAccountDB;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
+import org.bytedeco.opencv.presets.opencv_core;
 
 import java.util.HashMap;
 
