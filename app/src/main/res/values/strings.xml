@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">FYP</string>
     <string name="barSize">50dp</string>
+    <string name="profile_name" />
+    <string name="profile_description" />
+    <string name="title_first_item">lorem ipsum</string>
+    <string name="description_first_item">lorem ipsum</string>
+    <string name="title_second_item">lorem ipsum</string>
 </resources>

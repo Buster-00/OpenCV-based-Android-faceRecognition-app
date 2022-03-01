@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+
 import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
 import static com.fyp.helper.FrameFlipHelper.FlipRotateFrameHorizental;
 import static org.opencv.core.Core.ROTATE_180;
@@ -47,6 +48,7 @@ import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
 import static org.opencv.imgproc.Imgproc.FONT_HERSHEY_COMPLEX;
 import static org.opencv.imgproc.Imgproc.putText;
 import static org.opencv.imgproc.Imgproc.rectangle;
+
 
 public class FaceRecognitionActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
@@ -174,7 +176,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         Rect clipRect = null;
 
         //Render rectangle
-        /*for (int i = 0; i < faceArray.length; i++) {
+        for (int i = 0; i < faceArray.length; i++) {
             //Clip face
             clipRect = new Rect(new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), new Point(flippedFrame.width() - (faceArray[i].x + faceArray[i].width), faceArray[i].y + faceArray[i].height));
             rectangle(flippedFrame, clipRect, FaceDetectorHelper.FACE_RECT_COLOR, 1);
@@ -192,7 +194,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
                 putText(flippedFrame, "karazawa", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());
-        }*/
+        }
 
         //Final frame;
         return flippedFrame;
