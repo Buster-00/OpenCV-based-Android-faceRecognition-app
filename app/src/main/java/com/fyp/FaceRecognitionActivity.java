@@ -174,7 +174,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         Rect clipRect = null;
 
         //Render rectangle
-        for (int i = 0; i < faceArray.length; i++) {
+        /*for (int i = 0; i < faceArray.length; i++) {
             //Clip face
             clipRect = new Rect(new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), new Point(flippedFrame.width() - (faceArray[i].x + faceArray[i].width), faceArray[i].y + faceArray[i].height));
             rectangle(flippedFrame, clipRect, FaceDetectorHelper.FACE_RECT_COLOR, 1);
@@ -184,6 +184,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             double confidence[] = new double[1];
             faceRecognizer.predict(flippedFrame.submat(clipRect), label, confidence);
 
+
             //Render image
             if(label[0] != -1){
                 putText(flippedFrame, mapLabelName.get(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
@@ -191,7 +192,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
                 putText(flippedFrame, "karazawa", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());
-        }
+        }*/
 
         //Final frame;
         return flippedFrame;

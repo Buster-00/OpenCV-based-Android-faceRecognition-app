@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.fyp.R;
 import com.google.android.material.textfield.TextInputLayout;
 
+
 import shem.com.materiallogin.DefaultLoginView;
 import shem.com.materiallogin.DefaultRegisterView;
 import shem.com.materiallogin.MaterialLoginView;
@@ -22,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //initialize widget
-        materialLoginView = findViewById(R.id.material_log_in);
+        materialLoginView = (MaterialLoginView)findViewById(R.id.material_log_in);
         InitLogin();
 
     }

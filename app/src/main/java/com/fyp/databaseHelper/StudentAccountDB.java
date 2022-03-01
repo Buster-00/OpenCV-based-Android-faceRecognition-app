@@ -55,7 +55,6 @@ public class StudentAccountDB extends SQLiteOpenHelper {
 
         //insert data into database
         long result = DB.insert(TABLE_NAME, null, contentValues);
-        DB.close();
 
         if(result == -1){
             Log.e("Database Error", "insert new student account failed");
@@ -107,7 +106,8 @@ public class StudentAccountDB extends SQLiteOpenHelper {
         String s = new String();
         while(cursor.moveToNext()){
             s += cursor.getString(cursor.getColumnIndex(COLUMN_1));
-            s += cursor.getString(cursor.getColumnIndex(COLUMN_4));
+            s += " label: ";
+            s += cursor.getString(cursor.getColumnIndex(COLUMN_4)) + "\n";
         }
         return s;
     }

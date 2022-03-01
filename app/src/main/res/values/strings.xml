@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FYP</string>
+    <string name="barSize">50dp</string>
 </resources>
