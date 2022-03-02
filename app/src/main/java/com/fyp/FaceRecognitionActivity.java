@@ -2,15 +2,18 @@ package com.fyp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceView;
 
+import com.fyp.databaseHelper.StudentAccountDB;
 import com.fyp.face.PersonRecognizer;
 import com.fyp.helper.FaceDetectorHelper;
 
 import org.bytedeco.javacpp.Loader;
+import org.bytedeco.libfreenect._freenect_device;
 import org.bytedeco.opencv.opencv_java;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;
@@ -25,6 +28,7 @@ import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.face.Face;
 import org.opencv.face.FaceRecognizer;
 import org.opencv.face.LBPHFaceRecognizer;
 import org.opencv.imgcodecs.Imgcodecs;
@@ -38,6 +42,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+
+import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
 import static com.fyp.helper.FrameFlipHelper.FlipRotateFrameHorizental;
 import static org.opencv.core.Core.ROTATE_180;
@@ -48,7 +54,10 @@ import static org.opencv.imgproc.Imgproc.FONT_HERSHEY_COMPLEX;
 import static org.opencv.imgproc.Imgproc.putText;
 import static org.opencv.imgproc.Imgproc.rectangle;
 
+
 public class FaceRecognitionActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+
+    private static final int SUCCESS_TIMES = 10;
 
     //Hash map of label and name
     HashMap<Integer, String> mapLabelName;
@@ -67,6 +76,12 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
     //Face Recognizer
     private FaceRecognizer faceRecognizer;
+
+    //counter
+    int counter = 0;
+
+    //database helper
+    StudentAccountDB DB;
 
     //BaseLoaderCallback
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -108,10 +123,18 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //create PersonRecognizer
         faceRecognizer = LBPHFaceRecognizer.create(2,8,8,8,200);
-        faceRecognizer.read(mPath + "train.xml");
+
+        String pathOfTrain = new String(mPath + "train.xml");
+        File file = new File(pathOfTrain);
+        if(file.exists()){
+            faceRecognizer.read(pathOfTrain);
+        }
+
+        //Load database
+        DB = new StudentAccountDB(this);
 
         //Load map
-        loadMap();
+        //loadMap();
 
     }
 
@@ -174,7 +197,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         Rect clipRect = null;
 
         //Render rectangle
-        /*for (int i = 0; i < faceArray.length; i++) {
+        for (int i = 0; i < faceArray.length; i++) {
             //Clip face
             clipRect = new Rect(new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), new Point(flippedFrame.width() - (faceArray[i].x + faceArray[i].width), faceArray[i].y + faceArray[i].height));
             rectangle(flippedFrame, clipRect, FaceDetectorHelper.FACE_RECT_COLOR, 1);
@@ -184,15 +207,25 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             double confidence[] = new double[1];
             faceRecognizer.predict(flippedFrame.submat(clipRect), label, confidence);
 
-
             //Render image
             if(label[0] != -1){
-                putText(flippedFrame, mapLabelName.get(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
+                Log.e("The label is ", String.valueOf(label[0]));
+                if(label[0] == getCurrentUser().getLabel()){
+                    counter++;
+                }
+                putText(flippedFrame, DB.getNameByLabel(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
             }else{
                 putText(flippedFrame, "karazawa", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());
-        }*/
+        }
+
+        //If recognize face correctly more than 10 times, success to next step
+        if(counter > SUCCESS_TIMES){
+            Intent intent = new Intent(FaceRecognitionActivity.this, RecognizeSuccess.class);
+            //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
 
         //Final frame;
         return flippedFrame;
@@ -232,6 +265,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             labels[i] = i;
         }
         Mat matOfLabels = new MatOfInt(labels);
+
 
     }
 }

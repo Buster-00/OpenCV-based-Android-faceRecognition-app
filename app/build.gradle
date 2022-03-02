@@ -63,6 +63,7 @@ dependencies {
         transitive = true;
     }
 
+    implementation 'com.heinrichreimersoftware:material-drawer:2.3.3'
     implementation 'com.github.ragunathjawahar:android-saripaar:android-saripaar-2.0.3'
     implementation group: 'org.bytedeco', name: 'javacv', version: '1.5.7'
     implementation 'com.github.shem8:MaterialLogin:v2.1.1'
