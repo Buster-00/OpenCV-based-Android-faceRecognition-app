@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fyp.databaseHelper.StudentAccountDB;
+import com.fyp.login.MTLogin;
 import com.heinrichreimersoftware.materialdrawer.DrawerActivity;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
@@ -84,7 +85,7 @@ public class MainActivity extends DrawerActivity {
         addProfile(
                 new DrawerProfile()
                         .setRoundedAvatar((BitmapDrawable)this.getDrawable(R.drawable.cat_1))
-                        .setBackground(getResources().getDrawable(R.drawable.cat_2))
+                        .setBackground(this.getDrawable(R.drawable.bg))
                         .setName(getString(R.string.profile_name))
                         .setDescription(getString(R.string.profile_description))
                         .setOnProfileClickListener(new DrawerProfile.OnProfileClickListener() {
@@ -97,7 +98,7 @@ public class MainActivity extends DrawerActivity {
 
         addItem(
                 new DrawerItem()
-                        .setImage(this.getDrawable(R.drawable.cat_wide_1))
+                        .setImage(this.getDrawable(R.drawable.ic_first_item))
                         .setTextPrimary(getString(R.string.title_first_item))
                         .setTextSecondary(getString(R.string.description_first_item))
                         .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
@@ -112,12 +113,15 @@ public class MainActivity extends DrawerActivity {
 
         addItem(
                 new DrawerItem()
-                        .setImage(getResources().getDrawable(R.drawable.cat_wide_2))
-                        .setTextPrimary(getString(R.string.title_second_item))
+                        .setImage(this.getDrawable(R.drawable.ic_log_out))
+                        .setTextPrimary(getString(R.string.log_out))
                         .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
                             @Override
                             public void onClick(DrawerItem drawerItem, long id, int position) {
                                 Toast.makeText(MainActivity.this, "Clicked second item #" + id, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, MTLogin.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }
                         })
         );

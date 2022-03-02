@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceView;
 
+import com.fyp.databaseHelper.StudentAccountDB;
 import com.fyp.face.PersonRecognizer;
 import com.fyp.helper.FaceDetectorHelper;
 
@@ -70,6 +71,9 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
     //Face Recognizer
     private FaceRecognizer faceRecognizer;
 
+    //database helper
+    StudentAccountDB DB;
+
     //BaseLoaderCallback
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -110,10 +114,18 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //create PersonRecognizer
         faceRecognizer = LBPHFaceRecognizer.create(2,8,8,8,200);
-        faceRecognizer.read(mPath + "train.xml");
+
+        String pathOfTrain = new String(mPath + "train.xml");
+        File file = new File(pathOfTrain);
+        if(file.exists()){
+            faceRecognizer.read(pathOfTrain);
+        }
+
+        //Load database
+        DB = new StudentAccountDB(this);
 
         //Load map
-        loadMap();
+        //loadMap();
 
     }
 
@@ -189,7 +201,8 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
             //Render image
             if(label[0] != -1){
-                putText(flippedFrame, mapLabelName.get(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
+                Log.e("The label is ", String.valueOf(label[0]));
+                putText(flippedFrame, DB.getNameByLabel(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
             }else{
                 putText(flippedFrame, "karazawa", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
             }
@@ -234,6 +247,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             labels[i] = i;
         }
         Mat matOfLabels = new MatOfInt(labels);
+
 
     }
 }

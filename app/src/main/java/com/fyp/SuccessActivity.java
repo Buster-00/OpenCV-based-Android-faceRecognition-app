@@ -162,7 +162,7 @@ public class SuccessActivity extends AppCompatActivity {
         File[] imgFiles = root.listFiles(filenameFilter);
         matVector = new Vector<>();
         mapLabelName = new HashMap<>();
-        int counter = 0;
+        int counter = 1;
 
         for(File file : imgFiles){
 
@@ -182,10 +182,8 @@ public class SuccessActivity extends AppCompatActivity {
         }
 
         //Generate mat of labels
-        int[] labels = new int[matVector.size()];
-        for(int i = 0; i < matVector.size(); i++){
-            labels[i] = i;
-        }
+        int[] labels = new int[1];
+        labels[0] = 1;
         Mat matOfLabels = new MatOfInt(labels);
 
         //LBPH train
@@ -201,7 +199,7 @@ public class SuccessActivity extends AppCompatActivity {
 
 
         matVector = new Vector<>();
-        int counter = 0;
+        int counter = 1;
 
             //map label and name
             String fileName = imgFile.getName();

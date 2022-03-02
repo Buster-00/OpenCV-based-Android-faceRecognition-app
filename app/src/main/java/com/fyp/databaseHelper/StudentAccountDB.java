@@ -126,8 +126,23 @@ public class StudentAccountDB extends SQLiteOpenHelper {
         else {
             return -1;
         }
+    }
 
+    public String getNameByLabel(int label){
 
+        //get database reference
+        SQLiteDatabase DB = this.getReadableDatabase();
+
+        //Retrieve data
+
+        Cursor cursor = DB.rawQuery("SELECT " + COLUMN_3 +" FROM " + TABLE_NAME + " WHERE " + COLUMN_4 +"=?", new String[]{String.valueOf(label)});
+        //Cursor cursor = DB.rawQuery("SELECT name FROM studentAccount WHERE label=1", new String[]{});
+        if(cursor.moveToNext()){
+            return cursor.getString(cursor.getColumnIndex(COLUMN_3));
+        }
+        else {
+            return "unknown";
+        }
     }
 
 }
