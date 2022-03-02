@@ -3,13 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable-anydpi/ic_log_out.xml" value="0.4085" />
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.4085" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_first_item.xml" value="0.277" />
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.4085" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_second_item.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_avatar.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_cover.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_material_login.xml" value="0.18" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_material_register.xml" value="0.1875" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_recognize_success.xml" value="0.2547008547008547" />
       </map>
     </option>
   </component>
