@@ -21,7 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FYP"
         tools:replace="android:theme">
-        <activity android:name=".login.MTRegister"></activity>
+        <activity
+            android:name=".RecognizeSuccess"
+            android:exported="false" />
+        <activity android:name=".login.MTRegister" />
         <activity android:name=".TrainActivity" />
         <activity
             android:name=".FaceRecognitionActivity"
