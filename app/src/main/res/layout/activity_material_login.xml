@@ -107,13 +107,15 @@
                 </Button>
             </RelativeLayout>
             <TextView
+                android:id="@+id/tv_forgetPassword"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="#9a9a9a"
+                android:textColor="	#5F9EA0"
                 android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="forgot_your_password"
+                android:text="@string/forgot_your_password"
+                android:clickable="true"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

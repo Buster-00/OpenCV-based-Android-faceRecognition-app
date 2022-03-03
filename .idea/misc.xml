@@ -10,10 +10,12 @@
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_second_item.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_avatar.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_cover.xml" value="0.277" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_login.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_main.xml" value="0.18" />
-        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_material_login.xml" value="0.18" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_material_login.xml" value="0.5" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_material_register.xml" value="0.1875" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_recognize_success.xml" value="0.2547008547008547" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_reset_password.xml" value="0.2311965811965812" />
       </map>
     </option>
   </component>

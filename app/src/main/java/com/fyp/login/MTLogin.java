@@ -4,14 +4,12 @@ import static com.fyp.databaseHelper.UserManager.initUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityOptionsCompat;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Explode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +18,12 @@ import android.widget.Toast;
 
 import com.fyp.MainActivity;
 import com.fyp.R;
+import com.fyp.ResetPasswordActivity;
 import com.fyp.databaseHelper.StudentAccountDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +37,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
 
     @NotEmpty
     protected EditText etPassword;
-
+    protected TextView tv_forgetPassword;
     protected Button btGo;
     protected CardView cv;
     protected FloatingActionButton fab;
@@ -68,6 +66,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
         btGo = findViewById(R.id.bt_go);
         cv = findViewById(R.id.cv);
         fab = findViewById(R.id.fab);
+        tv_forgetPassword = findViewById(R.id.tv_forgetPassword);
     }
 
     private void setListener() {
@@ -87,6 +86,13 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
                 getWindow().setEnterTransition(null);
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MTLogin.this, fab, fab.getTransitionName());
                 startActivity(new Intent(MTLogin.this, MTRegister.class), options.toBundle());
+            }
+        });
+        tv_forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MTLogin.this, ResetPasswordActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -115,12 +121,9 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
             Explode explode = new Explode();
             explode.setDuration(500);
 
-            getWindow().setExitTransition(explode);
-            getWindow().setEnterTransition(explode);
-            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(MTLogin.this);
             Intent i2 = new Intent(MTLogin.this, MainActivity.class);
             i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(i2, oc2.toBundle());
+            startActivity(i2);
         }
 
     }

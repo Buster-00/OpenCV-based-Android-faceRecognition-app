@@ -7,4 +7,10 @@
     <string name="description_first_item">lorem ipsum</string>
     <string name="title_second_item">lorem ipsum</string>
     <string name="log_out">Log out</string>
+    <string name="forgot_your_password">Forgot your password? click here</string>
+    <string name="login">Log in</string>
+    <string name="go">Go</string>
+    <string name="register">Register</string>
+    <string name="repeat_password">RepeatPssword</string>
+    <string name="next">NEXT</string>
 </resources>
