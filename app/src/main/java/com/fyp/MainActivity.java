@@ -16,6 +16,7 @@ import com.fyp.login.MTLogin;
 import com.heinrichreimersoftware.materialdrawer.DrawerActivity;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
+import com.ramotion.foldingcell.FoldingCell;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
@@ -26,9 +27,11 @@ import java.util.HashMap;
 public class MainActivity extends DrawerActivity {
 
     //widget
+    Button btn_personalProfile;
     Button btn_register;
     Button btn_recognition;
     TextView tv_username;
+    FoldingCell fc;
 
     //handler
     private Handler mHandler;
@@ -39,9 +42,18 @@ public class MainActivity extends DrawerActivity {
         setContentView(R.layout.activity_main);
 
         //Initiate widgets
+        btn_personalProfile = findViewById(R.id.btn_personalProfile);
         btn_register = findViewById(R.id.btn_register);
         btn_recognition = findViewById(R.id.btn_recognition);
         tv_username = findViewById(R.id.tv_username);
+        fc = findViewById(R.id.folding_cell);
+
+        btn_personalProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, personalPorfileActivity.class));
+            }
+        });
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +66,13 @@ public class MainActivity extends DrawerActivity {
             @Override
             public void onClick(View view) {
                 setBtn_recognition();
+            }
+        });
+
+        fc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fc.toggle(false);
             }
         });
 
