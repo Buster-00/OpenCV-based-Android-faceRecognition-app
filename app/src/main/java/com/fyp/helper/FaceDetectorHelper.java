@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 public class FaceDetectorHelper {
 
     public static final Scalar FACE_RECT_COLOR = new Scalar(0, 255, 255, 0);
+    public static final Scalar FONT_COLOR = new Scalar(255, 255, 255, 0);
     private static final String TAG_CASCADE= "CascadeClassifierHelper";
     private static final String TAG_YUNET= "Yunet";
 

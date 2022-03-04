@@ -1,5 +1,8 @@
 package com.fyp;
 
+import static com.fyp.databaseHelper.UserManager.getCurrentUser;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,11 +11,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.fyp.databaseHelper.StudentAccountDB;
 import com.fyp.login.MTLogin;
+import com.google.android.material.dialog.MaterialDialogs;
 import com.heinrichreimersoftware.materialdrawer.DrawerActivity;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
@@ -26,7 +33,11 @@ import java.util.HashMap;
 
 public class MainActivity extends DrawerActivity {
 
+    private static boolean IS_SAVE_ACCOUNT = false;
+
     //widget
+
+    Button btn_delete;
     Button btn_personalProfile;
     Button btn_register;
     Button btn_recognition;
@@ -42,11 +53,30 @@ public class MainActivity extends DrawerActivity {
         setContentView(R.layout.activity_main);
 
         //Initiate widgets
+
+        btn_delete = findViewById(R.id.btn_delete);
         btn_personalProfile = findViewById(R.id.btn_personalProfile);
         btn_register = findViewById(R.id.btn_register);
         btn_recognition = findViewById(R.id.btn_recognition);
         tv_username = findViewById(R.id.tv_username);
         fc = findViewById(R.id.folding_cell);
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialDialog.Builder(MainActivity.this)
+                        .title("Confirm delete")
+                        .content("Do you want to delete your account data?")
+                        .positiveText("YES")
+                        .negativeText("NO")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                deleteUserData();
+                            }
+                        }).show();
+            }
+        });
 
         btn_personalProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +117,21 @@ public class MainActivity extends DrawerActivity {
         Loader.load(opencv_java.class);
     }
 
+    private void deleteUserData() {
+        StudentAccountDB DB = new StudentAccountDB(this);
+
+        if(DB.deleteByID(getCurrentUser().getID())){
+            Toast.makeText(this, "Delete account successfully", Toast.LENGTH_SHORT).show();
+            DB.close();
+            Intent intent = new Intent(MainActivity.this, MTLogin.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "Delete account failed", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
 
     protected void setBtn_register(){

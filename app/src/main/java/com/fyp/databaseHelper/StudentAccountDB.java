@@ -134,7 +134,6 @@ public class StudentAccountDB extends SQLiteOpenHelper {
         SQLiteDatabase DB = this.getReadableDatabase();
 
         //Retrieve data
-
         Cursor cursor = DB.rawQuery("SELECT " + COLUMN_3 +" FROM " + TABLE_NAME + " WHERE " + COLUMN_4 +"=?", new String[]{String.valueOf(label)});
         //Cursor cursor = DB.rawQuery("SELECT name FROM studentAccount WHERE label=1", new String[]{});
         if(cursor.moveToNext()){
@@ -143,6 +142,21 @@ public class StudentAccountDB extends SQLiteOpenHelper {
         else {
             return "unknown";
         }
+    }
+
+    public boolean deleteByID(String ID){
+
+        //get database reference
+        SQLiteDatabase DB = this.getWritableDatabase();
+
+        //Delete data
+        if(DB.delete(TABLE_NAME, "id=?", new String[]{ID}) != -1){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
 }

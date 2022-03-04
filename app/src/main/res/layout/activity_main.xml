@@ -90,6 +90,15 @@
         android:layout_marginTop="10dp"
         android:text="FaceRecognition" />
 
+    <Button
+        android:text="delete"
+        android:layout_marginTop="10dp"
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_recognition"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/btn_register"

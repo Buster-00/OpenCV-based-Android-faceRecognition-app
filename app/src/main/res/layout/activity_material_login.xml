@@ -9,7 +9,8 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
         app:cardCornerRadius="6dp"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true"
@@ -90,21 +91,38 @@
                         />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:paddingStart="50dp"
+                android:paddingEnd="30dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                >
+                    <CheckBox
+                        android:textSize="10dp"
+                        android:hint="Save account"
+                        android:textColor="#2fa881"
+                        android:id="@+id/cb_saveAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+            </LinearLayout>
             <RelativeLayout
                 android:layout_marginTop="25dp"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
+
                 <Button
                     android:id="@+id/bt_go"
-                    android:background="@drawable/bt_shape"
-                    android:stateListAnimator="@drawable/state_list_animator_z"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
+                    android:background="@drawable/bt_shape"
+                    android:stateListAnimator="@drawable/state_list_animator_z"
                     android:text="@string/go"
-                    android:textColor="#d3d3d3"
-                    >
-                </Button>
+                    android:textColor="#d3d3d3"></Button>
             </RelativeLayout>
             <TextView
                 android:id="@+id/tv_forgetPassword"
@@ -116,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/forgot_your_password"
                 android:clickable="true"
+                android:layout_marginBottom="10dp"
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

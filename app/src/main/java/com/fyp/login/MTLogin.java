@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.transition.Explode;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,13 +26,24 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
 
 public class MTLogin extends AppCompatActivity implements Validator.ValidationListener {
 
+    protected static boolean  IS_SAVE_ACCOUNT = false;
+
     //Widget
+
+    protected CheckBox cb_saveAccount;
+
     @NotEmpty
     protected EditText etStudentID;
 
@@ -61,12 +73,15 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
     }
 
     private void initView() {
+        cb_saveAccount = findViewById(R.id.cb_saveAccount);
         etStudentID = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
         btGo = findViewById(R.id.bt_go);
         cv = findViewById(R.id.cv);
         fab = findViewById(R.id.fab);
         tv_forgetPassword = findViewById(R.id.tv_forgetPassword);
+
+        cb_saveAccount.setChecked(IS_SAVE_ACCOUNT);
     }
 
     private void setListener() {
@@ -114,6 +129,25 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
 
     @Override
     public void onValidationSucceeded() {
+
+        //save account
+        if(cb_saveAccount.isChecked()){
+            if(!IS_SAVE_ACCOUNT){
+                IS_SAVE_ACCOUNT = true;
+
+                File file = new File(this.getExternalCacheDir() + "savedAccount");
+
+                try {
+                    FileOutputStream fis = new FileOutputStream(file);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        else{
+            IS_SAVE_ACCOUNT = false;
+        }
 
         //validate password and account
         if(Login()){

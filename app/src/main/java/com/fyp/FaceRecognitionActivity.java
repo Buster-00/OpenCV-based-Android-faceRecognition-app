@@ -116,7 +116,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         mPath = getExternalCacheDir()  + "/facerecOPCV/";
 
         //Initialize OpenCV library
-        //initOpenCV();
+        initOpenCV();
 
         //Load cascade classifier
         faceDetector = loadClassifier(this);
@@ -167,7 +167,6 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-
         return RecognizeFace(inputFrame);
     }
 
@@ -213,26 +212,28 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
                 if(label[0] == getCurrentUser().getLabel()){
                     counter++;
                 }
-                putText(flippedFrame, DB.getNameByLabel(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
+                putText(flippedFrame, DB.getNameByLabel(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
             }else{
-                putText(flippedFrame, "karazawa", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FACE_RECT_COLOR);
+                putText(flippedFrame, "karazawa", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());
         }
 
         //If recognize face correctly more than 10 times, success to next step
-        if(counter > SUCCESS_TIMES){
-            Intent intent = new Intent(FaceRecognitionActivity.this, RecognizeSuccess.class);
+        if(counter > 10){
+            Intent intent = new Intent(this, RecognizeSuccess.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            counter = 0;
+            finish();
+            Log.e("debug", "still running");
         }
 
         //Final frame;
+        Log.e("debug", "RecognizeFace still running");
         return flippedFrame;
     }
 
-
-    //TODO convert it to database
     private void loadMap(){
 
         //Retrieve all face image file
@@ -265,7 +266,6 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             labels[i] = i;
         }
         Mat matOfLabels = new MatOfInt(labels);
-
 
     }
 }
