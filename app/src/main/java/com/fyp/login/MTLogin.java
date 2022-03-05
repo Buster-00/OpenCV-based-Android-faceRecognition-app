@@ -10,6 +10,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,12 +27,16 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,6 +87,24 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
         tv_forgetPassword = findViewById(R.id.tv_forgetPassword);
 
         cb_saveAccount.setChecked(IS_SAVE_ACCOUNT);
+
+        if(IS_SAVE_ACCOUNT){
+            try{
+                FileInputStream fis = new FileInputStream(this.getExternalCacheDir() + "/savedAccount.txt");
+                BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+                String strLine;
+
+                if((strLine = br.readLine()) != null){
+                    etStudentID.setText(strLine);
+                }
+                else{
+                    Log.e("error", "the strLine is null" + this.getExternalCacheDir());
+                }
+            }catch (Exception e){
+
+            }
+
+        }
     }
 
     private void setListener() {
@@ -132,18 +155,20 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
 
         //save account
         if(cb_saveAccount.isChecked()){
-            if(!IS_SAVE_ACCOUNT){
                 IS_SAVE_ACCOUNT = true;
 
-                File file = new File(this.getExternalCacheDir() + "savedAccount");
+                File file = new File(this.getExternalCacheDir() + "/savedAccount.txt");
 
                 try {
-                    FileOutputStream fis = new FileOutputStream(file);
-
+                    file.createNewFile();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+                    bufferedWriter.write(etStudentID.getText().toString());
+                    bufferedWriter.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }
         }
         else{
             IS_SAVE_ACCOUNT = false;
