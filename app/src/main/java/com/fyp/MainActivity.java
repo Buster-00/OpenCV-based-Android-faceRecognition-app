@@ -24,6 +24,7 @@ import com.heinrichreimersoftware.materialdrawer.DrawerActivity;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
 import com.ramotion.foldingcell.FoldingCell;
+import com.tapadoo.alerter.Alerter;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
@@ -31,12 +32,15 @@ import org.bytedeco.opencv.presets.opencv_core;
 
 import java.util.HashMap;
 
+import me.majiajie.pagerbottomtabstrip.NavigationController;
+import me.majiajie.pagerbottomtabstrip.PageNavigationView;
+import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+
 public class MainActivity extends DrawerActivity {
 
     private static boolean IS_SAVE_ACCOUNT = false;
 
     //widget
-
     Button btn_delete;
     Button btn_personalProfile;
     Button btn_register;
@@ -47,19 +51,56 @@ public class MainActivity extends DrawerActivity {
     //handler
     private Handler mHandler;
 
+    //Navigation bar
+    NavigationController mNavigationController;
+    int[] testColors = {0xFF455A64, 0xFF00796B, 0xFF795548, 0xFF5B4947, 0xFFF57C00};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //Initiate widgets
-
+        PageNavigationView pageBottomTabLayout = findViewById(R.id.tab);
         btn_delete = findViewById(R.id.btn_delete);
         btn_personalProfile = findViewById(R.id.btn_personalProfile);
         btn_register = findViewById(R.id.btn_register);
         btn_recognition = findViewById(R.id.btn_recognition);
         tv_username = findViewById(R.id.tv_username);
         fc = findViewById(R.id.folding_cell);
+
+        //initiate side navigation bar
+        mNavigationController = pageBottomTabLayout.material()
+                .addItem(R.drawable.ic_ondemand_video_black_24dp, "Movies & TV", testColors[0])
+                .addItem(R.drawable.ic_audiotrack_black_24dp, "Music", testColors[1])
+                .addItem(R.drawable.ic_book_black_24dp, "Books", testColors[2])
+                .addItem(R.drawable.ic_news_black_24dp, "Newsstand", testColors[3])
+                .enableVerticalLayout()//使用垂直布局
+                .build();
+
+        mNavigationController.setMessageNumber(0, 8);
+        mNavigationController.setHasMessage(3, true);
+
+        mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
+            @Override
+            public void onSelected(int index, int old) {
+                Toast.makeText(MainActivity.this, "selected: " + index + " old: " + old, Toast.LENGTH_SHORT).show();
+                mNavigationController.setHasMessage(index, false);
+                mNavigationController.setMessageNumber(index, 0);
+                Alerter.create(MainActivity.this)
+                        .setTitle("Alert Title")
+                        .setText("Alert text...")
+                        .show();
+            }
+
+            @Override
+            public void onRepeat(int index) {
+                Toast.makeText(MainActivity.this, "repeated: " + index, Toast.LENGTH_SHORT).show();
+                mNavigationController.setHasMessage(index, false);
+                mNavigationController.setMessageNumber(index, 0);
+            }
+        });
+
 
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override

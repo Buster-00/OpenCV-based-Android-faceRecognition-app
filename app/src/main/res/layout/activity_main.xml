@@ -10,7 +10,9 @@
     android:background="@drawable/bg_01">
 
     <com.ramotion.foldingcell.FoldingCell
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="100dp"
         android:id="@+id/folding_cell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -91,13 +93,13 @@
         android:text="FaceRecognition" />
 
     <Button
-        android:text="delete"
-        android:layout_marginTop="10dp"
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_recognition"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="delete" />
 
     <TextView
         android:layout_centerHorizontal="true"
@@ -109,6 +111,14 @@
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <me.majiajie.pagerbottomtabstrip.PageNavigationView
+        android:id="@+id/tab"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg"
+        android:elevation="8dp" />
+
 
 </RelativeLayout>
 
