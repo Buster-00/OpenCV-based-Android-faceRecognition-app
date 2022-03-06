@@ -12,79 +12,8 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/ViewPager_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-    <com.google.android.material.button.MaterialButton
-        app:rippleColor="@color/black"
-        android:id="@+id/btn_register"
-        android:layout_width="@dimen/myButton_width"
-        android:layout_height="@dimen/myButton_height"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/myButton_bg_color"
-        android:elevation="@dimen/myButton_elevation"
-        android:text="faceRegister"
-        android:textColor="@color/myButton_font_color"
-        android:textSize="@dimen/myButton_font_size"
-        app:cornerRadius="@dimen/myButton_radius"
-        app:icon="@drawable/ic_log_out"
-        app:iconGravity="textTop"
-        app:iconTint="@color/myButton_icon_color"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        app:rippleColor="@color/black"
-        android:id="@+id/btn_recognition"
-        android:layout_width="@dimen/myButton_width"
-        android:layout_height="@dimen/myButton_height"
-        android:layout_marginLeft="220dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/myButton_bg_color"
-        android:elevation="@dimen/myButton_elevation"
-        android:text="FaceRecognition"
-        android:textColor="@color/myButton_font_color"
-        android:textSize="9dp"
-        app:cornerRadius="@dimen/myButton_radius"
-        app:icon="@drawable/ic_book_black_24dp"
-        app:iconGravity="textTop"
-        app:iconTint="@color/myButton_icon_color" />
-
-    <com.google.android.material.button.MaterialButton
-        app:rippleColor="@color/black"
-        android:elevation="@dimen/myButton_elevation"
-        android:backgroundTint="@color/myButton_bg_color"
-        android:textColor="@color/myButton_font_color"
-        app:iconTint="@color/myButton_icon_color"
-        android:textSize="@dimen/myButton_font_size"
-        app:iconGravity="textTop"
-        app:icon="@drawable/ic_favorite_gray_24dp"
-        android:id="@+id/btn_delete"
-        android:layout_width="@dimen/myButton_width"
-        android:layout_height="@dimen/myButton_height"
-        app:cornerRadius="@dimen/myButton_radius"
-        android:layout_below="@+id/btn_recognition"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="10dp"
-        android:text="delete" />
-
-    <com.google.android.material.button.MaterialButton
-        app:rippleColor="@color/black"
-        android:elevation="@dimen/myButton_elevation"
-        android:backgroundTint="@color/myButton_bg_color"
-        android:textColor="@color/myButton_font_color"
-        app:iconTint="@color/myButton_icon_color"
-        android:textSize="@dimen/myButton_font_size"
-        app:iconGravity="textTop"
-        app:icon="@drawable/ic_first_item"
-        android:id="@+id/btn_viewPager"
-        android:layout_width="@dimen/myButton_width"
-        android:layout_height="@dimen/myButton_height"
-        app:cornerRadius="@dimen/myButton_radius"
-        android:layout_below="@+id/btn_recognition"
-        android:layout_marginLeft="220dp"
-        android:layout_marginTop="10dp"
-        android:text="View Pager" />
 
     <TextView
 

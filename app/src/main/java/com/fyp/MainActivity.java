@@ -39,10 +39,7 @@ public class MainActivity extends DrawerActivity {
 
     //widget
     ViewPager viewPager;
-    Button btn_viewPager;
-    Button btn_delete;
-    Button btn_register;
-    Button btn_recognition;
+
     TextView tv_username;
 
     //handler
@@ -60,15 +57,11 @@ public class MainActivity extends DrawerActivity {
         //Initiate widgets
         viewPager = findViewById(R.id.ViewPager_main);
         PageNavigationView pageBottomTabLayout = findViewById(R.id.tab);
-        btn_viewPager = findViewById(R.id.btn_viewPager);
-        btn_delete = findViewById(R.id.btn_delete);
-        btn_register = findViewById(R.id.btn_register);
-        btn_recognition = findViewById(R.id.btn_recognition);
         tv_username = findViewById(R.id.tv_username);
 
         //initiate side navigation bar
         mNavigationController = pageBottomTabLayout.material()
-                .addItem(R.drawable.ic_ondemand_video_black_24dp, "Movies & TV", testColors[0])
+                .addItem(R.drawable.ic_home, "Movies & TV", testColors[0])
                 .addItem(R.drawable.ic_audiotrack_black_24dp, "Music", testColors[1])
                 .addItem(R.drawable.ic_book_black_24dp, "Books", testColors[2])
                 .addItem(R.drawable.ic_news_black_24dp, "Newsstand", testColors[3])
@@ -84,10 +77,10 @@ public class MainActivity extends DrawerActivity {
                 Toast.makeText(MainActivity.this, "selected: " + index + " old: " + old, Toast.LENGTH_SHORT).show();
                 mNavigationController.setHasMessage(index, false);
                 mNavigationController.setMessageNumber(index, 0);
-                Alerter.create(MainActivity.this)
+                /*Alerter.create(MainActivity.this)
                         .setTitle("Alert Title")
                         .setText("Alert text...")
-                        .show();
+                        .show();*/
             }
 
             @Override
@@ -102,44 +95,6 @@ public class MainActivity extends DrawerActivity {
         viewPager.setAdapter(new myAdapter(getSupportFragmentManager()));
         mNavigationController.setupWithViewPager(viewPager);
 
-        btn_viewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ViewPagerActivity.class));
-            }
-        });
-
-
-        btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialDialog.Builder(MainActivity.this)
-                        .title("Confirm delete")
-                        .content("Do you want to delete your account data?")
-                        .positiveText("YES")
-                        .negativeText("NO")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                deleteUserData();
-                            }
-                        }).show();
-            }
-        });
-
-        btn_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setBtn_register();
-            }
-        });
-
-        btn_recognition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setBtn_recognition();
-            }
-        });
 
         StudentAccountDB DB = new StudentAccountDB(this);
         HashMap<String, String> hm = new HashMap<>();
@@ -150,31 +105,6 @@ public class MainActivity extends DrawerActivity {
 
         //Initiate JavaCV
         Loader.load(opencv_java.class);
-    }
-
-    private void deleteUserData() {
-        StudentAccountDB DB = new StudentAccountDB(this);
-
-        if(DB.deleteByID(getCurrentUser().getID())){
-            Toast.makeText(this, "Delete account successfully", Toast.LENGTH_SHORT).show();
-            DB.close();
-            Intent intent = new Intent(MainActivity.this, MTLogin.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
-        else{
-            Toast.makeText(this, "Delete account failed", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-
-    protected void setBtn_register(){
-        startActivity(new Intent(MainActivity.this, FaceRegisterActivity.class));
-    }
-
-    protected void setBtn_recognition(){
-        startActivity(new Intent(MainActivity.this, FaceRecognitionActivity.class));
     }
 
     protected void setBtn_train(){
