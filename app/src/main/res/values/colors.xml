@@ -7,6 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="myButton_bg_color">#FFFFFFFF</color>
+    <color name="myButton_icon_color">#FF000000</color>
+    <color name="myButton_font_color">#FF000000</color>
 
 
 

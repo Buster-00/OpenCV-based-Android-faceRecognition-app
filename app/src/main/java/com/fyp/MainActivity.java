@@ -3,7 +3,7 @@ package com.fyp;
 import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,24 +11,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.fyp.Frgament.myAdapter;
 import com.fyp.databaseHelper.StudentAccountDB;
 import com.fyp.login.MTLogin;
-import com.google.android.material.dialog.MaterialDialogs;
 import com.heinrichreimersoftware.materialdrawer.DrawerActivity;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
-import com.ramotion.foldingcell.FoldingCell;
 import com.tapadoo.alerter.Alerter;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
-import org.bytedeco.opencv.presets.opencv_core;
 
 import java.util.HashMap;
 
@@ -41,12 +38,12 @@ public class MainActivity extends DrawerActivity {
     private static boolean IS_SAVE_ACCOUNT = false;
 
     //widget
+    ViewPager viewPager;
+    Button btn_viewPager;
     Button btn_delete;
-    Button btn_personalProfile;
     Button btn_register;
     Button btn_recognition;
     TextView tv_username;
-    FoldingCell fc;
 
     //handler
     private Handler mHandler;
@@ -61,13 +58,13 @@ public class MainActivity extends DrawerActivity {
         setContentView(R.layout.activity_main);
 
         //Initiate widgets
+        viewPager = findViewById(R.id.ViewPager_main);
         PageNavigationView pageBottomTabLayout = findViewById(R.id.tab);
+        btn_viewPager = findViewById(R.id.btn_viewPager);
         btn_delete = findViewById(R.id.btn_delete);
-        btn_personalProfile = findViewById(R.id.btn_personalProfile);
         btn_register = findViewById(R.id.btn_register);
         btn_recognition = findViewById(R.id.btn_recognition);
         tv_username = findViewById(R.id.tv_username);
-        fc = findViewById(R.id.folding_cell);
 
         //initiate side navigation bar
         mNavigationController = pageBottomTabLayout.material()
@@ -101,6 +98,17 @@ public class MainActivity extends DrawerActivity {
             }
         });
 
+        //Set ViewPager
+        viewPager.setAdapter(new myAdapter(getSupportFragmentManager()));
+        mNavigationController.setupWithViewPager(viewPager);
+
+        btn_viewPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ViewPagerActivity.class));
+            }
+        });
+
 
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,13 +127,6 @@ public class MainActivity extends DrawerActivity {
             }
         });
 
-        btn_personalProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, personalPorfileActivity.class));
-            }
-        });
-
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,13 +138,6 @@ public class MainActivity extends DrawerActivity {
             @Override
             public void onClick(View view) {
                 setBtn_recognition();
-            }
-        });
-
-        fc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fc.toggle(false);
             }
         });
 

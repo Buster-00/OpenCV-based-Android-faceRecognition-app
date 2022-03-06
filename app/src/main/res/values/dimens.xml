@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="myLayout_height">60dp</dimen>
+    <dimen name="myButton_height">135dp</dimen>
+    <dimen name="myButton_width">135dp</dimen>
+    <dimen name="myButton_radius">8dp</dimen>
+    <dimen name="myButton_font_size">12dp</dimen>
+    <dimen name="myButton_elevation">2dp</dimen>
 </resources>
