@@ -11,4 +11,69 @@
         android:layout_height="match_parent"
         android:text="fragment2" />
 
+    <com.ramotion.foldingcell.FoldingCell
+        android:clickable="true"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="100dp"
+        android:id="@+id/folding_cell"
+        android:layout_width="match_parent"
+        android:elevation="10dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/cell_content_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_green_dark"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:backgroundTint="#2e8abb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarStyle">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="标题"
+                    android:textSize="20sp"/>
+            </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_personalProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="click"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cell_title_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/img_01"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white"
+                android:paddingLeft="10dp"
+                android:text="yo!" />
+        </LinearLayout>
+
+    </com.ramotion.foldingcell.FoldingCell>
+
 </FrameLayout>

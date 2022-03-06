@@ -4,11 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fyp.R;
+import com.ramotion.foldingcell.FoldingCell;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +27,10 @@ public class Fragment_course_list extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    //widget
+    FoldingCell fc;
 
     public Fragment_course_list() {
         // Required empty public constructor
@@ -61,6 +67,19 @@ public class Fragment_course_list extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_3, container, false);
+        View view = inflater.inflate(R.layout.fragment_course_list, container, false);
+
+        //Initiate View
+        fc = view.findViewById(R.id.folding_cell);
+
+        fc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fc.toggle(false);
+                Log.e("FoldingCell", "clicked");
+            }
+        });
+
+        return view;
     }
 }

@@ -23,6 +23,7 @@ import com.fyp.R;
 import com.fyp.ViewPagerActivity;
 import com.fyp.databaseHelper.StudentAccountDB;
 import com.fyp.login.MTLogin;
+import com.ramotion.foldingcell.FoldingCell;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +46,7 @@ public class Fragment_home extends Fragment {
     Button btn_recognition;
     Button btn_viewPager;
     Button btn_delete;
+
 
     public Fragment_home() {
         // Required empty public constructor
