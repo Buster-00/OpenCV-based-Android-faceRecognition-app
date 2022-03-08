@@ -78,4 +78,22 @@
         app:iconTint="@color/myButton_icon_color"
         app:rippleColor="@color/black" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_testConnect"
+        android:layout_width="@dimen/myButton_width"
+        android:layout_height="@dimen/myButton_height"
+        android:layout_below="@+id/btn_viewPager"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/myButton_bg_color"
+        android:elevation="@dimen/myButton_elevation"
+        android:text="Test connect"
+        android:textColor="@color/myButton_font_color"
+        android:textSize="@dimen/myButton_font_size"
+        app:cornerRadius="@dimen/myButton_radius"
+        app:icon="@drawable/ic_book_black_24dp"
+        app:iconGravity="textTop"
+        app:iconTint="@color/myButton_icon_color"
+        app:rippleColor="@color/black" />
+
 </RelativeLayout>

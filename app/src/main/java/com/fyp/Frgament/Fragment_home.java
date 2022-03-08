@@ -8,6 +8,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +24,12 @@ import com.fyp.FaceRegisterActivity;
 import com.fyp.MainActivity;
 import com.fyp.R;
 import com.fyp.ViewPagerActivity;
+import com.fyp.databaseHelper.MariaDBconnector;
 import com.fyp.databaseHelper.StudentAccountDB;
 import com.fyp.login.MTLogin;
 import com.ramotion.foldingcell.FoldingCell;
+
+import java.sql.SQLException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +52,9 @@ public class Fragment_home extends Fragment {
     Button btn_recognition;
     Button btn_viewPager;
     Button btn_delete;
+    Button btn_testConnect;
 
+    Handler handler;
 
     public Fragment_home() {
         // Required empty public constructor
@@ -92,6 +100,27 @@ public class Fragment_home extends Fragment {
         btn_recognition = view.findViewById(R.id.btn_recognition);
         btn_viewPager = view.findViewById(R.id.btn_viewPager);
         btn_delete = view.findViewById(R.id.btn_delete);
+        btn_testConnect = view.findViewById(R.id.btn_testConnect);
+
+        handler = new Handler(){
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                switch (msg.what){
+                    case 100:
+                        Log.e("mysql", (String)msg.obj);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        btn_testConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBtn_testConnect();
+            }
+        });
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +169,27 @@ public class Fragment_home extends Fragment {
 
     protected void setBtn_recognition(){
         startActivity(new Intent(getActivity(), FaceRecognitionActivity.class));
+    }
+
+    protected void setBtn_testConnect(){
+        new Thread(){
+            @Override
+            public void run() {
+                MariaDBconnector maria = new MariaDBconnector();
+                String result = new String();
+                try {
+                    result = maria.connectNOSSL();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
+                Message message = Message.obtain();
+                message.what = 100;
+                message.obj = result;
+
+                handler.handleMessage(message);
+            }
+        }.start();
     }
 
     private void deleteUserData() {
