@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
     <com.ramotion.foldingcell.FoldingCell
+
         android:clickable="true"
         android:layout_marginLeft="@dimen/myButton_marginLeft_left"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/folding_cell"
         android:layout_width="match_parent"
         android:elevation="10dp"
+        android:background="@color/white"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -41,6 +45,7 @@
                 android:id="@+id/btn_personalProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="click"/>
 
             <TextView
@@ -48,25 +53,35 @@
                 android:layout_height="250dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/cell_title_view"
+        <androidx.cardview.widget.CardView
+            android:elevation="10dp"
+            android:backgroundTint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/img_01"/>
+            <LinearLayout
 
-            <TextView
-                android:id="@+id/tv_cardText"
+                android:id="@+id/cell_title_view"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/white"
-                android:paddingLeft="10dp"
-                android:text="yo!" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/img_01"/>
+
+                <TextView
+                    android:id="@+id/tv_cardText"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@color/white"
+                    android:paddingLeft="10dp"
+                    android:text="yo!" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
     </com.ramotion.foldingcell.FoldingCell>
 

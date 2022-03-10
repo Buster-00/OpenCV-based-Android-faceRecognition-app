@@ -62,6 +62,7 @@ public class Fragment_course_list extends Fragment {
 
         listView = view.findViewById(R.id.list_view);
 
+        //generate cardItem
         CardItem i1 = new CardItem("tom", 1);
         CardItem i2 = new CardItem("jack", 2);
         CardItem i3 = new CardItem("john", 3);
