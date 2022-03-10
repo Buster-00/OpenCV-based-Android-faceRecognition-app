@@ -6,4 +6,7 @@
     <dimen name="myButton_radius">8dp</dimen>
     <dimen name="myButton_font_size">12dp</dimen>
     <dimen name="myButton_elevation">2dp</dimen>
+    <dimen name="myButton_marginLeft_left">20dp</dimen>
+    <dimen name="myButton_marginLeft_right">180dp</dimen>
+    <dimen name="myButton_marginTOP"></dimen>
 </resources>

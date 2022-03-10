@@ -2,6 +2,8 @@ package com.fyp.databaseHelper;
 
 import android.widget.Toast;
 
+import com.squareup.okhttp.internal.http.HttpConnection;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -31,9 +33,13 @@ public class MariaDBconnector {
         Statement statement = con.createStatement();
 
         //Test a query to make sure we're connected:
+        String result = new String();
         ResultSet rs = statement.executeQuery("SELECT * FROM " + table_name);
-        rs.next();
-        String result = rs.getString("name");
+        statement.executeQuery("INSERT INTO " + table_name + " values('Tom', 'f')");
+        while(rs.next()){
+             result += rs.getString("name");
+        }
+
         con.close();
         return result;
     }
@@ -49,4 +55,5 @@ public class MariaDBconnector {
         info.setProperty("trustServerCertificate", "true");
         testConnect(info, true);
     }
+
 }

@@ -1,12 +1,17 @@
 package com.fyp.Frgament;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.fyp.R;
 
@@ -25,6 +30,9 @@ public class Fragment_2 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    //widget
+    ListView listView;
 
     public Fragment_2() {
         // Required empty public constructor
@@ -61,6 +69,58 @@ public class Fragment_2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_3, container, false);
+
+        listView = view.findViewById(R.id.list_view);
+
+        item i1 = new item("tom", 1);
+        item i2 = new item("jack", 2);
+        item i3 = new item("john", 3);
+        itemAdapter IA = new itemAdapter(getActivity(), R.layout.listview_item);
+        IA.add(i1);
+        IA.add(i2);
+        IA.add(i3);
+        listView.setAdapter(IA);
+
+        return view;
+    }
+
+    private class item{
+        private String name;
+        private int icon;
+
+        public item(String name, int icon){
+            this.name = name;
+            this.icon = icon;
+        }
+
+        public String getName(){
+            return name;
+        }
+
+        public int getIcon(){
+            return icon;
+        }
+
+    }
+
+    private class itemAdapter extends ArrayAdapter<item>{
+
+        private int resourceID;
+
+        public itemAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+            resourceID = resource;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent){
+            item i = getItem(position);
+
+            View view = LayoutInflater.from(getContext()).inflate(resourceID, null);
+            TextView tv_item = view.findViewById(R.id.tv_item);
+            tv_item.setText(i.getName());
+            return view;
+        }
     }
 }

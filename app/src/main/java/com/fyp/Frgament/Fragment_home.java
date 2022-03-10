@@ -26,6 +26,7 @@ import com.fyp.R;
 import com.fyp.ViewPagerActivity;
 import com.fyp.databaseHelper.MariaDBconnector;
 import com.fyp.databaseHelper.StudentAccountDB;
+import com.fyp.databaseHelper.okHttpHelper;
 import com.fyp.login.MTLogin;
 import com.ramotion.foldingcell.FoldingCell;
 
@@ -48,6 +49,7 @@ public class Fragment_home extends Fragment {
     private String mParam2;
 
     //Widget
+    Button btn_testHttp;
     Button btn_register;
     Button btn_recognition;
     Button btn_viewPager;
@@ -101,6 +103,7 @@ public class Fragment_home extends Fragment {
         btn_viewPager = view.findViewById(R.id.btn_viewPager);
         btn_delete = view.findViewById(R.id.btn_delete);
         btn_testConnect = view.findViewById(R.id.btn_testConnect);
+        btn_testHttp = view.findViewById(R.id.btn_testHttp);
 
         handler = new Handler(){
             @Override
@@ -114,6 +117,13 @@ public class Fragment_home extends Fragment {
                 }
             }
         };
+
+        btn_testHttp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBtn_testHttp();
+            }
+        });
 
         btn_testConnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +200,11 @@ public class Fragment_home extends Fragment {
                 handler.handleMessage(message);
             }
         }.start();
+    }
+
+    protected void setBtn_testHttp(){
+        okHttpHelper httpHelper = new okHttpHelper();
+        httpHelper.UploadFile(getActivity().getExternalCacheDir()+"/facerecOPCV/"+"train.xml");
     }
 
     private void deleteUserData() {
