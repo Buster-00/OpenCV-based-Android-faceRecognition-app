@@ -19,9 +19,9 @@ public class myAdapter extends FragmentPagerAdapter {
             case 0:
                 return new Fragment_home();
             case 1:
-                return new Fragment_2();
-            case 2:
                 return new Fragment_course_list();
+            case 2:
+                return new Fragment_course_list_2();
         }
         return new Fragment_home();
     }

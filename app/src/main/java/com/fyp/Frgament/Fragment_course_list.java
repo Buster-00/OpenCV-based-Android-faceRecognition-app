@@ -1,13 +1,17 @@
 package com.fyp.Frgament;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.fyp.R;
 import com.ramotion.foldingcell.FoldingCell;
@@ -19,32 +23,19 @@ import com.ramotion.foldingcell.FoldingCell;
  */
 public class Fragment_course_list extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-
     //widget
-    FoldingCell fc;
+    ListView listView;
 
     public Fragment_course_list() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment3.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_course_list newInstance(String param1, String param2) {
         Fragment_course_list fragment = new Fragment_course_list();
         Bundle args = new Bundle();
@@ -69,17 +60,85 @@ public class Fragment_course_list extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
 
-        //Initiate View
-        fc = view.findViewById(R.id.folding_cell);
+        listView = view.findViewById(R.id.list_view);
 
-        fc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fc.toggle(false);
-                Log.e("FoldingCell", "clicked");
-            }
-        });
+        CardItem i1 = new CardItem("tom", 1);
+        CardItem i2 = new CardItem("jack", 2);
+        CardItem i3 = new CardItem("john", 3);
+        CardItemAdapter IA = new CardItemAdapter(getActivity(), R.layout.listview_carditem);
+        IA.add(i1);
+        IA.add(i2);
+        IA.add(i3);
+        listView.setAdapter(IA);
 
         return view;
+    }
+
+    private class CardItem{
+        private String name;
+        private int icon;
+
+        public CardItem(String name, int icon){
+            this.name = name;
+            this.icon = icon;
+        }
+
+        public String getName(){
+            return name;
+        }
+
+        public int getIcon(){
+            return icon;
+        }
+
+    }
+
+    private class CardItemAdapter extends ArrayAdapter<CardItem>{
+
+        private int resourceID;
+
+        public CardItemAdapter(@NonNull Context context, int resource) {
+            super(context, resource);
+            resourceID = resource;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent){
+
+            //get item from array Adapter
+            CardItem i = getItem(position);
+            View view;
+            ViewHolder viewHolder;
+
+            //initialize layout
+            if(convertView == null){
+                view = LayoutInflater.from(getContext()).inflate(resourceID, null);
+                viewHolder = new ViewHolder();
+                viewHolder.fc = view.findViewById(R.id.folding_cell);
+                viewHolder.tvCardItem = view.findViewById(R.id.tv_cardText);
+                view.setTag(viewHolder);
+            }
+            else{
+                view = convertView;
+                viewHolder = (ViewHolder)view.getTag();
+            }
+
+            //widget
+
+            viewHolder.fc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    viewHolder.fc.toggle(false);
+                }
+            });
+
+            viewHolder.tvCardItem.setText(i.getName());
+            return view;
+        }
+
+         class ViewHolder{
+            public FoldingCell fc;
+            public TextView tvCardItem;
+        }
     }
 }
