@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:don="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
@@ -19,38 +20,57 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+
             android:id="@+id/cell_content_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_green_dark"
+            android:background="@drawable/radius_shape"
             android:visibility="gone"
             android:orientation="vertical">
 
+
             <androidx.appcompat.widget.Toolbar
+
                 android:id="@+id/toolbar"
                 android:backgroundTint="#2e8abb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
+                android:background="@color/purple_500"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarStyle">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="标题"
+                    android:text="Details"
                     android:textSize="20sp"/>
             </androidx.appcompat.widget.Toolbar>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_click"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="click"/>
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="250dp" />
+                android:layout_height="50dp"
+                android:text="the start time is \n you cannot attendance yet."/>
+
+            <com.don.clockviewlibrary.ClockView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                don:circle_color="@android:color/holo_blue_light"
+                don:hour_color="#ff00ff"
+                don:minute_color="@android:color/holo_red_light"
+                don:minute_mark_color="@android:color/white"
+                don:quarter_mark_color="@android:color/black"
+                don:second_color="@android:color/holo_green_light"
+                don:draw_center_circle="true"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_gravity="end"
+                android:id="@+id/btn_click"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:text="click"/>
+
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
