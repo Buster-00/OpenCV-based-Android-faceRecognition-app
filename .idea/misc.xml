@@ -11,6 +11,7 @@
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_second_item.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_avatar.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_cover.xml" value="0.277" />
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable/radius_shape.xml" value="0.2615" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_face_recognition.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_login.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_main.xml" value="0.33" />
@@ -29,7 +30,7 @@
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_frgament_1.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_home.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/header_logo.xml" value="0.2547008547008547" />
-        <entry key="..\:/FYP-Project/app/src/main/res/layout/listview_carditem.xml" value="0.8409610983981693" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/listview_carditem.xml" value="0.5" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/listview_item.xml" value="0.3384615384615385" />
       </map>
     </option>
