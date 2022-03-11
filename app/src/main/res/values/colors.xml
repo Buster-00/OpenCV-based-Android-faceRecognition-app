@@ -11,6 +11,9 @@
     <color name="myButton_icon_color">#FF000000</color>
     <color name="myButton_font_color">#FF000000</color>
     <color name="myColor_01">#FF6200EE</color>
+    <color name="green">#00FF7F</color>
+    <color name="gray">#DCDCDC</color>
+    <color name="red">#FF0000</color>
 
 
 
