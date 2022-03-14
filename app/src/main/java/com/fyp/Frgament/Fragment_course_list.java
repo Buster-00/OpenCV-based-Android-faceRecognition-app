@@ -1,8 +1,12 @@
 package com.fyp.Frgament;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -16,6 +20,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
 import com.github.chengang.library.TickView;
 import com.ramotion.foldingcell.FoldingCell;
@@ -172,6 +177,10 @@ public class Fragment_course_list extends Fragment {
                         }
                     };
                     timer.schedule(task, TOGGLE_DELAY_TIME);
+
+                    Intent intent = new Intent(getActivity(), FaceRecognitionActivity.class);
+                    boolean recognitionResult = false;
+                    startActivityForResult(intent, 1);
                 }
             });
 

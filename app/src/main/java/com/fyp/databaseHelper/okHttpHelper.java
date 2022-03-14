@@ -21,12 +21,12 @@ public class okHttpHelper {
     public void UploadFile(String path){
         OkHttpClient httpClient = new OkHttpClient();
 
-        MediaType contentType = MediaType.parse("text/xml");
+        MediaType contentType = MediaType.parse("text/plain");
         File file = new File(path);
         RequestBody body = RequestBody.create(file, contentType);
 
         Request getRequest = new Request.Builder()
-                .url("http://118.31.20.251/markdown/raw")
+                .url("http://118.31.20.251:8080/newServlet/upload")
                 .post(body)
                 .build();
 

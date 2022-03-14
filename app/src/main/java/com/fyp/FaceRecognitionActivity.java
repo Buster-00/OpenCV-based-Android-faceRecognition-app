@@ -221,11 +221,14 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //If recognize face correctly more than 10 times, success to next step
         if(counter > 10){
-            Intent intent = new Intent(this, RecognizeSuccess.class);
+            // Intent intent = new Intent(this, RecognizeSuccess.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+
+            Intent intent = new Intent();
+            intent.putExtra("result", true);
+            this.setResult(RESULT_OK, intent);
             counter = 0;
-            finish();
+            this.finish();
             Log.e("debug", "still running");
         }
 
