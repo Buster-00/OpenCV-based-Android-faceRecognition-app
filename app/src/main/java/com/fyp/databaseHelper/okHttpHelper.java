@@ -45,4 +45,29 @@ public class okHttpHelper {
         });
 
     }
+
+    public void downloadFile(){
+
+        //create httpclient
+        OkHttpClient httpClient = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("http://118.31.20.251:8080/newServlet/download")
+                .build();
+
+        Call call = httpClient.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e("http", "http failure" + e.toString());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                //TODO
+                
+            }
+        });
+    }
 }
