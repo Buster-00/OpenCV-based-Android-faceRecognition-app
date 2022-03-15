@@ -49,6 +49,7 @@ public class Fragment_home extends Fragment {
     private String mParam2;
 
     //Widget
+    Button btn_testHttp_response;
     Button btn_testHttp;
     Button btn_register;
     Button btn_recognition;
@@ -98,6 +99,7 @@ public class Fragment_home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Initiate widgets
+        btn_testHttp_response = view.findViewById(R.id.btn_testHttp_response);
         btn_register = view.findViewById(R.id.btn_register);
         btn_recognition = view.findViewById(R.id.btn_recognition);
         btn_viewPager = view.findViewById(R.id.btn_viewPager);
@@ -117,6 +119,13 @@ public class Fragment_home extends Fragment {
                 }
             }
         };
+
+        btn_testHttp_response.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBtn_testHttp_response();
+            }
+        });
 
         btn_testHttp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,6 +214,11 @@ public class Fragment_home extends Fragment {
     protected void setBtn_testHttp(){
         okHttpHelper httpHelper = new okHttpHelper();
         httpHelper.UploadFile(getActivity().getExternalCacheDir()+"/facerecOPCV/"+"train.xml");
+    }
+
+    protected void setBtn_testHttp_response(){
+        okHttpHelper httpHelper = new okHttpHelper();
+        httpHelper.downloadFile();
     }
 
     private void deleteUserData() {

@@ -66,7 +66,7 @@ public class okHttpHelper {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 //TODO
-                
+                Log.e("http", "Response: " + response.body().string());
             }
         });
     }
