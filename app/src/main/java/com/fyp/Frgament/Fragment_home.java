@@ -30,6 +30,11 @@ import com.fyp.databaseHelper.okHttpHelper;
 import com.fyp.login.MTLogin;
 import com.ramotion.foldingcell.FoldingCell;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -218,7 +223,8 @@ public class Fragment_home extends Fragment {
 
     protected void setBtn_testHttp_response(){
         okHttpHelper httpHelper = new okHttpHelper();
-        httpHelper.downloadFile();
+        httpHelper.downloadFile(getActivity().getExternalCacheDir()+"/facerecOPCV/"+"train.xml");
+
     }
 
     private void deleteUserData() {

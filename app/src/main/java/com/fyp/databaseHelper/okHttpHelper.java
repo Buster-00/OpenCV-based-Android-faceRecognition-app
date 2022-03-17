@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import okhttp3.Call;
@@ -18,10 +19,12 @@ import okhttp3.Response;
 
 public class okHttpHelper {
 
+    static String train_data = new String();
+
     public void UploadFile(String path){
         OkHttpClient httpClient = new OkHttpClient();
 
-        MediaType contentType = MediaType.parse("text/plain");
+        MediaType contentType = MediaType.parse("application/xml");
         File file = new File(path);
         RequestBody body = RequestBody.create(file, contentType);
 
@@ -46,7 +49,7 @@ public class okHttpHelper {
 
     }
 
-    public void downloadFile(){
+    public void downloadFile(String mPath){
 
         //create httpclient
         OkHttpClient httpClient = new OkHttpClient();
@@ -57,6 +60,7 @@ public class okHttpHelper {
 
         Call call = httpClient.newCall(request);
 
+
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -66,8 +70,33 @@ public class okHttpHelper {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 //TODO
-                Log.e("http", "Response: " + response.body().string());
+                String data = response.body().string();
+                Log.e("http", "Response: " + data);
+
+                File file = new File(mPath);
+                if(!file.exists()){
+                    //if the train.xml file is not exist
+                    if(!file.getParentFile().exists())
+                    {
+                        file.getParentFile().mkdirs();
+                    }
+
+                    try {
+                        file.createNewFile();
+                        FileWriter writer = new FileWriter(file);
+                        Log.e("data", data);
+                        writer.write(data);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    //if the train.xml file is exist
+
+                }
             }
         });
+
+
     }
 }
