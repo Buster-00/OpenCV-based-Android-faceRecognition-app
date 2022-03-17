@@ -21,7 +21,8 @@ import android.widget.Toast;
 import com.fyp.MainActivity;
 import com.fyp.R;
 import com.fyp.ResetPasswordActivity;
-import com.fyp.databaseHelper.StudentAccountDB;
+import com.fyp.databaseHelper.SQLiteStudent;
+import com.fyp.databaseHelper.Student;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -32,10 +33,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
@@ -208,7 +207,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
         String studentID = etStudentID.getText().toString();
         String password = etPassword.getText().toString();
 
-        StudentAccountDB DB = new StudentAccountDB(this);
+        Student DB = new Student(this);
         HashMap<String, String> hashMap = new HashMap<>();
 
         if(DB.readById(studentID, hashMap)){

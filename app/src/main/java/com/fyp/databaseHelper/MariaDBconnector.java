@@ -15,12 +15,12 @@ public class MariaDBconnector {
 
     String host ="118.31.20.251";
     String port = "3306";
-    String database = "test";
+    String database = Student.DB_NAME;
     String username = "ActionNet";
     String password = "2944Qq59608";
     String table_name = "MYTABLE";
 
-    private Connection getConnection(Properties info) throws SQLException{
+    public Connection getConnection(Properties info) throws SQLException{
         String url = "jdbc:mysql://" + host + ":" + port +"/" + database;
         info.setProperty("user", username);
         info.setProperty("password", password);

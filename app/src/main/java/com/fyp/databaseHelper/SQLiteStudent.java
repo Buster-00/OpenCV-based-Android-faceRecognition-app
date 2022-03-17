@@ -11,23 +11,22 @@ import androidx.annotation.Nullable;
 
 import java.util.HashMap;
 
-public class StudentAccountDB extends SQLiteOpenHelper {
+public class SQLiteStudent extends SQLiteOpenHelper {
 
     private static final int version = 2;
 
     //Define names
-    public static final String DB_NAME = "DB";
-    public static final String TABLE_NAME = "studentAccount";
+    String DB_NAME = Student.DB_NAME;
+    String TABLE_NAME = Student.TABLE_NAME;
 
     //Define column NAME
+    String COLUMN_1 = Student.COLUMN_1;
+    String COLUMN_2 = Student.COLUMN_2;
+    String COLUMN_3 = Student.COLUMN_3;
+    String COLUMN_4 = Student.COLUMN_4;
 
-    public static final String COLUMN_1 = "id";
-    public static final String COLUMN_2 = "password";
-    public static final String COLUMN_3 = "name";
-    public static final String COLUMN_4 = "label";
-
-    public StudentAccountDB(@Nullable Context context) {
-        super(context, DB_NAME, null, version);
+    public SQLiteStudent(@Nullable Context context) {
+        super(context, Student.DB_NAME, null, version);
     }
 
     @Override
@@ -55,6 +54,7 @@ public class StudentAccountDB extends SQLiteOpenHelper {
 
         //insert data into database
         long result = DB.insert(TABLE_NAME, null, contentValues);
+        DB.close();
 
         if(result == -1){
             Log.e("Database Error", "insert new student account failed");

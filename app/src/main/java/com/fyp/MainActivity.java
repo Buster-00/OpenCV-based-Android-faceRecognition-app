@@ -1,28 +1,20 @@
 package com.fyp;
 
-import static com.fyp.databaseHelper.UserManager.getCurrentUser;
-
-import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.fyp.Frgament.myAdapter;
-import com.fyp.databaseHelper.StudentAccountDB;
+import com.fyp.databaseHelper.SQLiteStudent;
 import com.fyp.login.MTLogin;
 import com.heinrichreimersoftware.materialdrawer.DrawerActivity;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
-import com.tapadoo.alerter.Alerter;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
@@ -96,7 +88,7 @@ public class MainActivity extends DrawerActivity {
         mNavigationController.setupWithViewPager(viewPager);
 
 
-        StudentAccountDB DB = new StudentAccountDB(this);
+        SQLiteStudent DB = new SQLiteStudent(this);
         HashMap<String, String> hm = new HashMap<>();
         tv_username.setText(DB.ReadAll());
 

@@ -1,25 +1,17 @@
 package com.fyp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceView;
 
-import com.fyp.databaseHelper.StudentAccountDB;
-import com.fyp.face.PersonRecognizer;
+import com.fyp.databaseHelper.SQLiteStudent;
 import com.fyp.helper.FaceDetectorHelper;
 
-import org.bytedeco.javacpp.Loader;
-import org.bytedeco.libfreenect._freenect_device;
-import org.bytedeco.opencv.opencv_java;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCamera2View;
-import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
@@ -27,12 +19,8 @@ import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.face.Face;
 import org.opencv.face.FaceRecognizer;
 import org.opencv.face.LBPHFaceRecognizer;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
@@ -46,10 +34,6 @@ import java.util.Vector;
 import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
 import static com.fyp.helper.FrameFlipHelper.FlipRotateFrameHorizental;
-import static org.opencv.core.Core.ROTATE_180;
-import static org.opencv.core.Core.flip;
-import static org.opencv.core.Core.rotate;
-import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
 import static org.opencv.imgproc.Imgproc.FONT_HERSHEY_COMPLEX;
 import static org.opencv.imgproc.Imgproc.putText;
 import static org.opencv.imgproc.Imgproc.rectangle;
@@ -81,7 +65,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
     int counter = 0;
 
     //database helper
-    StudentAccountDB DB;
+    SQLiteStudent DB;
 
     //BaseLoaderCallback
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -131,7 +115,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         }
 
         //Load database
-        DB = new StudentAccountDB(this);
+        DB = new SQLiteStudent(this);
 
         //Load map
         //loadMap();

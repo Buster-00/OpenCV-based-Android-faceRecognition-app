@@ -21,20 +21,13 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fyp.FaceRecognitionActivity;
 import com.fyp.FaceRegisterActivity;
-import com.fyp.MainActivity;
 import com.fyp.R;
 import com.fyp.ViewPagerActivity;
 import com.fyp.databaseHelper.MariaDBconnector;
-import com.fyp.databaseHelper.StudentAccountDB;
+import com.fyp.databaseHelper.SQLiteStudent;
 import com.fyp.databaseHelper.okHttpHelper;
 import com.fyp.login.MTLogin;
-import com.ramotion.foldingcell.FoldingCell;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.SQLException;
 
 /**
@@ -228,7 +221,7 @@ public class Fragment_home extends Fragment {
     }
 
     private void deleteUserData() {
-        StudentAccountDB DB = new StudentAccountDB(getActivity());
+        SQLiteStudent DB = new SQLiteStudent(getActivity());
 
         if(DB.deleteByID(getCurrentUser().getID())){
             Toast.makeText(getActivity(), "Delete account successfully", Toast.LENGTH_SHORT).show();

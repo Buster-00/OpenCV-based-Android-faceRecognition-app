@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,12 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fyp.databaseHelper.StudentAccountDB;
+import com.fyp.databaseHelper.SQLiteStudent;
 import com.fyp.face.Labels;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
-import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 import org.opencv.face.FaceRecognizer;
@@ -36,7 +34,6 @@ import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Vector;
 
-import static org.opencv.imgcodecs.Imgcodecs.*;
 import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
 
 public class SuccessActivity extends AppCompatActivity {
@@ -214,7 +211,7 @@ public class SuccessActivity extends AppCompatActivity {
 
 
         //Generate mat of labels
-        StudentAccountDB db = new StudentAccountDB(this);
+        SQLiteStudent db = new SQLiteStudent(this);
         int[] label = new int[1];
         label[0] = getCurrentUser().getLabel();
         Mat matOfLabels = new MatOfInt(label);
