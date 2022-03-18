@@ -17,17 +17,24 @@ public class Student {
     public static final String COLUMN_3 = "name";
     public static final String COLUMN_4 = "label";
 
-    private static boolean IS_CONNECT_TO_MARIA_DB = false;
+    private static boolean IS_CONNECT_TO_MARIA_DB = true;
 
     //Context used for local SQLite database
     private Context context;
     SQLiteStudent sqLiteStudent;
 
+    //Online Maria database
+    MariaStudent mariaStudent;
+
     public Student(Context context){
         this.context = context;
 
         if(!IS_CONNECT_TO_MARIA_DB){
+            //create local database helper
             sqLiteStudent = new SQLiteStudent(context);
+        }
+        else{
+            mariaStudent = new MariaStudent();
         }
     }
 
@@ -48,7 +55,7 @@ public class Student {
 
         if(IS_CONNECT_TO_MARIA_DB){
             //using online Maria database
-
+            mariaStudent.insert(col_1, col_2, col_3);
         }
         else{
             //using local SQLite database
