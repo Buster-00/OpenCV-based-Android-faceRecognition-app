@@ -4,6 +4,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import org.bytedeco.librealsense2.STAEControl;
+import org.mariadb.jdbc.MariaDbClob;
+
+import java.security.cert.PolicyQualifierInfo;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,10 +53,17 @@ public class MariaStudent {
                         Log.e("result", rs + "");
                         bool[0] = true;
                         Log.e("bool", String.valueOf(bool[0]));
+                    }else
+                    {
+                        bool[0] = false;
                     }
+
+                    //close connection
+                    MariaCon.close();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
+
             }
 
         };
@@ -68,9 +79,44 @@ public class MariaStudent {
     }
 
     public boolean readById(String id, HashMap<String, String> hm){
-        boolean bool = false;
+        final boolean[] bool = {false};
 
-        return bool;
+        Thread thread = new Thread(){
+            public void run(){
+                try {
+                    Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                    Statement statement = MariaCon.createStatement();
+
+                    //Retrieve data by id
+                    String query = String.format("SELECT * FROM %s WHERE %s='%s'", TABLE_NAME, COLUMN_1, id);
+                    ResultSet rs = statement.executeQuery(query);
+                    if(rs.next()){
+                        hm.put("id", rs.getString("id"));
+                        hm.put("password", rs.getString("password"));
+                        hm.put("name", rs.getString("name"));
+                        bool[0] = true;
+                    }
+                    else {
+                        bool[0] = false;
+                    }
+
+                    //close connection
+                    MariaCon.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
+            }
+        };
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return bool[0];
     }
 
     public String ReadAll(){
@@ -80,20 +126,147 @@ public class MariaStudent {
     }
 
     public int getLabelByID(String studentID){
-        int label = 0;
+        final int[] label = {0};
 
-        return label;
+        Thread thread = new Thread(){
+          public void run(){
+              try {
+                  Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                  Statement statement = MariaCon.createStatement();
+
+                  String query = String.format("SELECT %s FROM %s WHERE %s='%s'", COLUMN_4, TABLE_NAME, COLUMN_1, studentID);
+                  ResultSet rs = statement.executeQuery(query);
+                  if(rs.next()){
+                      label[0] = rs.getInt(COLUMN_4);
+                  }
+                  else{
+                      label[0] = -1;
+                  }
+
+                  //close connection
+                  MariaCon.close();
+              } catch (SQLException throwables) {
+                  throwables.printStackTrace();
+              }
+
+          }
+        };
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return label[0];
     }
 
     public String getNameByLabel(int label){
-        String name = new String();
+        final String[] name = {new String()};
 
-        return name;
+        Thread thread = new Thread(){
+            public void run(){
+                try {
+                    Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                    Statement statement = MariaCon.createStatement();
+
+                    String query = String.format("SELECT %s FROM %s WHERE %s=%s", COLUMN_3, TABLE_NAME, COLUMN_4, label);
+                    ResultSet rs = statement.executeQuery(query);
+                    if(rs.next()){
+                        name[0] = rs.getString("name");
+                    }
+                    else{
+                        name[0] = "unknown";
+                    }
+
+                    //close connection
+                    MariaCon.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        };
+
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return name[0];
     }
 
     public boolean deleteByID(String ID){
-        boolean bool = false;
+        final boolean[] bool = {false};
 
-        return bool;
+        Thread thread = new Thread(){
+            public void run(){
+                try {
+                    Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                    Statement statement = MariaCon.createStatement();
+
+                    String query = String.format("DELETE FROM %s WHERE %s='%s'", TABLE_NAME, COLUMN_1, ID);
+                    int result = statement.executeUpdate(query);
+
+                    if(result > 0){
+                        bool[0] = true;
+                    }
+                    else{
+                        bool[0] = false;
+                    }
+
+                    //close connection
+                    MariaCon.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
+        };
+
+        return bool[0];
     }
+
+    //Another implementation for thread function
+    /*class InsertThread extends Thread{
+
+        private boolean isSuccess;
+        private String col_1 = new String();
+        private String col_2 = new String();
+        private String col_3 = new String();
+
+        public InsertThread(String col_1, String col_2, String col_3){
+            this.col_1 = col_1;
+            this.col_2 = col_2;
+            this.col_3 = col_3;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                Statement statement = MariaCon.createStatement();
+
+                //Insert new student into table
+                String query = String.format("INSERT INTO %s(%s, %s, %s) VALUES('%s', '%s', '%s')",
+                        TABLE_NAME, COLUMN_1, COLUMN_2, COLUMN_3, col_1, col_2, col_3);
+                Log.e("query", query);
+                int rs = statement.executeUpdate(query);
+                if(rs > 0){
+                    Log.e("result", rs + "");
+                    isSuccess = true;
+                }
+                else {
+                    isSuccess = false;
+                }
+                Log.e("join", "completed" + "isSuccess:" + isSuccess);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+
+        public boolean getResult(){
+            return isSuccess;
+        }
+    }*/
 }

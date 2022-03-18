@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fyp.databaseHelper.SQLiteStudent;
+import com.fyp.databaseHelper.Student;
 import com.fyp.face.Labels;
 
 import org.bytedeco.javacpp.Loader;
@@ -211,13 +212,11 @@ public class SuccessActivity extends AppCompatActivity {
 
 
         //Generate mat of labels
-        SQLiteStudent db = new SQLiteStudent(this);
         int[] label = new int[1];
         label[0] = getCurrentUser().getLabel();
         Mat matOfLabels = new MatOfInt(label);
-        db.close();
-        //LBPH train
 
+        //LBPH train
         faceRecognizer.read(mPath + "train.xml");
         faceRecognizer.update(matVector, matOfLabels);
         faceRecognizer.write(mPath + "train.xml");

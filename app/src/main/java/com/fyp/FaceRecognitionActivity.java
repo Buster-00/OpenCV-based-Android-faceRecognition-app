@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.SurfaceView;
 
 import com.fyp.databaseHelper.SQLiteStudent;
+import com.fyp.databaseHelper.Student;
 import com.fyp.helper.FaceDetectorHelper;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -65,7 +66,8 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
     int counter = 0;
 
     //database helper
-    SQLiteStudent DB;
+    //SQLiteStudent DB;
+    Student DB;
 
     //BaseLoaderCallback
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -109,14 +111,15 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         faceRecognizer = LBPHFaceRecognizer.create(2,8,8,8,200);
 
         String pathOfTrain = new String(mPath + "train.xml");
+        Log.e("faceRecognizer", pathOfTrain);
         File file = new File(pathOfTrain);
         if(file.exists()){
             faceRecognizer.read(pathOfTrain);
         }
 
         //Load database
-        DB = new SQLiteStudent(this);
-
+        //DB = new SQLiteStudent(this);
+        DB = new Student(this);
         //Load map
         //loadMap();
 
@@ -196,9 +199,9 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
                 if(label[0] == getCurrentUser().getLabel()){
                     counter++;
                 }
-                putText(flippedFrame, DB.getNameByLabel(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
+                putText(flippedFrame, getCurrentUser().getName(), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
             }else{
-                putText(flippedFrame, "karazawa", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
+                putText(flippedFrame, "unregister face", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());
         }

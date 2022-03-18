@@ -33,6 +33,7 @@ public class okHttpHelper {
                 .post(body)
                 .build();
 
+
         Call call = httpClient.newCall(getRequest);
 
         call.enqueue(new Callback() {
@@ -86,6 +87,7 @@ public class okHttpHelper {
                         FileWriter writer = new FileWriter(file);
                         Log.e("data", data);
                         writer.write(data);
+                        writer.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

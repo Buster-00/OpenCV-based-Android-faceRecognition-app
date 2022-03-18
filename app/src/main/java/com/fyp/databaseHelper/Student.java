@@ -55,7 +55,7 @@ public class Student {
 
         if(IS_CONNECT_TO_MARIA_DB){
             //using online Maria database
-            mariaStudent.insert(col_1, col_2, col_3);
+            isSuccess = mariaStudent.insert(col_1, col_2, col_3);
         }
         else{
             //using local SQLite database
@@ -70,6 +70,7 @@ public class Student {
 
         if (IS_CONNECT_TO_MARIA_DB){
             //using online Maria database
+            isSuccess = mariaStudent.readById(id, hm);
         }
         else{
             //using local SQLite database
