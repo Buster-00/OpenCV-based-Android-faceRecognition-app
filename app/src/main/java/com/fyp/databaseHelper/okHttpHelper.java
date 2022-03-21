@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class okHttpHelper {
     public void UploadFile(String path){
         OkHttpClient httpClient = new OkHttpClient();
 
-        MediaType contentType = MediaType.parse("application/xml");
+        MediaType contentType = MediaType.parse("text/plain");
         File file = new File(path);
         RequestBody body = RequestBody.create(file, contentType);
 
@@ -84,10 +85,11 @@ public class okHttpHelper {
 
                     try {
                         file.createNewFile();
-                        FileWriter writer = new FileWriter(file);
+                        FileWriter fw = new FileWriter(file);
+                        BufferedWriter bw = new BufferedWriter(fw);
                         Log.e("data", data);
-                        writer.write(data);
-                        writer.close();
+                        bw.write(data);
+                        bw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

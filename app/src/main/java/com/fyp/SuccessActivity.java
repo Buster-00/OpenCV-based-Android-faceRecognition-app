@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.fyp.databaseHelper.SQLiteStudent;
 import com.fyp.databaseHelper.Student;
+import com.fyp.databaseHelper.okHttpHelper;
 import com.fyp.face.Labels;
 
 import org.bytedeco.javacpp.Loader;
@@ -139,7 +140,13 @@ public class SuccessActivity extends AppCompatActivity {
         }
 
 
+        //Upload train.xml to server
+        okHttpHelper httpHelper = new okHttpHelper();
+        httpHelper.UploadFile(mPath);
+
         Toast.makeText(SuccessActivity.this, "your registration is successed!", Toast.LENGTH_SHORT).show();
+
+
         Intent intent = new Intent(SuccessActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
