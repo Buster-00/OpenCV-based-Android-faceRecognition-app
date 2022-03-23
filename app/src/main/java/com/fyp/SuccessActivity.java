@@ -2,12 +2,16 @@ package com.fyp;
 
 import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.fyp.databaseHelper.SQLiteStudent;
 import com.fyp.databaseHelper.Student;
 import com.fyp.databaseHelper.okHttpHelper;
@@ -33,10 +38,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 
 import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SuccessActivity extends AppCompatActivity {
 
@@ -55,6 +69,10 @@ public class SuccessActivity extends AppCompatActivity {
 
     //LBPH FaceRecognizer
     FaceRecognizer faceRecognizer;
+
+    //dialog
+    MaterialDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,15 +159,81 @@ public class SuccessActivity extends AppCompatActivity {
 
 
         //Upload train.xml to server
-        okHttpHelper httpHelper = new okHttpHelper();
-        httpHelper.UploadFile(mPath);
+        uploadFile(mPath + "train.xml");
 
-        Toast.makeText(SuccessActivity.this, "your registration is successed!", Toast.LENGTH_SHORT).show();
+    }
+
+    //upload train.xml file to server
+    private void uploadFile(String path) {
+
+        //initialize handler of dialog
+        Handler mHandler = new Handler(){
+            public void handleMessage(Message msg){
+                switch (msg.what){
+                    case 1:
+                        dialog.dismiss();
+                        //Toast.makeText(SuccessActivity.this, "your registration is successed!", Toast.LENGTH_SHORT).show();
+                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
+                                .title("Message")
+                                .positiveText("Confirm")
+                                .content("Upload success")
+                                .show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        dialog = new MaterialDialog.Builder(this)
+                .title("Uploading")
+                .content("Uploading the data to server, please wait")
+                .progress(true, 0)
+                .positiveText("cancel")
+                .show();
+
+        OkHttpClient httpClient = new OkHttpClient();
+
+        MediaType contentType = MediaType.parse("text/plain");
+        File file = new File(path);
+        RequestBody body = RequestBody.create(file, contentType);
+
+        Request getRequest = new Request.Builder()
+                .url("http://118.31.20.251:8080/newServlet/upload")
+                .post(body)
+                .build();
 
 
-        Intent intent = new Intent(SuccessActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+
+        Call call = httpClient.newCall(getRequest);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e("http", "http failure" + e.toString());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.e("http", "okHttpPost enqueue: \n onResponse:"+ response.toString() +"\n body:" +response.body().string());
+//                Looper.prepare();
+//                Message msg = Message.obtain();
+//                msg.what = 1;
+//                mHandler.handleMessage(msg);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        Toast.makeText(SuccessActivity.this, "your registration is successed!", Toast.LENGTH_SHORT).show();
+                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
+                                .title("Message")
+                                .positiveText("Confirm")
+                                .content("Upload success")
+                                .show();
+                    }
+                });
+            }
+        });
 
     }
 
