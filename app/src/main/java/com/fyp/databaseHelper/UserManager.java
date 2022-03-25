@@ -10,7 +10,7 @@ public class UserManager {
         return currentUser;
     }
 
-    public static void initUser(String ID, Student DB){
+    public static void initUser(String ID, StudentDB DB){
         currentUser = new User(ID, DB);
     }
 
@@ -19,7 +19,7 @@ public class UserManager {
         private String name;
         private int label;
 
-        User(String ID, Student DB){
+        User(String ID, StudentDB DB){
             setID(ID);
             HashMap<String, String> hashMap = new HashMap<>();
             DB.readById(ID, hashMap);

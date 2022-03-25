@@ -5,24 +5,17 @@ import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.fyp.databaseHelper.SQLiteStudent;
-import com.fyp.databaseHelper.Student;
-import com.fyp.databaseHelper.okHttpHelper;
+import com.fyp.databaseHelper.StudentDB;
 import com.fyp.face.Labels;
 
 import org.bytedeco.javacpp.Loader;
@@ -159,34 +152,18 @@ public class SuccessActivity extends AppCompatActivity {
 
 
         //Upload train.xml to server
-        uploadFile(mPath + "train.xml");
+        if(StudentDB.getISConnectToNetwork()){
+            uploadTrainFile(mPath + "train.xml");
+        }
+
 
     }
 
     //upload train.xml file to server
-    private void uploadFile(String path) {
-
-        //initialize handler of dialog
-        Handler mHandler = new Handler(){
-            public void handleMessage(Message msg){
-                switch (msg.what){
-                    case 1:
-                        dialog.dismiss();
-                        //Toast.makeText(SuccessActivity.this, "your registration is successed!", Toast.LENGTH_SHORT).show();
-                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
-                                .title("Message")
-                                .positiveText("Confirm")
-                                .content("Upload success")
-                                .show();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
+    private void uploadTrainFile(String path) {
 
         dialog = new MaterialDialog.Builder(this)
-                .title("Uploading")
+                .title("Uploading data")
                 .content("Uploading the data to server, please wait")
                 .progress(true, 0)
                 .positiveText("cancel")
@@ -211,20 +188,26 @@ public class SuccessActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e("http", "http failure" + e.toString());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
+                                .title("Message")
+                                .positiveText("Confirm")
+                                .content("Upload failure")
+                                .show();
+                    }
+                });
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Log.e("http", "okHttpPost enqueue: \n onResponse:"+ response.toString() +"\n body:" +response.body().string());
-//                Looper.prepare();
-//                Message msg = Message.obtain();
-//                msg.what = 1;
-//                mHandler.handleMessage(msg);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        Toast.makeText(SuccessActivity.this, "your registration is successed!", Toast.LENGTH_SHORT).show();
                         dialog = new MaterialDialog.Builder(SuccessActivity.this)
                                 .title("Message")
                                 .positiveText("Confirm")

@@ -1,20 +1,13 @@
 package com.fyp.databaseHelper;
 
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
-import org.bytedeco.librealsense2.STAEControl;
-import org.mariadb.jdbc.MariaDbClob;
-
-import java.security.cert.PolicyQualifierInfo;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Properties;
-import java.util.logging.LogRecord;
 
 public class MariaStudent {
 
@@ -22,14 +15,14 @@ public class MariaStudent {
     MariaDBconnector connector;
 
     //Define names
-    String DB_NAME = Student.DB_NAME;
-    String TABLE_NAME = Student.TABLE_NAME;
+    String DB_NAME = StudentDB.DB_NAME;
+    String TABLE_NAME = StudentDB.TABLE_NAME;
 
     //Define column NAME
-    String COLUMN_1 = Student.COLUMN_1;
-    String COLUMN_2 = Student.COLUMN_2;
-    String COLUMN_3 = Student.COLUMN_3;
-    String COLUMN_4 = Student.COLUMN_4;
+    String COLUMN_1 = StudentDB.COLUMN_1;
+    String COLUMN_2 = StudentDB.COLUMN_2;
+    String COLUMN_3 = StudentDB.COLUMN_3;
+    String COLUMN_4 = StudentDB.COLUMN_4;
 
     public MariaStudent(){
 

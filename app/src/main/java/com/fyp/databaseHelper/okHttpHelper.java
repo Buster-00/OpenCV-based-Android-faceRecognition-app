@@ -5,6 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.fyp.invariable.InVar;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -57,7 +59,7 @@ public class okHttpHelper {
         OkHttpClient httpClient = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("http://118.31.20.251:8080/newServlet/download")
+                .url(InVar.NETWORK_UPDATE_URL)
                 .build();
 
         Call call = httpClient.newCall(request);

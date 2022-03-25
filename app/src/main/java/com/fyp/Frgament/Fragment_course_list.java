@@ -22,12 +22,15 @@ import android.widget.TextView;
 
 import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
+import com.fyp.databaseHelper.Lecture;
+import com.fyp.databaseHelper.LectureDB;
 import com.github.chengang.library.TickView;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,14 +79,17 @@ public class Fragment_course_list extends Fragment {
 
         listView = view.findViewById(R.id.list_view);
 
-        //generate cardItem
-        CardItem i1 = new CardItem("tom", 1);
-        CardItem i2 = new CardItem("jack", 2);
-        CardItem i3 = new CardItem("john", 3);
         CardItemAdapter IA = new CardItemAdapter(getActivity(), R.layout.listview_carditem);
-        IA.add(i1);
-        IA.add(i2);
-        IA.add(i3);
+
+        //generate cardItem
+        LectureDB lectureDB = new LectureDB(getActivity());
+        Vector<Lecture> lectureVector= lectureDB.getAllLecture();
+
+        for(Lecture lecture : lectureVector){
+            CardItem cardItem = new CardItem(lecture.getLectureName(), 1);
+            IA.add(cardItem);
+        }
+
         listView.setAdapter(IA);
 
         return view;

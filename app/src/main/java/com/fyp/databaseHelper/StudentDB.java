@@ -3,9 +3,11 @@ package com.fyp.databaseHelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.fyp.invariable.InVar;
+
 import java.util.HashMap;
 
-public class Student {
+public class StudentDB {
 
     //Define names
     public static final String DB_NAME = "DB";
@@ -17,7 +19,7 @@ public class Student {
     public static final String COLUMN_3 = "name";
     public static final String COLUMN_4 = "label";
 
-    private static boolean IS_CONNECT_TO_MARIA_DB = true;
+    private static boolean IS_CONNECT_TO_MARIA_DB = InVar.IS_CONNECT_TO_MARIA_DB;
 
     //Context used for local SQLite database
     private Context context;
@@ -26,7 +28,11 @@ public class Student {
     //Online Maria database
     MariaStudent mariaStudent;
 
-    public Student(Context context){
+    public static boolean getISConnectToNetwork(){
+        return IS_CONNECT_TO_MARIA_DB;
+    }
+
+    public StudentDB(Context context){
         this.context = context;
 
         if(!IS_CONNECT_TO_MARIA_DB){
@@ -38,7 +44,7 @@ public class Student {
         }
     }
 
-    public Student(){
+    public StudentDB(){
         //For non parameter constructor
     }
 

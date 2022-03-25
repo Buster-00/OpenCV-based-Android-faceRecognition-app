@@ -16,17 +16,17 @@ public class SQLiteStudent extends SQLiteOpenHelper {
     private static final int version = 2;
 
     //Define names
-    String DB_NAME = Student.DB_NAME;
-    String TABLE_NAME = Student.TABLE_NAME;
+    String DB_NAME = StudentDB.DB_NAME;
+    String TABLE_NAME = StudentDB.TABLE_NAME;
 
     //Define column NAME
-    String COLUMN_1 = Student.COLUMN_1;
-    String COLUMN_2 = Student.COLUMN_2;
-    String COLUMN_3 = Student.COLUMN_3;
-    String COLUMN_4 = Student.COLUMN_4;
+    String COLUMN_1 = StudentDB.COLUMN_1;
+    String COLUMN_2 = StudentDB.COLUMN_2;
+    String COLUMN_3 = StudentDB.COLUMN_3;
+    String COLUMN_4 = StudentDB.COLUMN_4;
 
     public SQLiteStudent(@Nullable Context context) {
-        super(context, Student.DB_NAME, null, version);
+        super(context, StudentDB.DB_NAME, null, version);
     }
 
     @Override

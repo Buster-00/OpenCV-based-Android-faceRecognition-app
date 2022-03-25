@@ -21,8 +21,7 @@ import android.widget.Toast;
 import com.fyp.MainActivity;
 import com.fyp.R;
 import com.fyp.ResetPasswordActivity;
-import com.fyp.databaseHelper.SQLiteStudent;
-import com.fyp.databaseHelper.Student;
+import com.fyp.databaseHelper.StudentDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -207,7 +206,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
         String studentID = etStudentID.getText().toString();
         String password = etPassword.getText().toString();
 
-        Student DB = new Student(this);
+        StudentDB DB = new StudentDB(this);
         HashMap<String, String> hashMap = new HashMap<>();
 
         if(DB.readById(studentID, hashMap)){

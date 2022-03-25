@@ -16,8 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fyp.R;
-import com.fyp.databaseHelper.SQLiteStudent;
-import com.fyp.databaseHelper.Student;
+import com.fyp.databaseHelper.StudentDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -193,7 +192,7 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
         String password = et_reg_password.getText().toString();
         String studentName = et_reg_student_name.getText().toString();
 
-        Student DB = new Student(this);
+        StudentDB DB = new StudentDB(this);
 
         if(DB.insert(studentID, password, studentName)){
             Toast.makeText(this, "Register successfully", Toast.LENGTH_SHORT).show();

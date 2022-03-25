@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 
-import com.fyp.databaseHelper.SQLiteStudent;
-import com.fyp.databaseHelper.Student;
+import com.fyp.databaseHelper.StudentDB;
 import com.fyp.helper.FaceDetectorHelper;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -67,7 +66,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
     //database helper
     //SQLiteStudent DB;
-    Student DB;
+    StudentDB DB;
 
     //BaseLoaderCallback
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -119,7 +118,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
         //Load database
         //DB = new SQLiteStudent(this);
-        DB = new Student(this);
+        DB = new StudentDB(this);
         //Load map
         //loadMap();
 
