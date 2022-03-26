@@ -1,42 +1,25 @@
 package com.fyp.Frgament;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
-import com.fyp.databaseHelper.Lecture;
-import com.fyp.databaseHelper.LectureDB;
-import com.github.chengang.library.TickView;
 import com.ramotion.foldingcell.FoldingCell;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
 
-import java.sql.Time;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.List;
 import java.util.Vector;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_course_list#newInstance} factory method to
- * create an instance of this fragment.
- */
 
 public class Fragment_course_list extends Fragment {
 
@@ -46,8 +29,11 @@ public class Fragment_course_list extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
     //widget
-    ListView listView;
+    RecyclerView rec_course;
+    RecyclerView.LayoutManager mLayoutManager;
+    Vector<CardItem> mDatas = new Vector<>();
 
     public Fragment_course_list() {
         // Required empty public constructor
@@ -77,127 +63,28 @@ public class Fragment_course_list extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
 
-        listView = view.findViewById(R.id.list_view);
-
-        CardItemAdapter IA = new CardItemAdapter(getActivity(), R.layout.listview_carditem);
-
-        //generate cardItem
-        LectureDB lectureDB = new LectureDB(getActivity());
-        Vector<Lecture> lectureVector= lectureDB.getAllLecture();
-
-        for(Lecture lecture : lectureVector){
-            CardItem cardItem = new CardItem(lecture.getLectureName(), 1);
-            IA.add(cardItem);
+        //Initiate View
+        rec_course = view.findViewById(R.id.rec_course);
+        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        for(int i = 0 ; i < 10; i++){
+            CardItem cardItem = new CardItem();
+            mDatas.add(cardItem);
         }
 
-        listView.setAdapter(IA);
+        rec_course.setLayoutManager(mLayoutManager);
+        rec_course.setAdapter(new CommonAdapter<CardItem>(getActivity(), R.layout.recycleview_carditem, mDatas){
+
+            @Override
+            protected void convert(ViewHolder holder, CardItem cardItem, int position) {
+                holder.setText(R.id.tv_courseName,"course: " + position);
+            }
+        });
+
 
         return view;
     }
 
-    private class CardItem{
-        private String name;
-        private int icon;
+    class CardItem{
 
-        public CardItem(String name, int icon){
-            this.name = name;
-            this.icon = icon;
-        }
-
-        public String getName(){
-            return name;
-        }
-
-        public int getIcon(){
-            return icon;
-        }
-
-    }
-
-    private class CardItemAdapter extends ArrayAdapter<CardItem>{
-
-        static final int HANDLE_MSG_TOGGLE = 1;
-        static final int TOGGLE_DELAY_TIME = 3000;
-
-        private int resourceID;
-
-        public CardItemAdapter(@NonNull Context context, int resource) {
-            super(context, resource);
-            resourceID = resource;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent){
-
-            //get item from array Adapter
-            CardItem i = getItem(position);
-            View view;
-            ViewHolder viewHolder;
-
-            //initialize layout
-            if(convertView == null){
-                view = LayoutInflater.from(getContext()).inflate(resourceID, null);
-                viewHolder = new ViewHolder();
-                viewHolder.fc = view.findViewById(R.id.folding_cell);
-                viewHolder.tvCardItem = view.findViewById(R.id.tv_cardText);
-                viewHolder.tk = view.findViewById(R.id.tick_view);
-                viewHolder.btn_click = view.findViewById(R.id.btn_click);
-                view.setTag(viewHolder);
-            }
-            else{
-                view = convertView;
-                viewHolder = (ViewHolder)view.getTag();
-            }
-
-            //set widget
-            viewHolder.fc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    viewHolder.fc.toggle(false);
-                }
-            });
-
-            viewHolder.tvCardItem.setText(i.getName());
-
-            viewHolder.tk.setClickable(false);
-
-            Handler mHandler = new Handler(){
-                public void handleMessage(Message msg){
-                    switch (msg.what){
-                        case HANDLE_MSG_TOGGLE:
-                            viewHolder.tk.toggle();
-                    }
-                }
-            };
-
-            viewHolder.btn_click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Timer timer = new Timer();
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            Message msg = new Message();
-                            msg.what = HANDLE_MSG_TOGGLE;
-                            mHandler.sendMessage(msg);
-                        }
-                    };
-                    timer.schedule(task, TOGGLE_DELAY_TIME);
-
-                    Intent intent = new Intent(getActivity(), FaceRecognitionActivity.class);
-                    boolean recognitionResult = false;
-                    startActivityForResult(intent, 1);
-                }
-            });
-
-            return view;
-        }
-
-         class ViewHolder{
-            public Button btn_click;
-            public TickView tk;
-            public FoldingCell fc;
-            public TextView tvCardItem;
-        }
     }
 }
