@@ -11,14 +11,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fyp.R;
+import com.fyp.databaseHelper.Lecture;
+import com.fyp.databaseHelper.LectureDB;
 import com.ramotion.foldingcell.FoldingCell;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 public class Fragment_course_list extends Fragment {
@@ -33,7 +38,7 @@ public class Fragment_course_list extends Fragment {
     //widget
     RecyclerView rec_course;
     RecyclerView.LayoutManager mLayoutManager;
-    Vector<CardItem> mDatas = new Vector<>();
+    Vector<CourseData> mDatas = new Vector<>();
 
     public Fragment_course_list() {
         // Required empty public constructor
@@ -65,26 +70,56 @@ public class Fragment_course_list extends Fragment {
 
         //Initiate View
         rec_course = view.findViewById(R.id.rec_course);
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        for(int i = 0 ; i < 10; i++){
-            CardItem cardItem = new CardItem();
-            mDatas.add(cardItem);
+        mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        LectureDB lectureDB = new LectureDB(getActivity());
+        Vector<Lecture> lectureData = lectureDB.getAllLecture();
+        for(Lecture lecture : lectureData){
+            CourseData data = new CourseData();
+            data.courseID = lecture.getLectureID();
+            data.courseName = lecture.getLectureName();
+            data.lecturer = lecture.getLecturer();
+            data.time = lecture.getTime();
+            mDatas.add(data);
         }
 
+        Random random = new Random();
+
         rec_course.setLayoutManager(mLayoutManager);
-        rec_course.setAdapter(new CommonAdapter<CardItem>(getActivity(), R.layout.recycleview_carditem, mDatas){
+        rec_course.setAdapter(new CommonAdapter<CourseData>(getActivity(), R.layout.recycleview_carditem, mDatas){
 
             @Override
-            protected void convert(ViewHolder holder, CardItem cardItem, int position) {
-                holder.setText(R.id.tv_courseName,"course: " + position);
+            protected void convert(ViewHolder holder, CourseData data, int position) {
+                holder.setText(R.id.tv_courseName, data.courseID + " " + data.courseName);
+                holder.setText(R.id.tv_lecturer, data.lecturer);
+                holder.setText(R.id.tv_time, data.time);
+                holder.setOnClickListener(R.id.btn_enter_lecture, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getActivity(), "Enter lecture successfully", Toast.LENGTH_SHORT);
+                        Button button = holder.getView(R.id.btn_enter_lecture);
+                        button.setClickable(false);
+                    }
+                });
+                if(random.nextBoolean()){
+                    if(random.nextBoolean()){
+                        holder.setImageDrawable(R.id.img_course, getActivity().getDrawable(R.drawable.triangle_blue));
+                    }else
+                    {
+                        holder.setImageDrawable(R.id.img_course, getActivity().getDrawable(R.drawable.triangle_purple));
+                    }
+                }
+
+
             }
         });
-
 
         return view;
     }
 
-    class CardItem{
-
+    class CourseData{
+        public String time;
+        public String courseID;
+        public String courseName;
+        public String lecturer;
     }
 }

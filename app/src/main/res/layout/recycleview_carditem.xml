@@ -6,12 +6,16 @@
     >
 
     <androidx.cardview.widget.CardView
-        android:elevation="10dp"
+        android:elevation="20dp"
         android:clickable="true"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
         app:cardCornerRadius="10dp"
-        android:layout_width="150dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,18 +23,49 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_marginTop="5dp"
+                android:id="@+id/img_course"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@drawable/cat_1"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/newtriangle"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_courseName"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
+                android:textSize="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="course"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_lecturer"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="lecturer"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_time"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="lecturer"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_enter_lecture"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:textColor="@color/purple_500"
+                android:textSize="12dp"
+                android:text="Enter"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
