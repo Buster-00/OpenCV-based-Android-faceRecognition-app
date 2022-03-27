@@ -95,11 +95,15 @@ public class Fragment_course_list extends Fragment {
                 holder.setOnClickListener(R.id.btn_enter_lecture, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Toast.makeText(getActivity(), "Enter lecture successfully", Toast.LENGTH_SHORT);
+                        Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
                         Button button = holder.getView(R.id.btn_enter_lecture);
-                        button.setClickable(false);
+                        button.
+                        Log.e("sd", "clicked");
                     }
                 });
+
+
+
                 if(random.nextBoolean()){
                     if(random.nextBoolean()){
                         holder.setImageDrawable(R.id.img_course, getActivity().getDrawable(R.drawable.triangle_blue));
