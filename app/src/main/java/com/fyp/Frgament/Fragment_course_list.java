@@ -86,7 +86,6 @@ public class Fragment_course_list extends Fragment {
 
         rec_course.setLayoutManager(mLayoutManager);
         rec_course.setAdapter(new CommonAdapter<CourseData>(getActivity(), R.layout.recycleview_carditem, mDatas){
-
             @Override
             protected void convert(ViewHolder holder, CourseData data, int position) {
                 holder.setText(R.id.tv_courseName, data.courseID + " " + data.courseName);
@@ -97,8 +96,10 @@ public class Fragment_course_list extends Fragment {
                     public void onClick(View view) {
                         Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
                         Button button = holder.getView(R.id.btn_enter_lecture);
-                        button.
+                        button.setClickable(false);
+                        mDatas.remove(position);
                         Log.e("sd", "clicked");
+                        notifyDataSetChanged();
                     }
                 });
 
