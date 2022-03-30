@@ -80,7 +80,7 @@ public class MainActivity extends DrawerActivity {
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
             public void onSelected(int index, int old) {
-                Toast.makeText(MainActivity.this, "selected: " + index + " old: " + old, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "selected: " + index + " old: " + old, Toast.LENGTH_SHORT).show();
                 mNavigationController.setHasMessage(index, false);
                 mNavigationController.setMessageNumber(index, 0);
                 /*Alerter.create(MainActivity.this)
@@ -91,7 +91,7 @@ public class MainActivity extends DrawerActivity {
 
             @Override
             public void onRepeat(int index) {
-                Toast.makeText(MainActivity.this, "repeated: " + index, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "repeated: " + index, Toast.LENGTH_SHORT).show();
                 mNavigationController.setHasMessage(index, false);
                 mNavigationController.setMessageNumber(index, 0);
             }
@@ -208,7 +208,7 @@ public class MainActivity extends DrawerActivity {
                         .setOnProfileClickListener(new DrawerProfile.OnProfileClickListener() {
                             @Override
                             public void onClick(DrawerProfile drawerProfile, long id) {
-                                Toast.makeText(MainActivity.this, "Clicked profile #" + id, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "Clicked profile #" + id, Toast.LENGTH_SHORT).show();
                             }
                         })
         );
@@ -221,7 +221,7 @@ public class MainActivity extends DrawerActivity {
                         .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
                             @Override
                             public void onClick(DrawerItem drawerItem, long id, int position) {
-                                Toast.makeText(MainActivity.this, "Clicked first item #" + id, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "Clicked first item #" + id, Toast.LENGTH_SHORT).show();
                             }
                         })
         );
@@ -235,7 +235,7 @@ public class MainActivity extends DrawerActivity {
                         .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
                             @Override
                             public void onClick(DrawerItem drawerItem, long id, int position) {
-                                Toast.makeText(MainActivity.this, "Clicked second item #" + id, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(MainActivity.this, "Clicked second item #" + id, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, MTLogin.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);

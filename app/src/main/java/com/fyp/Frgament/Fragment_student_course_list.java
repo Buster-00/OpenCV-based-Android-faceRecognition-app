@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
@@ -24,9 +26,13 @@ import com.fyp.databaseHelper.LectureDB;
 import com.github.chengang.library.TickView;
 import com.ramotion.foldingcell.FoldingCell;
 
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,6 +80,27 @@ public class Fragment_student_course_list extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_course_list, container, false);
 
         listView = view.findViewById(R.id.list_view);
+
+        /* starts before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.MONTH, -1);
+
+        /* ends after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 1);
+
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calendarView)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(5)
+                .build();
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+
+            }
+        });
+
 
         CardItemAdapter IA = new CardItemAdapter(getActivity(), R.layout.listview_carditem);
 
@@ -134,6 +161,7 @@ public class Fragment_student_course_list extends Fragment {
             if(convertView == null){
                 view = LayoutInflater.from(getContext()).inflate(resourceID, null);
                 viewHolder = new ViewHolder();
+                viewHolder.calendarView = view.findViewById(R.id.calendar_view);
                 viewHolder.fc = view.findViewById(R.id.folding_cell);
                 viewHolder.tvCardItem = view.findViewById(R.id.tv_cardText);
                 viewHolder.tk = view.findViewById(R.id.tick_view);
@@ -166,23 +194,31 @@ public class Fragment_student_course_list extends Fragment {
                 }
             };
 
+            viewHolder.calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                @Override
+                public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                    Toast.makeText(getActivity(), "year:" + i + " month:" + i1 + " day:" + i2, Toast.LENGTH_LONG).show();
+                }
+            });
+
             viewHolder.btn_click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Timer timer = new Timer();
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            Message msg = new Message();
-                            msg.what = HANDLE_MSG_TOGGLE;
-                            mHandler.sendMessage(msg);
-                        }
-                    };
-                    timer.schedule(task, TOGGLE_DELAY_TIME);
+//                    Timer timer = new Timer();
+//                    TimerTask task = new TimerTask() {
+//                        @Override
+//                        public void run() {
+//                            Message msg = new Message();
+//                            msg.what = HANDLE_MSG_TOGGLE;
+//                            mHandler.sendMessage(msg);
+//                        }
+//                    };
+//                    timer.schedule(task, TOGGLE_DELAY_TIME);
+//
+//                    Intent intent = new Intent(getActivity(), FaceRecognitionActivity.class);
+//                    boolean recognitionResult = false;
+//                    startActivityForResult(intent, 1);
 
-                    Intent intent = new Intent(getActivity(), FaceRecognitionActivity.class);
-                    boolean recognitionResult = false;
-                    startActivityForResult(intent, 1);
                 }
             });
 
@@ -190,6 +226,7 @@ public class Fragment_student_course_list extends Fragment {
         }
 
          class ViewHolder{
+            public CalendarView calendarView;
             public Button btn_click;
             public TickView tk;
             public FoldingCell fc;

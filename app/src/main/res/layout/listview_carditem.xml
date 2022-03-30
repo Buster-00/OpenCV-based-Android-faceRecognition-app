@@ -62,6 +62,11 @@
                 don:second_color="@android:color/holo_green_light"
                 don:draw_center_circle="true"/>
 
+            <CalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
             <com.google.android.material.button.MaterialButton
                 android:layout_gravity="end"
                 android:id="@+id/btn_click"
