@@ -23,6 +23,8 @@ import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
 import com.fyp.databaseHelper.Lecture;
 import com.fyp.databaseHelper.LectureDB;
+import com.fyp.databaseHelper.StudentLectureDB;
+import com.fyp.databaseHelper.UserManager;
 import com.github.chengang.library.TickView;
 import com.ramotion.foldingcell.FoldingCell;
 
@@ -105,11 +107,18 @@ public class Fragment_student_course_list extends Fragment {
         CardItemAdapter IA = new CardItemAdapter(getActivity(), R.layout.listview_carditem);
 
         //generate cardItem
+        StudentLectureDB studentLectureDB = new StudentLectureDB(getActivity());
         LectureDB lectureDB = new LectureDB(getActivity());
-        Vector<Lecture> lectureVector= lectureDB.getAllLecture();
+        Vector<String> IDs = studentLectureDB.getLecturesIDsByStudentID(UserManager.getCurrentUser().getID());
+        Vector<Lecture> lectureVector = new Vector<>();
+
+        for(String ID : IDs){
+            Lecture lecture = lectureDB.getLectureByID(ID);
+            lectureVector.add(lecture);
+        }
 
         for(Lecture lecture : lectureVector){
-            CardItem cardItem = new CardItem(lecture.getLectureName(), 1);
+            CardItem cardItem = new CardItem(lecture, 1);
             IA.add(cardItem);
         }
 
@@ -119,17 +128,20 @@ public class Fragment_student_course_list extends Fragment {
     }
 
     private class CardItem{
+        Lecture lecture;
         private String name;
         private int icon;
 
-        public CardItem(String name, int icon){
-            this.name = name;
+        public CardItem(Lecture lecture, int icon){
+            this.lecture = lecture;
             this.icon = icon;
         }
 
         public String getName(){
-            return name;
+            return lecture.getLectureName();
         }
+
+        public String getID(){return lecture.getLectureID();}
 
         public int getIcon(){
             return icon;
@@ -153,7 +165,7 @@ public class Fragment_student_course_list extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent){
 
             //get item from array Adapter
-            CardItem i = getItem(position);
+            CardItem cardItem = getItem(position);
             View view;
             ViewHolder viewHolder;
 
@@ -166,6 +178,7 @@ public class Fragment_student_course_list extends Fragment {
                 viewHolder.tvCardItem = view.findViewById(R.id.tv_cardText);
                 viewHolder.tk = view.findViewById(R.id.tick_view);
                 viewHolder.btn_click = view.findViewById(R.id.btn_click);
+                viewHolder.tv_lectureID = view.findViewById(R.id.tv_lectureID);
                 view.setTag(viewHolder);
             }
             else{
@@ -181,7 +194,9 @@ public class Fragment_student_course_list extends Fragment {
                 }
             });
 
-            viewHolder.tvCardItem.setText(i.getName());
+            viewHolder.tvCardItem.setText(cardItem.getName());
+
+            viewHolder.tv_lectureID.setText(cardItem.getID());
 
             viewHolder.tk.setClickable(false);
 
@@ -204,20 +219,20 @@ public class Fragment_student_course_list extends Fragment {
             viewHolder.btn_click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Timer timer = new Timer();
-//                    TimerTask task = new TimerTask() {
-//                        @Override
-//                        public void run() {
-//                            Message msg = new Message();
-//                            msg.what = HANDLE_MSG_TOGGLE;
-//                            mHandler.sendMessage(msg);
-//                        }
-//                    };
-//                    timer.schedule(task, TOGGLE_DELAY_TIME);
-//
-//                    Intent intent = new Intent(getActivity(), FaceRecognitionActivity.class);
-//                    boolean recognitionResult = false;
-//                    startActivityForResult(intent, 1);
+                    Timer timer = new Timer();
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            Message msg = new Message();
+                            msg.what = HANDLE_MSG_TOGGLE;
+                            mHandler.sendMessage(msg);
+                        }
+                    };
+                    timer.schedule(task, TOGGLE_DELAY_TIME);
+
+                    Intent intent = new Intent(getActivity(), FaceRecognitionActivity.class);
+                    boolean recognitionResult = false;
+                    startActivityForResult(intent, 1);
 
                 }
             });
@@ -231,6 +246,7 @@ public class Fragment_student_course_list extends Fragment {
             public TickView tk;
             public FoldingCell fc;
             public TextView tvCardItem;
+            public TextView tv_lectureID;
         }
     }
 }

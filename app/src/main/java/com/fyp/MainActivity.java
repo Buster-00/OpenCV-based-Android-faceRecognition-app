@@ -46,7 +46,7 @@ public class MainActivity extends DrawerActivity {
     //widget
     ViewPager viewPager;
 
-    TextView tv_username;
+
 
     //handler
     private Handler mHandler;
@@ -63,7 +63,7 @@ public class MainActivity extends DrawerActivity {
         //Initiate widgets
         viewPager = findViewById(R.id.ViewPager_main);
         PageNavigationView pageBottomTabLayout = findViewById(R.id.tab);
-        tv_username = findViewById(R.id.tv_username);
+
 
         //initiate side navigation bar
         mNavigationController = pageBottomTabLayout.material()
@@ -104,7 +104,6 @@ public class MainActivity extends DrawerActivity {
 
         SQLiteStudent DB = new SQLiteStudent(this);
         HashMap<String, String> hm = new HashMap<>();
-        tv_username.setText(DB.ReadAll());
 
         //Drawer
         initMaterialDrawer();

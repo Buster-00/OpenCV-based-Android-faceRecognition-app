@@ -61,6 +61,16 @@ public class LectureDB {
         }
     }
 
+    public Lecture getLectureByID(String ID){
+        if(isConnect){
+            //TODO
+            return null;
+        }
+        else{
+            return sqLiteLectureDB.getLectureByID(ID);
+        }
+    }
+
     class SQLiteLectureDB extends SQLiteOpenHelper{
 
         private static final int version = 2;
@@ -129,6 +139,29 @@ public class LectureDB {
             }
 
             return lectureVector;
+        }
+
+        public Lecture getLectureByID(String ID){
+
+            //Get database reference
+            SQLiteDatabase DB = this.getReadableDatabase();
+
+            //Retrieve all data
+            Cursor cursor = DB.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE lectureID=?", new String[]{ID});
+
+            if (cursor.moveToNext()){
+                String s1 = cursor.getString(cursor.getColumnIndex(COLUMN_1));
+                String s2 = cursor.getString(cursor.getColumnIndex(COLUMN_2));
+                String s3 = cursor.getString(cursor.getColumnIndex(COLUMN_3));
+                String s4 = cursor.getString(cursor.getColumnIndex(COLUMN_4));
+                String s5 = cursor.getString(cursor.getColumnIndex(COLUMN_5));
+                Lecture lecture = new Lecture(s1, s2, s3, s4, s5);
+                return lecture;
+            }
+            else{
+                return null;
+            }
+
         }
     }
 

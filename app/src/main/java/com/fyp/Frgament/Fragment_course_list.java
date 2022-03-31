@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.fyp.R;
 import com.fyp.databaseHelper.Lecture;
 import com.fyp.databaseHelper.LectureDB;
+import com.fyp.databaseHelper.StudentLectureDB;
+import com.fyp.databaseHelper.UserManager;
 import com.ramotion.foldingcell.FoldingCell;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -98,8 +100,16 @@ public class Fragment_course_list extends Fragment {
                         Button button = holder.getView(R.id.btn_enter_lecture);
                         button.setClickable(false);
                         mDatas.remove(position);
-                        Log.e("sd", "clicked");
                         notifyDataSetChanged();
+
+                        //Enter class
+                        StudentLectureDB DB = new StudentLectureDB(getActivity());
+                        if(DB.insert(UserManager.getCurrentUser().getID(), data.courseID)){
+                            Toast.makeText(getActivity(), "Enter class successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Enter class failure, you have entered this class before", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

@@ -5,6 +5,7 @@ import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -155,6 +156,10 @@ public class SuccessActivity extends AppCompatActivity {
         if(StudentDB.getISConnectToNetwork()){
             uploadTrainFile(mPath + "train.xml");
         }
+
+        Intent intent = new Intent(SuccessActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
 
     }
