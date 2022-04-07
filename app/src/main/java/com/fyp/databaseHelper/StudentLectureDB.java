@@ -26,7 +26,7 @@ public class StudentLectureDB {
     //Context used for local database
     boolean isConnect = InVar.IS_CONNECT_TO_MARIA_DB;
     Context context;
-    SQLiteStudentLectureDB sqLiteStudentLectureDB;
+    public SQLiteStudentLectureDB sqLiteStudentLectureDB;
 
     public StudentLectureDB(Context context){
         if(!isConnect){
@@ -55,22 +55,29 @@ public class StudentLectureDB {
         }
     }
 
-    class SQLiteStudentLectureDB extends SQLiteOpenHelper {
+    public class SQLiteStudentLectureDB extends SQLiteOpenHelper {
 
 
-        SQLiteStudentLectureDB(Context context){
+        public SQLiteStudentLectureDB(Context context){
             super(context, DB_NAME, null, InVar.SQLite_version);
         }
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
-            sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_NAME +
+            sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                     "(studentID TEXT, lectureID TEXT, PRIMARY KEY(studentID, lectureID))");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+        }
+
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+            super.onOpen(db);
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+                    "(studentID TEXT, lectureID TEXT, PRIMARY KEY(studentID, lectureID))");
         }
 
         public boolean insert(String studentID, String lectureID){

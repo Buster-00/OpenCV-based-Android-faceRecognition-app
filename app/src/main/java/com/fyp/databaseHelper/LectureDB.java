@@ -89,6 +89,12 @@ public class LectureDB {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
         }
+        
+        @Override
+        public void onOpen(SQLiteDatabase db){
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+                    "(lectureID TEXT UNIQUE PRIMARY KEY, lectureName TEXT, lecturer TEXT, day TEXT, time TEXT)");
+        }
 
         public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5){
 

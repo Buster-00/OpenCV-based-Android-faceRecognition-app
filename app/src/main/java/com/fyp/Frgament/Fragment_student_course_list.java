@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
 import com.fyp.databaseHelper.Lecture;
@@ -50,6 +51,9 @@ public class Fragment_student_course_list extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    StudentLectureDB studentLectureDB;
+    LectureDB lectureDB;
+
     //widget
     ListView listView;
 
@@ -73,15 +77,21 @@ public class Fragment_student_course_list extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        studentLectureDB = new StudentLectureDB(getActivity());
+        lectureDB = new LectureDB(getActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_course_list, container, false);
 
+        //widget
         listView = view.findViewById(R.id.list_view);
+        RecyclerRefreshLayout recyclerRefreshLayout = view.findViewById(R.id.refresh_layout);
 
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
@@ -91,6 +101,9 @@ public class Fragment_student_course_list extends Fragment {
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
 
+        //initialize widget
+
+        //initalize calendar
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5)
@@ -107,8 +120,6 @@ public class Fragment_student_course_list extends Fragment {
         CardItemAdapter IA = new CardItemAdapter(getActivity(), R.layout.listview_carditem);
 
         //generate cardItem
-        StudentLectureDB studentLectureDB = new StudentLectureDB(getActivity());
-        LectureDB lectureDB = new LectureDB(getActivity());
         Vector<String> IDs = studentLectureDB.getLecturesIDsByStudentID(UserManager.getCurrentUser().getID());
         Vector<Lecture> lectureVector = new Vector<>();
 
@@ -124,8 +135,35 @@ public class Fragment_student_course_list extends Fragment {
 
         listView.setAdapter(IA);
 
+        //initialize refresh recycle view
+        recyclerRefreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recyclerRefreshLayout.setRefreshing(true);
+                CardItemAdapter IA = new CardItemAdapter(getActivity(), R.layout.listview_carditem);
+                StudentLectureDB studentLectureDB = new StudentLectureDB(getActivity());
+                LectureDB lectureDB = new LectureDB(getActivity());
+                Vector<String> IDs = studentLectureDB.getLecturesIDsByStudentID(UserManager.getCurrentUser().getID());
+                Vector<Lecture> lectureVector = new Vector<>();
+
+                for(String ID : IDs){
+                    Lecture lecture = lectureDB.getLectureByID(ID);
+                    lectureVector.add(lecture);
+                }
+
+                for(Lecture lecture : lectureVector){
+                    CardItem cardItem = new CardItem(lecture, 1);
+                    IA.add(cardItem);
+                }
+
+                listView.setAdapter(IA);
+                recyclerRefreshLayout.setRefreshing(false);
+            }
+        });
+
         return view;
     }
+
 
     private class CardItem{
         Lecture lecture;

@@ -210,8 +210,9 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             // Intent intent = new Intent(this, RecognizeSuccess.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            Intent intent = new Intent();
+            Intent intent = new Intent(this, RecognizeSuccess.class);
             intent.putExtra("result", true);
+            startActivity(intent);
             this.setResult(RESULT_OK, intent);
             counter = 0;
             this.finish();
