@@ -11,9 +11,19 @@
         android:layout_height="match_parent"
         android:text="fragment_course_list" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_course"
+    <com.dinuscxj.refresh.RecyclerRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_course"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.dinuscxj.refresh.RecyclerRefreshLayout>
+
+
+
 
 </FrameLayout>

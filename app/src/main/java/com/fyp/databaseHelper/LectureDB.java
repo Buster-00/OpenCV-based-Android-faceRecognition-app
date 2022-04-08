@@ -89,7 +89,7 @@ public class LectureDB {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
         }
-        
+
         @Override
         public void onOpen(SQLiteDatabase db){
             db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +

@@ -2,6 +2,7 @@ package com.fyp.Frgament;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.fyp.R;
 import com.fyp.databaseHelper.Lecture;
 import com.fyp.databaseHelper.LectureDB;
@@ -38,6 +40,7 @@ public class Fragment_course_list extends Fragment {
 
 
     //widget
+    RecyclerRefreshLayout recyclerRefreshLayout;
     RecyclerView rec_course;
     RecyclerView.LayoutManager mLayoutManager;
     Vector<CourseData> mDatas = new Vector<>();
@@ -71,6 +74,7 @@ public class Fragment_course_list extends Fragment {
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
 
         //Initiate View
+        recyclerRefreshLayout = view.findViewById(R.id.refresh_layout);
         rec_course = view.findViewById(R.id.rec_course);
         mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         LectureDB lectureDB = new LectureDB(getActivity());
@@ -98,9 +102,6 @@ public class Fragment_course_list extends Fragment {
                     public void onClick(View view) {
                         Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
                         Button button = holder.getView(R.id.btn_enter_lecture);
-                        button.setClickable(false);
-                        mDatas.remove(position);
-                        notifyDataSetChanged();
 
                         //Enter class
                         StudentLectureDB DB = new StudentLectureDB(getActivity());
@@ -128,6 +129,33 @@ public class Fragment_course_list extends Fragment {
             }
         });
 
+        recyclerRefreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recyclerRefreshLayout.setRefreshing(true);
+                boolean hasChanged = false;
+                Vector<Lecture> lectureData = lectureDB.getAllLecture();
+                for(Lecture lecture : lectureData){
+                    CourseData data = new CourseData();
+                    data.courseID = lecture.getLectureID();
+                    data.courseName = lecture.getLectureName();
+                    data.lecturer = lecture.getLecturer();
+                    data.time = lecture.getTime();
+
+                    if(!mDatas.contains(data)){
+                        mDatas.add(data);
+                        hasChanged = true;
+                    }
+
+                    if (hasChanged){
+                        rec_course.getAdapter().notifyDataSetChanged();
+                    }
+
+                    recyclerRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
+
         return view;
     }
 
@@ -136,5 +164,18 @@ public class Fragment_course_list extends Fragment {
         public String courseID;
         public String courseName;
         public String lecturer;
+
+        @Override
+        public boolean equals(@Nullable Object object) {
+
+            CourseData obj = (CourseData) object;
+            if(obj.time.equals(time) && obj.courseID.equals(courseID) && obj.courseName.equals(courseName) && obj.lecturer.equals(lecturer)){
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
