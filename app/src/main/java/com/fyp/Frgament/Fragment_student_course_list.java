@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -206,6 +207,7 @@ public class Fragment_student_course_list extends Fragment {
             CardItem cardItem = getItem(position);
             View view;
             ViewHolder viewHolder;
+            final String[] date = {new String()};
 
             //initialize layout
             if(convertView == null){
@@ -251,6 +253,7 @@ public class Fragment_student_course_list extends Fragment {
                 @Override
                 public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
                     Toast.makeText(getActivity(), "year:" + i + " month:" + i1 + " day:" + i2, Toast.LENGTH_LONG).show();
+                    date[0] = "year:" + i + " month:" + i1 + " day:" + i2;
                 }
             });
 
@@ -269,8 +272,12 @@ public class Fragment_student_course_list extends Fragment {
                     timer.schedule(task, TOGGLE_DELAY_TIME);
 
                     Intent intent = new Intent(getActivity(), FaceRecognitionActivity.class);
+                    intent.putExtra("LectureID", cardItem.getID());
+                    intent.putExtra("LectureName", cardItem.getName());
+                    intent.putExtra("Date", date[0]);
+                    Log.e("LectureID", cardItem.getID());
                     boolean recognitionResult = false;
-                    startActivityForResult(intent, 1);
+                    startActivity(intent);
 
                 }
             });

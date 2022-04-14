@@ -32,6 +32,8 @@ public class myAdapter extends FragmentPagerAdapter {
                 return new Fragment_student_course_list();
             case 2:
                 return new Fragment_course_list();
+            case 3:
+                return new Fragemnt_attedance_record();
         }
         return new Fragment_home();
     }
@@ -39,7 +41,7 @@ public class myAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Override

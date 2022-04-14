@@ -63,6 +63,7 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
     //counter
     int counter = 0;
+    int failure_counter = 0;
 
     //database helper
     //SQLiteStudent DB;
@@ -201,6 +202,8 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
                 putText(flippedFrame, getCurrentUser().getName(), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
             }else{
                 putText(flippedFrame, "unregister face", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
+                failure_counter++;
+
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());
         }
@@ -210,13 +213,23 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             // Intent intent = new Intent(this, RecognizeSuccess.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
+            String LectureID = getIntent().getStringExtra("LectureID");
+            String LectureName = getIntent().getStringExtra("LectureName");
+            String date = getIntent().getStringExtra("Date");
             Intent intent = new Intent(this, RecognizeSuccess.class);
-            intent.putExtra("result", true);
+            intent.putExtra("LectureID", LectureID);
+            intent.putExtra("LectureName", LectureName);
+            intent.putExtra("Date", date);
             startActivity(intent);
             this.setResult(RESULT_OK, intent);
             counter = 0;
             this.finish();
             Log.e("debug", "still running");
+        }
+        else if(failure_counter > 10){
+            Intent intent = new Intent(this, RecognizeFailureActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
 
         //Final frame;

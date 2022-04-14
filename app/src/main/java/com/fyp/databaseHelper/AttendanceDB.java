@@ -13,6 +13,7 @@ import com.fyp.invariable.InVar;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 
 public class AttendanceDB {
 
@@ -24,6 +25,44 @@ public class AttendanceDB {
     public static final String COLUMN_1 = "lectureID";
     public static final String COLUMN_2 = "studentID";
     public static final String COLUMN_3 = "date";
+
+    //local database
+    SQLiteAttendance sqLiteAttendance;
+
+    public AttendanceDB(Context context){
+
+        //using local database
+        if(!InVar.IS_CONNECT_TO_MARIA_DB){
+            sqLiteAttendance = new SQLiteAttendance(context);
+        }
+        else{
+            //TODO using remote database
+        }
+
+    }
+
+    public boolean insert(String col_1, String col_2, String col_3){
+
+        //using local database
+        if(!InVar.IS_CONNECT_TO_MARIA_DB){
+            return sqLiteAttendance.insert(col_1, col_2, col_3);
+        }
+        else{
+            //TODO Remote server
+            return false;
+        }
+    }
+
+    public Vector<AttendanceRecord> getAttendanceByStudentID(String studentID){
+        //using local database
+        if(!InVar.IS_CONNECT_TO_MARIA_DB){
+            return sqLiteAttendance.getAttendanceByStudentID(studentID);
+        }
+        else{
+            //TODO Remote server
+            return null;
+        }
+    }
 
     class SQLiteAttendance extends SQLiteOpenHelper {
 
@@ -67,8 +106,8 @@ public class AttendanceDB {
 
         }
 
-        public HashMap<String, String> getAttendanceByStudentID(String studentID){
-            HashMap<String, String> map = new HashMap<>();
+        public Vector<AttendanceRecord> getAttendanceByStudentID(String studentID){
+            Vector<AttendanceRecord> data = new Vector<>();
 
             //get database reference
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
@@ -76,12 +115,48 @@ public class AttendanceDB {
             //get data
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT lectureID, studentID, date WHERE studentID=?", new String[]{studentID});
             while (cursor.moveToNext()){
-                map.put("lectureID", cursor.getString(cursor.getColumnIndex(COLUMN_1)));
-                map.put("studentID", cursor.getString(cursor.getColumnIndex(COLUMN_2)));
-                map.put("date", cursor.getString(cursor.getColumnIndex(COLUMN_3)));
+                AttendanceRecord record = new AttendanceRecord(cursor.getString(cursor.getColumnIndex(COLUMN_1)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_2)), cursor.getString(cursor.getColumnIndex(COLUMN_3)));
+                data.add(record);
             }
 
-            return map;
+            return data;
+        }
+    }
+
+    public class AttendanceRecord{
+        String LectureID;
+        String StudentID;
+        String Date;
+
+        public AttendanceRecord(String lectureID, String studentID, String date) {
+            LectureID = lectureID;
+            StudentID = studentID;
+            Date = date;
+        }
+
+        public String getLectureID() {
+            return LectureID;
+        }
+
+        public void setLectureID(String lectureID) {
+            LectureID = lectureID;
+        }
+
+        public String getStudentID() {
+            return StudentID;
+        }
+
+        public void setStudentID(String studentID) {
+            StudentID = studentID;
+        }
+
+        public String getDate() {
+            return Date;
+        }
+
+        public void setDate(String date) {
+            Date = date;
         }
     }
 }
