@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.fyp.databaseHelper.StudentAccountDB;
+import com.fyp.databaseHelper.SQLiteStudent;
 
 import java.util.HashMap;
 
@@ -43,7 +43,7 @@ public class NameRegisterActivity extends AppCompatActivity {
     private void btn_next_click(){
 
         //Insert data into database
-        StudentAccountDB db = new StudentAccountDB(this);
+        SQLiteStudent db = new SQLiteStudent(this);
         db.insert(tv_ID.getText().toString(), "123456", tv_name.toString().toString());
         HashMap<String, String> hm = new HashMap<>();
         db.readById(tv_ID.getText().toString(), hm);

@@ -5,11 +5,9 @@ import androidx.cardview.widget.CardView;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
@@ -18,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fyp.R;
-import com.fyp.databaseHelper.StudentAccountDB;
+import com.fyp.databaseHelper.StudentDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -194,7 +192,7 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
         String password = et_reg_password.getText().toString();
         String studentName = et_reg_student_name.getText().toString();
 
-        StudentAccountDB DB = new StudentAccountDB(this);
+        StudentDB DB = new StudentDB(this);
 
         if(DB.insert(studentID, password, studentName)){
             Toast.makeText(this, "Register successfully", Toast.LENGTH_SHORT).show();
@@ -204,7 +202,6 @@ public class MTRegister extends AppCompatActivity implements Validator.Validatio
             Toast.makeText(this, "Register failure, the account is already existed", Toast.LENGTH_SHORT).show();
         }
 
-        DB.close();
     }
 
 }

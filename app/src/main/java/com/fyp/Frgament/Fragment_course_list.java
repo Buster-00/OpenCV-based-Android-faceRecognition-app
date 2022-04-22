@@ -1,39 +1,34 @@
 package com.fyp.Frgament;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.fyp.FaceRecognitionActivity;
+import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.fyp.R;
-import com.github.chengang.library.TickView;
+import com.fyp.databaseHelper.Lecture;
+import com.fyp.databaseHelper.LectureDB;
+import com.fyp.databaseHelper.StudentLectureDB;
+import com.fyp.databaseHelper.UserManager;
 import com.ramotion.foldingcell.FoldingCell;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
 
-import java.sql.Time;
-import java.util.Timer;
-import java.util.TimerTask;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_course_list#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 public class Fragment_course_list extends Fragment {
 
@@ -43,8 +38,12 @@ public class Fragment_course_list extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
     //widget
-    ListView listView;
+    RecyclerRefreshLayout recyclerRefreshLayout;
+    RecyclerView rec_course;
+    RecyclerView.LayoutManager mLayoutManager;
+    Vector<CourseData> mDatas = new Vector<>();
 
     public Fragment_course_list() {
         // Required empty public constructor
@@ -74,124 +73,109 @@ public class Fragment_course_list extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_course_list, container, false);
 
-        listView = view.findViewById(R.id.list_view);
+        //Initiate View
+        recyclerRefreshLayout = view.findViewById(R.id.refresh_layout);
+        rec_course = view.findViewById(R.id.rec_course);
+        mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        LectureDB lectureDB = new LectureDB(getActivity());
+        Vector<Lecture> lectureData = lectureDB.getAllLecture();
+        for(Lecture lecture : lectureData){
+            CourseData data = new CourseData();
+            data.courseID = lecture.getLectureID();
+            data.courseName = lecture.getLectureName();
+            data.lecturer = lecture.getLecturer();
+            data.time = lecture.getTime();
+            mDatas.add(data);
+        }
 
-        //generate cardItem
-        CardItem i1 = new CardItem("tom", 1);
-        CardItem i2 = new CardItem("jack", 2);
-        CardItem i3 = new CardItem("john", 3);
-        CardItemAdapter IA = new CardItemAdapter(getActivity(), R.layout.listview_carditem);
-        IA.add(i1);
-        IA.add(i2);
-        IA.add(i3);
-        listView.setAdapter(IA);
+        Random random = new Random();
+
+        rec_course.setLayoutManager(mLayoutManager);
+        rec_course.setAdapter(new CommonAdapter<CourseData>(getActivity(), R.layout.recycleview_carditem, mDatas){
+            @Override
+            protected void convert(ViewHolder holder, CourseData data, int position) {
+                holder.setText(R.id.tv_courseName, data.courseID + " " + data.courseName);
+                holder.setText(R.id.tv_lecturer, data.lecturer);
+                holder.setText(R.id.tv_time, data.time);
+                holder.setOnClickListener(R.id.btn_enter_lecture, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
+                        Button button = holder.getView(R.id.btn_enter_lecture);
+
+                        //Enter class
+                        StudentLectureDB DB = new StudentLectureDB(getActivity());
+                        if(DB.insert(UserManager.getCurrentUser().getID(), data.courseID)){
+                            Toast.makeText(getActivity(), "Enter class successfully", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "Enter class failure, you have entered this class before", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+
+                if(random.nextBoolean()){
+                    if(random.nextBoolean()){
+                        holder.setImageDrawable(R.id.img_course, getActivity().getDrawable(R.drawable.triangle_blue));
+                    }else
+                    {
+                        holder.setImageDrawable(R.id.img_course, getActivity().getDrawable(R.drawable.triangle_purple));
+                    }
+                }
+
+
+            }
+        });
+
+        recyclerRefreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                recyclerRefreshLayout.setRefreshing(true);
+                boolean hasChanged = false;
+                Vector<Lecture> lectureData = lectureDB.getAllLecture();
+                for(Lecture lecture : lectureData){
+                    CourseData data = new CourseData();
+                    data.courseID = lecture.getLectureID();
+                    data.courseName = lecture.getLectureName();
+                    data.lecturer = lecture.getLecturer();
+                    data.time = lecture.getTime();
+
+                    if(!mDatas.contains(data)){
+                        mDatas.add(data);
+                        hasChanged = true;
+                    }
+
+                    if (hasChanged){
+                        rec_course.getAdapter().notifyDataSetChanged();
+                    }
+
+                    recyclerRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
 
         return view;
     }
 
-    private class CardItem{
-        private String name;
-        private int icon;
-
-        public CardItem(String name, int icon){
-            this.name = name;
-            this.icon = icon;
-        }
-
-        public String getName(){
-            return name;
-        }
-
-        public int getIcon(){
-            return icon;
-        }
-
-    }
-
-    private class CardItemAdapter extends ArrayAdapter<CardItem>{
-
-        static final int HANDLE_MSG_TOGGLE = 1;
-        static final int TOGGLE_DELAY_TIME = 3000;
-
-        private int resourceID;
-
-        public CardItemAdapter(@NonNull Context context, int resource) {
-            super(context, resource);
-            resourceID = resource;
-        }
+    class CourseData{
+        public String time;
+        public String courseID;
+        public String courseName;
+        public String lecturer;
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent){
+        public boolean equals(@Nullable Object object) {
 
-            //get item from array Adapter
-            CardItem i = getItem(position);
-            View view;
-            ViewHolder viewHolder;
-
-            //initialize layout
-            if(convertView == null){
-                view = LayoutInflater.from(getContext()).inflate(resourceID, null);
-                viewHolder = new ViewHolder();
-                viewHolder.fc = view.findViewById(R.id.folding_cell);
-                viewHolder.tvCardItem = view.findViewById(R.id.tv_cardText);
-                viewHolder.tk = view.findViewById(R.id.tick_view);
-                viewHolder.btn_click = view.findViewById(R.id.btn_click);
-                view.setTag(viewHolder);
+            CourseData obj = (CourseData) object;
+            if(obj.time.equals(time) && obj.courseID.equals(courseID) && obj.courseName.equals(courseName) && obj.lecturer.equals(lecturer)){
+                return true;
             }
-            else{
-                view = convertView;
-                viewHolder = (ViewHolder)view.getTag();
+            else
+            {
+                return false;
             }
-
-            //set widget
-            viewHolder.fc.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    viewHolder.fc.toggle(false);
-                }
-            });
-
-            viewHolder.tvCardItem.setText(i.getName());
-
-            viewHolder.tk.setClickable(false);
-
-            Handler mHandler = new Handler(){
-                public void handleMessage(Message msg){
-                    switch (msg.what){
-                        case HANDLE_MSG_TOGGLE:
-                            viewHolder.tk.toggle();
-                    }
-                }
-            };
-
-            viewHolder.btn_click.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Timer timer = new Timer();
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            Message msg = new Message();
-                            msg.what = HANDLE_MSG_TOGGLE;
-                            mHandler.sendMessage(msg);
-                        }
-                    };
-                    timer.schedule(task, TOGGLE_DELAY_TIME);
-
-                    Intent intent = new Intent(getActivity(), FaceRecognitionActivity.class);
-                    boolean recognitionResult = false;
-                    startActivityForResult(intent, 1);
-                }
-            });
-
-            return view;
-        }
-
-         class ViewHolder{
-            public Button btn_click;
-            public TickView tk;
-            public FoldingCell fc;
-            public TextView tvCardItem;
         }
     }
 }

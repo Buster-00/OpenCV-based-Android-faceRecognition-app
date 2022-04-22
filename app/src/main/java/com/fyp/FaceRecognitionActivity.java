@@ -1,25 +1,17 @@
 package com.fyp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceView;
 
-import com.fyp.databaseHelper.StudentAccountDB;
-import com.fyp.face.PersonRecognizer;
+import com.fyp.databaseHelper.StudentDB;
 import com.fyp.helper.FaceDetectorHelper;
 
-import org.bytedeco.javacpp.Loader;
-import org.bytedeco.libfreenect._freenect_device;
-import org.bytedeco.opencv.opencv_java;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCamera2View;
-import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
@@ -27,12 +19,8 @@ import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.face.Face;
 import org.opencv.face.FaceRecognizer;
 import org.opencv.face.LBPHFaceRecognizer;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
@@ -46,10 +34,6 @@ import java.util.Vector;
 import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
 import static com.fyp.helper.FrameFlipHelper.FlipRotateFrameHorizental;
-import static org.opencv.core.Core.ROTATE_180;
-import static org.opencv.core.Core.flip;
-import static org.opencv.core.Core.rotate;
-import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
 import static org.opencv.imgproc.Imgproc.FONT_HERSHEY_COMPLEX;
 import static org.opencv.imgproc.Imgproc.putText;
 import static org.opencv.imgproc.Imgproc.rectangle;
@@ -79,9 +63,11 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
     //counter
     int counter = 0;
+    int failure_counter = 0;
 
     //database helper
-    StudentAccountDB DB;
+    //SQLiteStudent DB;
+    StudentDB DB;
 
     //BaseLoaderCallback
     BaseLoaderCallback baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -125,14 +111,15 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         faceRecognizer = LBPHFaceRecognizer.create(2,8,8,8,200);
 
         String pathOfTrain = new String(mPath + "train.xml");
+        Log.e("faceRecognizer", pathOfTrain);
         File file = new File(pathOfTrain);
         if(file.exists()){
             faceRecognizer.read(pathOfTrain);
         }
 
         //Load database
-        DB = new StudentAccountDB(this);
-
+        //DB = new SQLiteStudent(this);
+        DB = new StudentDB(this);
         //Load map
         //loadMap();
 
@@ -212,9 +199,11 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
                 if(label[0] == getCurrentUser().getLabel()){
                     counter++;
                 }
-                putText(flippedFrame, DB.getNameByLabel(label[0]), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
+                putText(flippedFrame, getCurrentUser().getName(), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
             }else{
-                putText(flippedFrame, "karazawa", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
+                putText(flippedFrame, "unregister face", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
+                failure_counter++;
+
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());
         }
@@ -224,12 +213,23 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             // Intent intent = new Intent(this, RecognizeSuccess.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            Intent intent = new Intent();
-            intent.putExtra("result", true);
+            String LectureID = getIntent().getStringExtra("LectureID");
+            String LectureName = getIntent().getStringExtra("LectureName");
+            String date = getIntent().getStringExtra("Date");
+            Intent intent = new Intent(this, RecognizeSuccess.class);
+            intent.putExtra("LectureID", LectureID);
+            intent.putExtra("LectureName", LectureName);
+            intent.putExtra("Date", date);
+            startActivity(intent);
             this.setResult(RESULT_OK, intent);
             counter = 0;
             this.finish();
             Log.e("debug", "still running");
+        }
+        else if(failure_counter > 10){
+            Intent intent = new Intent(this, RecognizeFailureActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
 
         //Final frame;

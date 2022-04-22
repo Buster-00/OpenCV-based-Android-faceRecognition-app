@@ -47,27 +47,23 @@
 
 
             <TextView
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="the start time is \n you cannot attendance yet."/>
+                android:text="Please select the attendance time"/>
 
-            <com.don.clockviewlibrary.ClockView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                don:circle_color="@android:color/holo_blue_light"
-                don:hour_color="#ff00ff"
-                don:minute_color="@android:color/holo_red_light"
-                don:minute_mark_color="@android:color/white"
-                don:quarter_mark_color="@android:color/black"
-                don:second_color="@android:color/holo_green_light"
-                don:draw_center_circle="true"/>
+
+            <CalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_gravity="end"
                 android:id="@+id/btn_click"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="15dp"
                 android:layout_marginRight="10dp"
                 android:text="Attendance"/>
 
@@ -119,14 +115,30 @@
 
                 </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/tv_cardText"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:background="@color/white"
-                    android:paddingLeft="10dp"
-                    android:text="yo!" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginTop="3dp"
+                        android:id="@+id/tv_cardText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingLeft="10dp"
+                        android:text="yo!" />
+
+                    <TextView
+                        android:id="@+id/tv_lectureID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="yo!"
+                        />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

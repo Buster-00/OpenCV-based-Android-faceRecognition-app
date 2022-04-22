@@ -4,20 +4,18 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fyp.R;
-import com.ramotion.foldingcell.FoldingCell;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_course_list_2#newInstance} factory method to
+ * Use the {@link Frgament_profile#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_course_list_2 extends Fragment {
+public class Frgament_profile extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,11 +26,7 @@ public class Fragment_course_list_2 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
-    //widget
-    FoldingCell fc;
-
-    public Fragment_course_list_2() {
+    public Frgament_profile() {
         // Required empty public constructor
     }
 
@@ -42,11 +36,11 @@ public class Fragment_course_list_2 extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment3.
+     * @return A new instance of fragment Frgament_profile.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_course_list_2 newInstance(String param1, String param2) {
-        Fragment_course_list_2 fragment = new Fragment_course_list_2();
+    public static Frgament_profile newInstance(String param1, String param2) {
+        Frgament_profile fragment = new Frgament_profile();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,19 +61,6 @@ public class Fragment_course_list_2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_course_list_2, container, false);
-
-        //Initiate View
-        fc = view.findViewById(R.id.folding_cell);
-
-        fc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fc.toggle(false);
-                Log.e("FoldingCell", "clicked");
-            }
-        });
-
-        return view;
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 }

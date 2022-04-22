@@ -2,26 +2,25 @@ package com.fyp;
 
 import static com.fyp.databaseHelper.UserManager.getCurrentUser;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.fyp.databaseHelper.StudentAccountDB;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.fyp.databaseHelper.StudentDB;
 import com.fyp.face.Labels;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
-import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 import org.opencv.face.FaceRecognizer;
@@ -33,11 +32,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 
-import static org.opencv.imgcodecs.Imgcodecs.*;
 import static org.opencv.imgproc.Imgproc.COLOR_BGR2GRAY;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class SuccessActivity extends AppCompatActivity {
 
@@ -56,6 +63,10 @@ public class SuccessActivity extends AppCompatActivity {
 
     //LBPH FaceRecognizer
     FaceRecognizer faceRecognizer;
+
+    //dialog
+    MaterialDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,10 +152,76 @@ public class SuccessActivity extends AppCompatActivity {
         }
 
 
-        Toast.makeText(SuccessActivity.this, "your registration is successed!", Toast.LENGTH_SHORT).show();
+        //Upload train.xml to server
+        if(StudentDB.getISConnectToNetwork()){
+            uploadTrainFile(mPath + "train.xml");
+        }
+
         Intent intent = new Intent(SuccessActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
+
+    }
+
+    //upload train.xml file to server
+    private void uploadTrainFile(String path) {
+
+        dialog = new MaterialDialog.Builder(this)
+                .title("Uploading data")
+                .content("Uploading the data to server, please wait")
+                .progress(true, 0)
+                .positiveText("cancel")
+                .show();
+
+        OkHttpClient httpClient = new OkHttpClient();
+
+        MediaType contentType = MediaType.parse("text/plain");
+        File file = new File(path);
+        RequestBody body = RequestBody.create(file, contentType);
+
+        Request getRequest = new Request.Builder()
+                .url("http://118.31.20.251:8080/newServlet/upload")
+                .post(body)
+                .build();
+
+
+
+        Call call = httpClient.newCall(getRequest);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e("http", "http failure" + e.toString());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
+                                .title("Message")
+                                .positiveText("Confirm")
+                                .content("Upload failure")
+                                .show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.e("http", "okHttpPost enqueue: \n onResponse:"+ response.toString() +"\n body:" +response.body().string());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
+                                .title("Message")
+                                .positiveText("Confirm")
+                                .content("Upload success")
+                                .show();
+                    }
+                });
+            }
+        });
 
     }
 
@@ -214,13 +291,11 @@ public class SuccessActivity extends AppCompatActivity {
 
 
         //Generate mat of labels
-        StudentAccountDB db = new StudentAccountDB(this);
         int[] label = new int[1];
         label[0] = getCurrentUser().getLabel();
         Mat matOfLabels = new MatOfInt(label);
-        db.close();
-        //LBPH train
 
+        //LBPH train
         faceRecognizer.read(mPath + "train.xml");
         faceRecognizer.update(matVector, matOfLabels);
         faceRecognizer.write(mPath + "train.xml");

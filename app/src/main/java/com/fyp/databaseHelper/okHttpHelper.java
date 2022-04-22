@@ -5,6 +5,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.fyp.invariable.InVar;
+
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +27,7 @@ public class okHttpHelper {
     public void UploadFile(String path){
         OkHttpClient httpClient = new OkHttpClient();
 
-        MediaType contentType = MediaType.parse("application/xml");
+        MediaType contentType = MediaType.parse("text/plain");
         File file = new File(path);
         RequestBody body = RequestBody.create(file, contentType);
 
@@ -32,6 +35,7 @@ public class okHttpHelper {
                 .url("http://118.31.20.251:8080/newServlet/upload")
                 .post(body)
                 .build();
+
 
         Call call = httpClient.newCall(getRequest);
 
@@ -55,7 +59,7 @@ public class okHttpHelper {
         OkHttpClient httpClient = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("http://118.31.20.251:8080/newServlet/download")
+                .url(InVar.NETWORK_UPDATE_URL)
                 .build();
 
         Call call = httpClient.newCall(request);
@@ -83,9 +87,11 @@ public class okHttpHelper {
 
                     try {
                         file.createNewFile();
-                        FileWriter writer = new FileWriter(file);
+                        FileWriter fw = new FileWriter(file);
+                        BufferedWriter bw = new BufferedWriter(fw);
                         Log.e("data", data);
-                        writer.write(data);
+                        bw.write(data);
+                        bw.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

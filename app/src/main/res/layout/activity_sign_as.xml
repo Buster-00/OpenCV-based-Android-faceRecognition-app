@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".login.SignAsActivity">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_loginAsStudent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="80dp"
+        android:background="@drawable/student"
+        android:backgroundTint="@color/white"
+        />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_loginAsStudent"
+        android:layout_alignLeft="@+id/btn_loginAsStudent"
+        android:text="Log in as student" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_loginAsLecturer"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="230dp"
+        android:background="@drawable/lecturer"
+        android:backgroundTint="@color/white"
+        />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_loginAsStudent"
+        android:layout_alignLeft="@+id/btn_loginAsLecturer"
+        android:text="Log in as lecturer" />
+
+
+</RelativeLayout>
