@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="/"
-                    android:textSize="18dp"
+                    android:textSize="12dp"
                     />
 
                 <TextView
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="/"
-                    android:textSize="18dp"
+                    android:textSize="12dp"
                     />
             </LinearLayout>
 

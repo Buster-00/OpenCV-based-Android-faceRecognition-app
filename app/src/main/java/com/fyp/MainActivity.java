@@ -46,8 +46,6 @@ public class MainActivity extends DrawerActivity {
     //widget
     ViewPager viewPager;
 
-
-
     //handler
     private Handler mHandler;
 

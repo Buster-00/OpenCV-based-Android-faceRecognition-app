@@ -22,4 +22,15 @@
         android:layout_height="wrap_content"
         android:text="Recognize Success"
         />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_finish"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple_500"
+        android:text="Finish"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_below="@id/tv_recognize_success"/>
 </RelativeLayout>

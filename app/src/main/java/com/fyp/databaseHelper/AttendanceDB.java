@@ -83,6 +83,13 @@ public class AttendanceDB {
 
         }
 
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+            super.onOpen(db);
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
+                    "(lectureID TEXT , studentID TEXT, date TEXT)");
+        }
+
         public boolean insert(String col_1, String col_2, String col_3){
 
             //get database reference
@@ -113,7 +120,7 @@ public class AttendanceDB {
             SQLiteDatabase sqLiteDatabase = getReadableDatabase();
 
             //get data
-            Cursor cursor = sqLiteDatabase.rawQuery("SELECT lectureID, studentID, date WHERE studentID=?", new String[]{studentID});
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT lectureID, studentID, date FROM attendance WHERE studentID=?", new String[]{studentID});
             while (cursor.moveToNext()){
                 AttendanceRecord record = new AttendanceRecord(cursor.getString(cursor.getColumnIndex(COLUMN_1)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_2)), cursor.getString(cursor.getColumnIndex(COLUMN_3)));

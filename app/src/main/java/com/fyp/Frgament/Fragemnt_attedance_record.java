@@ -5,7 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,13 +85,14 @@ public class Fragemnt_attedance_record extends Fragment {
         recyclerRefreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                recyclerRefreshLayout.setRefreshing(true);
                 AttendanceDB attendanceDB = new AttendanceDB(getActivity());
-                Vector<AttendanceDB.AttendanceRecord> mDatas = new Vector<>();
-
                 Vector<AttendanceDB.AttendanceRecord> data = attendanceDB.getAttendanceByStudentID(UserManager.getCurrentUser().getID());
 
                 //Set Adapter to recycle view
-                recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(getActivity(), R.layout.fragment_attendace_record, mDatas) {
+                RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(getActivity(), R.layout.listview_attedance_record, data) {
                     @Override
                     protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord attendanceData, int position) {
                         holder.setText(R.id.tv_lectureID, attendanceData.getLectureID());
@@ -97,18 +100,21 @@ public class Fragemnt_attedance_record extends Fragment {
                     }
 
                 });
-
+                recyclerRefreshLayout.setRefreshing(false);
             }
         });
 
         //Retrieve attendance record from database
         AttendanceDB attendanceDB = new AttendanceDB(getActivity());
-        Vector<AttendanceDB.AttendanceRecord> mDatas = new Vector<>();
+
 
         Vector<AttendanceDB.AttendanceRecord> data = attendanceDB.getAttendanceByStudentID(UserManager.getCurrentUser().getID());
+        Log.e("data"," "+data.size());
 
         //Set Adapter to recycle view
-        recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(getActivity(), R.layout.fragment_attendace_record, mDatas) {
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(getActivity(), R.layout.listview_attedance_record, data) {
             @Override
             protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord attendanceData, int position) {
                 holder.setText(R.id.tv_lectureID, attendanceData.getLectureID());
