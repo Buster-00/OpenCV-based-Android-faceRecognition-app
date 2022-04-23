@@ -4,7 +4,6 @@ package com.fyp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceView;
 
@@ -23,7 +22,6 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.objdetect.FaceDetectorYN;
 
@@ -39,7 +37,6 @@ import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
 import static org.opencv.core.Core.ROTATE_180;
 import static org.opencv.core.Core.flip;
 import static org.opencv.core.Core.rotate;
-import static org.opencv.imgproc.Imgproc.COLOR_RGBA2RGB;
 import static org.opencv.imgproc.Imgproc.line;
 import static org.opencv.imgproc.Imgproc.rectangle;
 
@@ -230,7 +227,7 @@ public class FaceRegisterActivity extends CameraActivity implements CameraBridge
         //if detect face > 10 times, turn to another activity
        if(detect_counter > 10){
            SaveFace(flippedFrame.submat(clipRect), faceDescription);
-           Intent intent = new Intent(FaceRegisterActivity.this, SuccessActivity.class);
+           Intent intent = new Intent(FaceRegisterActivity.this, RegisterSuccessActivity.class);
            Bundle bundle = new Bundle();
 
            intent.putExtra("name", mPath + faceDescription + ".jpg");

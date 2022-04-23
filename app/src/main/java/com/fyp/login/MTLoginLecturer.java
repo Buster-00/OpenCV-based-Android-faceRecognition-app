@@ -2,9 +2,6 @@ package com.fyp.login;
 
 import static com.fyp.databaseHelper.UserManager.initUser;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -18,10 +15,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fyp.MainActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import com.fyp.R;
 import com.fyp.ResetPasswordActivity;
+import com.fyp.databaseHelper.LecturerDB;
 import com.fyp.databaseHelper.StudentDB;
+import com.fyp.lecturer.Lecturer_MainActivity;
 import com.fyp.student.Student_MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -40,7 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MTLogin extends AppCompatActivity implements Validator.ValidationListener {
+public class MTLoginLecturer extends AppCompatActivity implements Validator.ValidationListener {
 
     protected static boolean  IS_SAVE_ACCOUNT = false;
 
@@ -49,7 +50,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
     protected CheckBox cb_saveAccount;
 
     @NotEmpty
-    protected EditText etStudentID;
+    protected EditText etLecturerID;
 
     @NotEmpty
     protected EditText etPassword;
@@ -64,7 +65,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material_login);
+        setContentView(R.layout.activity_lecturer_login);
         initView();
         initValidator();
         setListener();
@@ -78,7 +79,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
 
     private void initView() {
         cb_saveAccount = findViewById(R.id.cb_saveAccount);
-        etStudentID = findViewById(R.id.et_username);
+        etLecturerID = findViewById(R.id.et_username);
         etPassword = findViewById(R.id.et_password);
         btGo = findViewById(R.id.bt_go);
         cv = findViewById(R.id.cv);
@@ -94,7 +95,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
                 String strLine;
 
                 if((strLine = br.readLine()) != null){
-                    etStudentID.setText(strLine);
+                    etLecturerID.setText(strLine);
                 }
                 else{
                     Log.e("error", "the strLine is null" + this.getExternalCacheDir());
@@ -121,14 +122,14 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
             public void onClick(View view) {
                 getWindow().setExitTransition(null);
                 getWindow().setEnterTransition(null);
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MTLogin.this, fab, fab.getTransitionName());
-                startActivity(new Intent(MTLogin.this, MTRegister.class), options.toBundle());
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MTLoginLecturer.this, fab, fab.getTransitionName());
+                startActivity(new Intent(MTLoginLecturer.this, MTRegisterLecturer.class), options.toBundle());
             }
         });
         tv_forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MTLogin.this, ResetPasswordActivity.class);
+                Intent intent = new Intent(MTLoginLecturer.this, ResetPasswordActivity.class);
                 startActivity(intent);
             }
         });
@@ -161,7 +162,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
                 try {
                     file.createNewFile();
                     BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-                    bufferedWriter.write(etStudentID.getText().toString());
+                    bufferedWriter.write(etLecturerID.getText().toString());
                     bufferedWriter.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -180,7 +181,7 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
             explode.setDuration(500);
 
             //turn to new activity after login successfully
-            Intent i2 = new Intent(MTLogin.this, Student_MainActivity.class);
+            Intent i2 = new Intent(MTLoginLecturer.this, Lecturer_MainActivity.class);
             i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i2);
         }
@@ -205,19 +206,18 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
     }
 
     private boolean Login(){
-        String studentID = etStudentID.getText().toString();
+        String LecturerID = etLecturerID.getText().toString();
         String password = etPassword.getText().toString();
 
-        StudentDB DB = new StudentDB(this);
-        HashMap<String, String> hashMap = new HashMap<>();
-
-        if(DB.readById(studentID, hashMap)){
-            String DB_password = hashMap.get("password");
+        LecturerDB DB = new LecturerDB(this);
+        LecturerDB.Lecturer lecturer;
+        if((lecturer = DB.ReadByID(LecturerID)) != null){
+            String DB_password = lecturer.getPassword();
 
             //password current
             if(DB_password.equals(password)){
                 Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();
-                initUser(studentID, DB);
+                initUser(LecturerID, DB);
                 return true;
             }
             //password inCurrent

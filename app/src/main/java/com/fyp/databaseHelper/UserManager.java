@@ -14,6 +14,10 @@ public class UserManager {
         currentUser = new User(ID, DB);
     }
 
+    public static void initUser(String ID, LecturerDB DB){
+        currentUser = new User(ID, DB);
+    }
+
     public static class User{
         private String ID;
         private String name;
@@ -25,6 +29,12 @@ public class UserManager {
             DB.readById(ID, hashMap);
             setName(hashMap.get("name"));
             setLabel(DB.getLabelByID(ID));
+        }
+
+        User(String ID, LecturerDB DB){
+            setID(ID);
+            LecturerDB.Lecturer lecturer = DB.ReadByID(ID);
+            setName(lecturer.getName());
         }
 
         public String getID(){ return ID;}

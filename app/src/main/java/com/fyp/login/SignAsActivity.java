@@ -32,5 +32,13 @@ public class SignAsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn_logInAsLecturer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignAsActivity.this, MTLoginLecturer.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fyp.databaseHelper.StudentDB;
 import com.fyp.face.Labels;
+import com.fyp.student.Student_MainActivity;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
@@ -46,7 +47,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SuccessActivity extends AppCompatActivity {
+public class RegisterSuccessActivity extends AppCompatActivity {
 
     //Widget
     Button btn_confirm;
@@ -157,7 +158,7 @@ public class SuccessActivity extends AppCompatActivity {
             uploadTrainFile(mPath + "train.xml");
         }
 
-        Intent intent = new Intent(SuccessActivity.this, MainActivity.class);
+        Intent intent = new Intent(RegisterSuccessActivity.this, Student_MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
@@ -197,7 +198,7 @@ public class SuccessActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
+                        dialog = new MaterialDialog.Builder(RegisterSuccessActivity.this)
                                 .title("Message")
                                 .positiveText("Confirm")
                                 .content("Upload failure")
@@ -213,7 +214,7 @@ public class SuccessActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
+                        dialog = new MaterialDialog.Builder(RegisterSuccessActivity.this)
                                 .title("Message")
                                 .positiveText("Confirm")
                                 .content("Upload success")

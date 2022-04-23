@@ -24,13 +24,24 @@
         android:theme="@style/Theme.FYP"
         tools:replace="android:theme">
         <activity
-            android:name=".login.SignAsActivity">
+            android:name=".lecturer.Lecturer_MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".student.Student_MainActivity"
+            android:exported="false" />
+        <activity android:name=".login.SignAsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".login.MTRegisterLecturer"
+            android:exported="false" />
+        <activity
+            android:name=".login.MTLoginLecturer"
+            android:exported="false" />
         <activity
             android:name=".RecognizeFailureActivity"
             android:exported="false" />
@@ -59,7 +70,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SuccessActivity" />
+        <activity android:name=".RegisterSuccessActivity" />
         <activity
             android:name=".FaceRegisterActivity"
             android:screenOrientation="landscape">
