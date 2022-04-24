@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.fyp.R;
+import com.fyp.databaseHelper.LecturerDB;
 import com.fyp.databaseHelper.StudentDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -188,13 +189,13 @@ public class MTRegisterLecturer extends AppCompatActivity implements Validator.V
     }
 
     private void register(){
-        String studentID = et_reg_student_ID.getText().toString();
+        String lecturerID = et_reg_student_ID.getText().toString();
         String password = et_reg_password.getText().toString();
-        String studentName = et_reg_student_name.getText().toString();
+        String lecturerName = et_reg_student_name.getText().toString();
 
-        StudentDB DB = new StudentDB(this);
+        LecturerDB DB = new LecturerDB(this);
 
-        if(DB.insert(studentID, password, studentName)){
+        if(DB.insert(lecturerID, password, lecturerName)){
             Toast.makeText(this, "Register successfully", Toast.LENGTH_SHORT).show();
             animateRevealClose();
         }

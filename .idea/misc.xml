@@ -14,6 +14,7 @@
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_avatar.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_cover.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/radius_shape.xml" value="0.2615" />
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable/special_tab_round_bg.xml" value="0.258" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_face_recognition.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_lecturer_login.xml" value="0.3388888888888889" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_lecturer_main.xml" value="0.32971014492753625" />
@@ -40,6 +41,7 @@
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_course_list_2.xml" value="0.30512820512820515" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_frgament_1.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_home.xml" value="0.2547008547008547" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_lecturer_home.xml" value="0.26623931623931624" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_profile.xml" value="0.45427350427350427" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_student_course_list.xml" value="0.307518115942029" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_student_home.xml" value="0.5" />

@@ -72,6 +72,11 @@ public class LecturerDB {
 
         }
 
+        @Override
+        public void onOpen(SQLiteDatabase db){
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(id TEXT UNIQUE, password TEXT, name TEXT); ");
+        }
+
         public boolean insert(String id, String password, String name){
 
             //get writable database reference
