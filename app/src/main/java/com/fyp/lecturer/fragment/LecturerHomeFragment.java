@@ -1,5 +1,6 @@
 package com.fyp.lecturer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.fyp.R;
+import com.fyp.lecturer.AttendanceSheetActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +63,24 @@ public class LecturerHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_lecturer_home, container, false);
+
+        //Widget
+        Button btn_createNewAttendanceSheet;
+
+        //Initialize Widget
+        btn_createNewAttendanceSheet = view.findViewById(R.id.btn_newAttendanceSheet);
+
+        btn_createNewAttendanceSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AttendanceSheetActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lecturer_home, container, false);
+        return view;
     }
 }

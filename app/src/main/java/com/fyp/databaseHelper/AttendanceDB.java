@@ -131,7 +131,7 @@ public class AttendanceDB {
         }
     }
 
-    public class AttendanceRecord{
+    public static class AttendanceRecord{
         String LectureID;
         String StudentID;
         String Date;

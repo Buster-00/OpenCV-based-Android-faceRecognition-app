@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".lecturer.fragment.LecturerHomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -11,4 +12,24 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_newAttendanceSheet"
+        android:layout_width="@dimen/myButton_width"
+        android:layout_height="@dimen/myButton_height"
+        android:layout_marginLeft="@dimen/myButton_marginLeft_left"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/myButton_bg_color"
+        android:elevation="@dimen/myButton_elevation"
+        android:text="Create attendance sheet"
+        android:textColor="@color/myButton_font_color"
+        android:textSize="12dp"
+        app:cornerRadius="@dimen/myButton_radius"
+        app:icon="@drawable/ic_log_out"
+        app:iconGravity="textTop"
+        app:iconTint="@color/myButton_icon_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/black" />
+
+</RelativeLayout>

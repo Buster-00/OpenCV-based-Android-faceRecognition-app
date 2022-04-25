@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.fyp">
+    package="com.fyp" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -22,14 +22,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FYP"
-        tools:replace="android:theme">
+        tools:replace="android:theme" >
+        <activity
+            android:name=".lecturer.AttendanceSheetActivity"
+            android:exported="false" />
         <activity
             android:name=".lecturer.Lecturer_MainActivity"
             android:exported="false" />
         <activity
             android:name=".student.Student_MainActivity"
             android:exported="false" />
-        <activity android:name=".login.SignAsActivity">
+        <activity android:name=".login.SignAsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,7 +66,7 @@
             android:name=".FaceRecognitionActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".NameRegisterActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,14 +76,14 @@
         <activity android:name=".RegisterSuccessActivity" />
         <activity
             android:name=".FaceRegisterActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.MTLogin">
+        <activity android:name=".login.MTLogin" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
