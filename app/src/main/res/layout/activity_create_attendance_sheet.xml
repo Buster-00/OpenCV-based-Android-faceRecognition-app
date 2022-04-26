@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".lecturer.CreateAttendanceSheetActivity">
+
+    <EditText
+        android:id="@+id/et_lectureID"
+        android:hint="LectureID"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/et_lectureName"
+        android:hint="LectureName"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/et_Venue"
+        android:hint="Venue"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"/>
+
+    <CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="create"/>
+
+</LinearLayout>

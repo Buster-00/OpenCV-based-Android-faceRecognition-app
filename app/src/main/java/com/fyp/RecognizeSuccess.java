@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.fyp.databaseHelper.AttendanceDB;
 import com.fyp.databaseHelper.UserManager;
+import com.fyp.lecturer.AttendanceSheetActivity;
 import com.github.chengang.library.TickView;
 
 public class RecognizeSuccess extends AppCompatActivity {
@@ -43,8 +44,9 @@ public class RecognizeSuccess extends AppCompatActivity {
         btn_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecognizeSuccess.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent intent = new Intent(RecognizeSuccess.this, AttendanceSheetActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("NAME", "Bob");
                 startActivity(intent);
             }
         });

@@ -29,4 +29,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_cancel"
+        android:layout_toLeftOf="@+id/btn_add_student"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/red"
+        android:src="@drawable/ic_baseline_clear_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_done"
+        android:layout_toRightOf="@+id/btn_add_student"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/green"
+        android:src="@drawable/ic_baseline_check_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
   </RelativeLayout>

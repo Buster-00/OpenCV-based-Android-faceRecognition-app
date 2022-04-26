@@ -9,6 +9,9 @@ import com.fyp.R;
 import com.fyp.lecturer.fragment.lecturerViewPagerAdapter;
 import com.fyp.student.fragment.studentViewPagerAdapter;
 
+import org.bytedeco.javacpp.Loader;
+import org.bytedeco.opencv.opencv_java;
+
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
@@ -66,5 +69,8 @@ public class Lecturer_MainActivity extends AppCompatActivity {
         //Set ViewPager
         viewPager.setAdapter(new lecturerViewPagerAdapter(getSupportFragmentManager()));
         mNavigationController.setupWithViewPager(viewPager);
+
+        //Initiate JavaCV
+        Loader.load(opencv_java.class);
     }
 }

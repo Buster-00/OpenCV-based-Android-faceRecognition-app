@@ -196,9 +196,10 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
             //Render image
             if(label[0] != -1){
                 Log.e("The label is ", String.valueOf(label[0]));
-                if(label[0] == getCurrentUser().getLabel()){
-                    counter++;
-                }
+//                if(label[0] == getCurrentUser().getLabel()){
+//                    counter++;
+//                }
+                counter++;
                 putText(flippedFrame, getCurrentUser().getName(), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
             }else{
                 putText(flippedFrame, "unregister face", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);

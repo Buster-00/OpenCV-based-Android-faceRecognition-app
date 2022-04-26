@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.fyp.R;
 import com.fyp.lecturer.AttendanceSheetActivity;
+import com.fyp.lecturer.CreateAttendanceSheetActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,7 +76,7 @@ public class LecturerHomeFragment extends Fragment {
         btn_createNewAttendanceSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AttendanceSheetActivity.class);
+                Intent intent = new Intent(getActivity(), CreateAttendanceSheetActivity.class);
                 startActivity(intent);
             }
         });

@@ -7,11 +7,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
 import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
+import com.fyp.RecognizeSuccess;
 import com.fyp.databaseHelper.AttendanceDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -23,7 +26,12 @@ public class AttendanceSheetActivity extends AppCompatActivity {
 
     //widget
     FloatingActionButton btn_add_student;
+    FloatingActionButton btn_cancel;
+    FloatingActionButton btn_done;
     RecyclerView recycle_student_list;
+
+    //Recycler view data
+    Vector<AttendanceDB.AttendanceRecord> data = new Vector<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,8 @@ public class AttendanceSheetActivity extends AppCompatActivity {
 
         //initialize widget
         btn_add_student = findViewById(R.id.btn_add_student);
+        btn_cancel = findViewById(R.id.btn_cancel);
+        btn_done = findViewById(R.id.btn_done);
         recycle_student_list = findViewById(R.id.recycle_student_list);
 
         btn_add_student.setOnClickListener(new View.OnClickListener() {
@@ -42,10 +52,38 @@ public class AttendanceSheetActivity extends AppCompatActivity {
             }
         });
 
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AttendanceSheetActivity.this, CreateAttendanceSheetActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
+
+        Log.e("AttendanceSheet", "onCreate");
+
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent newIntent){
+        super.onNewIntent(newIntent);
+        setIntent(newIntent);
+    }
+
+    @Override
+    protected  void onResume() {
+        super.onResume();
+        Log.e("AttendanceSheet", "onResume");
+        Intent intent = getIntent();
+        String studentName = intent.getStringExtra("NAME");
+
         //initialize recycler_view student list
-        Vector<AttendanceDB.AttendanceRecord> data = new Vector<>();
-        AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord("swe101", "swe1809223", "2022-1-1");
+        AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord(studentName, "swe1809223", "2022-1-1");
         data.add(attendanceRecord);
+        Log.e("AttendanceSheet", ""+data.size());
+        Log.e("AttendanceSheet", "studentName" + studentName);
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recycle_student_list.setLayoutManager(mLayoutManager);
@@ -57,4 +95,15 @@ public class AttendanceSheetActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK ) {
+            //do something.
+            return true;
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
+    }
+
 }
