@@ -5,11 +5,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/flyhigh"
     tools:context=".lecturer.AttendanceSheetActivity">
 
+   <androidx.appcompat.widget.Toolbar
+       app:title="Attendance Sheet"
+       app:titleTextColor="@color/white"
+       android:id="@+id/toolbar"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:background="@drawable/md_transparent"
+       app:navigationIcon="@drawable/ic_baseline_chevron_left_24" />
+
+
     <androidx.cardview.widget.CardView
-        android:layout_marginVertical="30dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_below="@+id/toolbar"
+        android:elevation="20dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="100dp"
+        android:layout_marginHorizontal="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -20,22 +35,24 @@
 
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_add_student"
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/ic_baseline_add_24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:elevation="10dp"
+       android:id="@+id/btn_add_student"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="80dp"
+       android:src="@drawable/ic_baseline_add_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+
         android:id="@+id/btn_cancel"
         android:layout_toLeftOf="@+id/btn_add_student"
         android:layout_marginRight="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="80dp"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/red"
+
         android:src="@drawable/ic_baseline_clear_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -44,11 +61,13 @@
         android:id="@+id/btn_done"
         android:layout_toRightOf="@+id/btn_add_student"
         android:layout_marginLeft="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="80dp"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/green"
+
         android:src="@drawable/ic_baseline_check_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-  </RelativeLayout>
+
+
+</RelativeLayout>

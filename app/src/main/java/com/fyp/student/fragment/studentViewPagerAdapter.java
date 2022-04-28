@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import com.fyp.Frgament.Fragment_profile;
 
 public class studentViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -15,7 +16,17 @@ public class studentViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        return new StudentHomeFragment();
+        switch (position){
+            case 0:
+                return new StudentHomeFragment();
+            case 1:
+                return new StudentHomeFragment();
+            case 2:
+                return new Fragment_profile();
+            default:
+                return null;
+        }
+
     }
 
     @Override

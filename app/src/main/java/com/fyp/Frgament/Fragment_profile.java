@@ -1,21 +1,23 @@
 package com.fyp.Frgament;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.fyp.R;
 
+import com.fyp.databaseHelper.UserManager;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Frgament_profile#newInstance} factory method to
+ * Use the {@link Fragment_profile#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Frgament_profile extends Fragment {
+public class Fragment_profile extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +28,7 @@ public class Frgament_profile extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Frgament_profile() {
+    public Fragment_profile() {
         // Required empty public constructor
     }
 
@@ -39,8 +41,8 @@ public class Frgament_profile extends Fragment {
      * @return A new instance of fragment Frgament_profile.
      */
     // TODO: Rename and change types and number of parameters
-    public static Frgament_profile newInstance(String param1, String param2) {
-        Frgament_profile fragment = new Frgament_profile();
+    public static Fragment_profile newInstance(String param1, String param2) {
+        Fragment_profile fragment = new Fragment_profile();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +63,15 @@ public class Frgament_profile extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        //widget
+        TextView tv_userName;
+
+        //initialize widget;
+        tv_userName = view.findViewById(R.id.tv_userName);
+        tv_userName.setText(UserManager.getCurrentUser().getName());
+
+        return view;
     }
 }

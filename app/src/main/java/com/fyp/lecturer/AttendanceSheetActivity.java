@@ -2,6 +2,7 @@ package com.fyp.lecturer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
@@ -19,6 +21,8 @@ import com.fyp.databaseHelper.AttendanceDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
+
+import org.mariadb.jdbc.internal.com.read.ReadInitialHandShakePacket;
 
 import java.util.Vector;
 
@@ -29,6 +33,7 @@ public class AttendanceSheetActivity extends AppCompatActivity {
     FloatingActionButton btn_cancel;
     FloatingActionButton btn_done;
     RecyclerView recycle_student_list;
+    Toolbar toolbar;
 
     //Recycler view data
     Vector<AttendanceDB.AttendanceRecord> data = new Vector<>();
@@ -43,6 +48,7 @@ public class AttendanceSheetActivity extends AppCompatActivity {
         btn_cancel = findViewById(R.id.btn_cancel);
         btn_done = findViewById(R.id.btn_done);
         recycle_student_list = findViewById(R.id.recycle_student_list);
+        toolbar = findViewById(R.id.toolbar);
 
         btn_add_student.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,12 +63,19 @@ public class AttendanceSheetActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AttendanceSheetActivity.this, CreateAttendanceSheetActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Toast.makeText(AttendanceSheetActivity.this, "Cancel the attendance sheet", Toast.LENGTH_LONG).show();
                 startActivity(intent);
             }
         });
 
         Log.e("AttendanceSheet", "onCreate");
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -80,10 +93,13 @@ public class AttendanceSheetActivity extends AppCompatActivity {
         String studentName = intent.getStringExtra("NAME");
 
         //initialize recycler_view student list
-        AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord(studentName, "swe1809223", "2022-1-1");
-        data.add(attendanceRecord);
-        Log.e("AttendanceSheet", ""+data.size());
-        Log.e("AttendanceSheet", "studentName" + studentName);
+        if(studentName != null){
+            AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord(studentName, "swe1809223", "2022-1-1");
+            data.add(attendanceRecord);
+            Log.e("AttendanceSheet", ""+data.size());
+            Log.e("AttendanceSheet", "studentName" + studentName);
+        }
+
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recycle_student_list.setLayoutManager(mLayoutManager);

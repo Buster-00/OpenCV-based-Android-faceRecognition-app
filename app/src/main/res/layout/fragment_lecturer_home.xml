@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".lecturer.fragment.LecturerHomeFragment">
 
@@ -10,15 +11,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:text="" />
 
     <com.google.android.material.button.MaterialButton
+        app:elevation="10dp"
         android:id="@+id/btn_newAttendanceSheet"
-        android:layout_width="@dimen/myButton_width"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/myButton_height"
-        android:layout_marginLeft="@dimen/myButton_marginLeft_left"
-        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="@dimen/myButton_marginLeft_left"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@color/myButton_bg_color"
         android:elevation="@dimen/myButton_elevation"
         android:text="Create attendance sheet"
