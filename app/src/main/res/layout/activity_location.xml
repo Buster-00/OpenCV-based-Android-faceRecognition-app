@@ -15,4 +15,20 @@
        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
 
+    <ImageView
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/distance"
+        android:id="@+id/QR_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_scan"
+        android:text="scan"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </RelativeLayout>

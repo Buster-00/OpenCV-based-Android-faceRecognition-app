@@ -1,21 +1,30 @@
 package com.fyp.student;
 
+import static com.fyp.helper.QRCodeHelper.createQRCodeBitmap;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fyp.R;
 import com.fyp.helper.GetDistanceUtils;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.google.zxing.qrcode.encoder.QRCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +32,8 @@ import java.util.List;
 public class locationActivity extends AppCompatActivity {
 
     TextView tv_distance;
+    ImageView imageView_QRCode;
+    Button btn_scan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +41,28 @@ public class locationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_location);
 
         tv_distance = findViewById(R.id.distance);
+        imageView_QRCode = findViewById(R.id.QR_code);
+        btn_scan = findViewById(R.id.btn_scan);
 
         double lati_1 = 0;
         double longti_1 = 0;
 
+
         Location location = getLocation();
-        double distance = GetDistanceUtils.getDistance(108.33, 22.84, location.getLongitude(), location.getLatitude());
+        double distance = GetDistanceUtils.distanceInMi(22.84, 108.33, location.getLatitude(), location.getLongitude());
         tv_distance.setText(""+distance);
+        imageView_QRCode.setImageBitmap(createQRCodeBitmap("latitude: " + location.getLatitude() + "longitude: " + location.getLongitude(), 640,640));
+
+        //set scan button
+        btn_scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(locationActivity.this);
+                intentIntegrator.setPrompt("Scan the QRcode");
+                intentIntegrator.setOrientationLocked(false);
+                intentIntegrator.initiateScan();
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -132,6 +158,20 @@ public class locationActivity extends AppCompatActivity {
                 break;
             default:
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() == null) {
+                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 

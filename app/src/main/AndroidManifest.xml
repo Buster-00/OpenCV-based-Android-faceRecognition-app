@@ -25,8 +25,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FYP"
         tools:replace="android:theme">
+
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
         <activity
             android:name=".student.locationActivity"
+
             android:exported="false" />
         <activity
             android:name=".lecturer.CreateAttendanceSheetActivity"
