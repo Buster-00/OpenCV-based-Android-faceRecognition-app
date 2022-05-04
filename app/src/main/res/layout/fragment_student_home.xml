@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".student.fragment.StudentHomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,11 +13,26 @@
         android:text="@string/hello_blank_fragment" />
 
     <com.google.android.material.button.MaterialButton
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
         android:id="@+id/btn_face_register"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Face Register"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_below="@id/btn_face_register"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        android:id="@+id/btn_location"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location"/>
 
 </RelativeLayout>

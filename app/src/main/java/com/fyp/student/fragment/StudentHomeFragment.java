@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.fyp.FaceRegisterActivity;
 import com.fyp.R;
+import com.fyp.student.locationActivity;
 
 import java.io.InputStream;
 
@@ -70,15 +71,24 @@ public class StudentHomeFragment extends Fragment {
 
         //widget
         Button btn_face_register;
+        Button btn_location;
 
         //initialize widgets
         btn_face_register = view.findViewById(R.id.btn_face_register);
+        btn_location = view.findViewById(R.id.btn_location);
 
         btn_face_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), FaceRegisterActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btn_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), locationActivity.class));
             }
         });
 

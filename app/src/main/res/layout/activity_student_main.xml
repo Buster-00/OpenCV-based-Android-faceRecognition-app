@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/phoenixstart"
     tools:context=".student.Student_MainActivity">
 
     <androidx.viewpager.widget.ViewPager
@@ -18,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
         />
 
 </RelativeLayout>
