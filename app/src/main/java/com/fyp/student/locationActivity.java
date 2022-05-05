@@ -20,8 +20,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
 import com.fyp.helper.GetDistanceUtils;
+import com.fyp.helper.QRCodeHelper;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.qrcode.encoder.QRCode;
@@ -34,6 +38,9 @@ public class locationActivity extends AppCompatActivity {
     TextView tv_distance;
     ImageView imageView_QRCode;
     Button btn_scan;
+
+    //location
+    Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,7 @@ public class locationActivity extends AppCompatActivity {
         double longti_1 = 0;
 
 
-        Location location = getLocation();
+        location = getLocation();
         double distance = GetDistanceUtils.distanceInMi(22.84, 108.33, location.getLatitude(), location.getLongitude());
         tv_distance.setText(""+distance);
         imageView_QRCode.setImageBitmap(createQRCodeBitmap("latitude: " + location.getLatitude() + "longitude: " + location.getLongitude(), 640,640));
@@ -163,12 +170,29 @@ public class locationActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //get result
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        //do something to result
         if(result != null) {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                //get json and object
+                String json = result.getContents();
+                ObjectMapper mapper = new JsonMapper();
+                QRCodeHelper.QRInformation info = null;
+                try {
+                    //get distance
+                    info = mapper.readValue(json, QRCodeHelper.QRInformation.class);
+                    Location location = getLocation();
+                    double distance = GetDistanceUtils.distanceInMi(info.getLatitude(), info.getLongitude(), location.getLatitude(), location.getLongitude());
+                    Log.e("distance", " "+ info.getLatitude() + " "+ info.getLongitude() + " " +location.getLatitude() + " " + location.getLongitude());
+                    Toast.makeText(this, "Scanned: " + distance, Toast.LENGTH_LONG).show();
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

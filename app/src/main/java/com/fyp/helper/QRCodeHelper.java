@@ -17,7 +17,7 @@ import java.util.Hashtable;
 
 public class QRCodeHelper {
     public static Bitmap createQRCodeBitmap(String content, int width, int height){
-        return createQRCodeBitmap(content, width, height, "UTF-8", "L", "2", Color.WHITE, Color.TRANSPARENT);
+        return createQRCodeBitmap(content, width, height, "UTF-8", "L", "2", Color.BLACK, Color.TRANSPARENT);
     }
 
     public static Bitmap createQRCodeBitmap(String content, int width, int height,
@@ -74,6 +74,25 @@ public class QRCodeHelper {
 
     //JavaBean for json file
     static public class QRInformation{
+        private double latitude;
+        private double  longitude;
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(double latitude) {
+            this.latitude = latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
+
         private String date;
         private String venue;
         private String LectureID;
