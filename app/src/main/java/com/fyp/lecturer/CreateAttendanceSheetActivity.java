@@ -12,7 +12,11 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
+import com.fyp.helper.QRCodeHelper;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -92,6 +96,7 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
 
     @Override
     public void onValidationSucceeded() {
+
         //Retrieve information
         String lectureID = et_LectureID.getText().toString();
         String lectureName = et_LectureName.getText().toString();
@@ -100,8 +105,23 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
                 lectureID + "-" + lectureName + "-" + venue + "\n" + date[0],
                 Toast.LENGTH_LONG).show();
 
+        //Create Json
+        QRCodeHelper.QRInformation info = new QRCodeHelper.QRInformation();
+        info.setDate(date[0]);
+        info.setLectureID(lectureID);
+        info.setLectureName(lectureName);
+        info.setVenue(venue);
+        ObjectMapper mapper = new JsonMapper();
+        String json = new String();
+        try {
+             json = mapper.writeValueAsString(info);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
         //Turn to next activity
-        Intent intent = new Intent(CreateAttendanceSheetActivity.this, AttendanceSheetActivity.class);
+        Intent intent = new Intent(CreateAttendanceSheetActivity.this, LecturerQRCodeActivity.class);
+        intent.putExtra("INFO", json);
         startActivity(intent);
     }
 

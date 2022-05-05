@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.fyp"
         minSdkVersion 29
-        targetSdkVersion 29
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
 
@@ -63,6 +63,9 @@ dependencies {
         transitive = true;
     }
 
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.11.1'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.11.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     implementation 'com.google.zxing:core:3.3.0'
     implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
