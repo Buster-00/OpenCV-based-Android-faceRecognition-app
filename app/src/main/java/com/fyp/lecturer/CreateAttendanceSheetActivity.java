@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
+import com.fyp.databaseHelper.UserManager;
 import com.fyp.helper.QRCodeHelper;
 import com.fyp.student.locationActivity;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -122,6 +123,7 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
         QRCodeHelper.QRInformation info = new QRCodeHelper.QRInformation();
         info.setDate(date[0]);
         info.setLectureID(lectureID);
+        info.setLecturer(UserManager.getCurrentUser().getName());
         info.setLectureName(lectureName);
         info.setVenue(venue);
         info.setLatitude(location.getLatitude());

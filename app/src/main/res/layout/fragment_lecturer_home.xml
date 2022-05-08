@@ -14,7 +14,6 @@
         android:text="" />
 
     <com.google.android.material.button.MaterialButton
-        app:elevation="10dp"
         android:id="@+id/btn_newAttendanceSheet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/myButton_height"
@@ -26,6 +25,7 @@
         android:textColor="@color/myButton_font_color"
         android:textSize="12dp"
         app:cornerRadius="@dimen/myButton_radius"
+        app:elevation="10dp"
         app:icon="@drawable/ic_log_out"
         app:iconGravity="textTop"
         app:iconTint="@color/myButton_icon_color"

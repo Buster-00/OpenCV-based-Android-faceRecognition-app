@@ -1,6 +1,7 @@
 package com.fyp.student;
 
 import static com.fyp.helper.QRCodeHelper.createQRCodeBitmap;
+import static com.fyp.invariable.InVar.MAX_DISTANCE;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -190,6 +191,20 @@ public class locationActivity extends AppCompatActivity {
                     double distance = GetDistanceUtils.distanceInMi(info.getLatitude(), info.getLongitude(), location.getLatitude(), location.getLongitude());
                     Log.e("distance", " "+ info.getLatitude() + " "+ info.getLongitude() + " " +location.getLatitude() + " " + location.getLongitude());
                     Toast.makeText(this, "Scanned: " + distance, Toast.LENGTH_LONG).show();
+
+                    //if distance more than certain value
+                    if(distance >= MAX_DISTANCE){
+                        Intent intent = new Intent(locationActivity.this, DistanceFailedActivity.class);
+                        intent.putExtra("DISTANCE", distance);
+                        startActivity(intent);
+                    }
+                    //go on to next step
+                    else{
+                        Intent intent = new Intent(locationActivity.this, DistanceSuccessActivity.class);
+                        intent.putExtra("DISTANCE", distance);
+                        intent.putExtra("JSON", json);
+                        startActivity(intent);
+                    }
                 } catch (JsonProcessingException e) {
                     e.printStackTrace();
                 }

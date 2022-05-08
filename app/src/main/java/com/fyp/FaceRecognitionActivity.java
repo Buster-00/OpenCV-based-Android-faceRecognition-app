@@ -210,21 +210,21 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
         }
 
         //If recognize face correctly more than 10 times, success to next step
-        if(counter > 10){
+        if(counter > 3){
             // Intent intent = new Intent(this, RecognizeSuccess.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            String LectureID = getIntent().getStringExtra("LectureID");
-            String LectureName = getIntent().getStringExtra("LectureName");
-            String date = getIntent().getStringExtra("Date");
+//            String LectureID = getIntent().getStringExtra("LectureID");
+//            String LectureName = getIntent().getStringExtra("LectureName");
+//            String date = getIntent().getStringExtra("Date");
             Intent intent = new Intent(this, RecognizeSuccess.class);
-            intent.putExtra("LectureID", LectureID);
-            intent.putExtra("LectureName", LectureName);
-            intent.putExtra("Date", date);
+//            intent.putExtra("LectureID", LectureID);
+//            intent.putExtra("LectureName", LectureName);
+//            intent.putExtra("Date", date);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtras(getIntent());
             startActivity(intent);
-            this.setResult(RESULT_OK, intent);
-            counter = 0;
-            this.finish();
+            counter = -10;
             Log.e("debug", "still running");
         }
         else if(failure_counter > 10){

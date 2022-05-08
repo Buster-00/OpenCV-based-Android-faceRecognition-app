@@ -94,7 +94,7 @@ public class AttendanceSheetActivity extends AppCompatActivity {
 
         //initialize recycler_view student list
         if(studentName != null){
-            AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord(studentName, "swe1809223", "2022-1-1");
+            AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord(studentName, "swe1809223", "2022-1-1", "John", "D1-404");
             data.add(attendanceRecord);
             Log.e("AttendanceSheet", ""+data.size());
             Log.e("AttendanceSheet", "studentName" + studentName);

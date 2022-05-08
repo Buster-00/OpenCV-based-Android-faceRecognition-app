@@ -1,12 +1,17 @@
 package com.fyp.student;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.fyp.MainActivity;
 import com.fyp.R;
@@ -16,6 +21,11 @@ import com.fyp.student.fragment.studentViewPagerAdapter;
 import com.heinrichreimersoftware.materialdrawer.DrawerActivity;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerItem;
 import com.heinrichreimersoftware.materialdrawer.structure.DrawerProfile;
+
+import org.bytedeco.javacpp.Loader;
+import org.bytedeco.opencv.opencv_java;
+
+import java.util.ArrayList;
 
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
@@ -76,6 +86,20 @@ public class Student_MainActivity extends DrawerActivity {
 
         //Drawer
         initMaterialDrawer();
+
+        //get location service authority
+        ArrayList<String> permissions = new ArrayList<>();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+
+        if(permissions.size() != 0){
+            requestPermissions(permissions.toArray(new String[permissions.size()]), 2);
+        }
+
     }
 
     private void initMaterialDrawer() {
@@ -123,6 +147,24 @@ public class Student_MainActivity extends DrawerActivity {
                         })
         );
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 2://定位
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("*************", "同意定位权限");
+
+                } else {
+                    Toast.makeText(this, "未同意获取定位权限", Toast.LENGTH_SHORT).show();
+
+                }
+                break;
+            default:
+
+        }
     }
 
 }

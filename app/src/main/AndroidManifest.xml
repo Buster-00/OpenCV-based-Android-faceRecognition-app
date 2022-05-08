@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fyp">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -25,6 +27,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FYP"
         tools:replace="android:theme">
+        <activity
+            android:name=".student.DistanceSuccessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".student.DistanceFailedActivity"
+            android:exported="false" />
         <activity
             android:name=".lecturer.LecturerQRCodeActivity"
             android:exported="false" />
@@ -73,6 +81,7 @@
             android:name=".ResetPasswordActivity"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".RecognizeSuccess"
             android:exported="false" />
         <activity android:name=".login.MTRegister" />
