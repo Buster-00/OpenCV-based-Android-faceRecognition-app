@@ -2,6 +2,7 @@ package com.fyp.databaseHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,8 +12,13 @@ import androidx.annotation.Nullable;
 
 import com.fyp.invariable.InVar;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Vector;
 
 public class AttendanceDB {
@@ -31,6 +37,9 @@ public class AttendanceDB {
     //local database
     SQLiteAttendance sqLiteAttendance;
 
+    //Remote database
+    MariaAttendance mariaAttendance;
+
     public AttendanceDB(Context context){
 
         //using local database
@@ -38,7 +47,7 @@ public class AttendanceDB {
             sqLiteAttendance = new SQLiteAttendance(context);
         }
         else{
-            //TODO using remote database
+            mariaAttendance = new MariaAttendance();
         }
 
     }
@@ -52,7 +61,7 @@ public class AttendanceDB {
         }
         else{
             //TODO Remote server
-            return false;
+            return mariaAttendance.insert(col_1, col_2, col_3, col_4, col_5);
         }
     }
 
@@ -140,6 +149,93 @@ public class AttendanceDB {
 
             return data;
         }
+    }
+
+    class MariaAttendance{
+
+        public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5 ){
+
+            final boolean[] isSuccess = {false};
+
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = MariaCon.createStatement();
+
+                        //Insert new attendance record into statement
+                        String query = String.format("INSERT INTO %s(%s, %s, %s, %s, %s) VALUES('%s', '%s', '%s', '%s', '%s')",
+                                TABLE_NAME, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5, col_1, col_2, col_3, col_4, col_5);
+                        int rs = statement.executeUpdate(query);
+                        if(rs > 0){
+                            isSuccess[0] = true;
+                        }
+                        else{
+                            isSuccess[0] = false;
+                        }
+
+                        //close connection
+                        MariaCon.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return isSuccess[0];
+        }
+
+        public Vector<AttendanceRecord> getAttendanceByStudentID(String studentID){
+
+            Vector<AttendanceRecord> records = new Vector<>();
+
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = MariaCon.createStatement();
+
+                        //Retrieve by student ID
+                        String query = String.format("SELECT * FROM %s WHERE %s='%s'",
+                                TABLE_NAME, COLUMN_2, studentID);
+                        ResultSet rs = statement.executeQuery(query);
+                        while(rs.next()){
+                            AttendanceRecord record = new AttendanceRecord(
+                                    rs.getString(COLUMN_1),
+                                    rs.getString(COLUMN_2),
+                                    rs.getString(COLUMN_3),
+                                    rs.getString(COLUMN_4),
+                                    rs.getString(COLUMN_5));
+
+                            records.add(record);
+                        }
+
+                        MariaCon.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return records;
+        }
+
     }
 
     public static class AttendanceRecord{

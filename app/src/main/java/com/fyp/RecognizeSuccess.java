@@ -1,5 +1,6 @@
 package com.fyp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -51,12 +52,14 @@ public class RecognizeSuccess extends AppCompatActivity {
         String venue = info.getVenue();
         tv_recognize_success.setText("Attend " + LectureID + " " + LectureName + "Success!");
 
-        tickView.toggle();
+
 
         //add record data to database
         AttendanceDB attendanceDB = new AttendanceDB(this);
         attendanceDB.insert(LectureID, UserManager.getCurrentUser().getID(), Date, lecturerName, venue);
         Log.e("Database", "Insert attendance");
+
+        tickView.toggle();
 
         //initialize button
         btn_finish.setOnClickListener(new View.OnClickListener() {
