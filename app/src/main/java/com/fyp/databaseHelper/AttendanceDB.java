@@ -60,7 +60,6 @@ public class AttendanceDB {
             return sqLiteAttendance.insert(col_1, col_2, col_3, col_4, col_5);
         }
         else{
-            //TODO Remote server
             return mariaAttendance.insert(col_1, col_2, col_3, col_4, col_5);
         }
     }
@@ -71,8 +70,7 @@ public class AttendanceDB {
             return sqLiteAttendance.getAttendanceByStudentID(studentID);
         }
         else{
-            //TODO Remote server
-            return null;
+            return mariaAttendance.getAttendanceByStudentID(studentID);
         }
     }
 
@@ -147,6 +145,7 @@ public class AttendanceDB {
                 data.add(record);
             }
 
+            Log.e("AttendanceDB", "data");
             return data;
         }
     }
@@ -233,6 +232,7 @@ public class AttendanceDB {
                 e.printStackTrace();
             }
 
+            Log.e("size", ""+records.size());
             return records;
         }
 

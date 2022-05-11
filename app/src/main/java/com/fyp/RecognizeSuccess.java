@@ -56,8 +56,8 @@ public class RecognizeSuccess extends AppCompatActivity {
 
         //add record data to database
         AttendanceDB attendanceDB = new AttendanceDB(this);
-        attendanceDB.insert(LectureID, UserManager.getCurrentUser().getID(), Date, lecturerName, venue);
-        Log.e("Database", "Insert attendance");
+        boolean isSuccess = attendanceDB.insert(LectureID, UserManager.getCurrentUser().getID(), Date, lecturerName, venue);
+        Log.e("Database", "Insert attendance" + LectureID + UserManager.getCurrentUser().getID() + Date + lecturerName + venue + " " +isSuccess);
 
         tickView.toggle();
 

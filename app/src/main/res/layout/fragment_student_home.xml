@@ -35,4 +35,16 @@
         android:layout_height="@dimen/myButton_height"
         android:text="Location"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:layout_below="@id/btn_location"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        android:id="@+id/btn_record"
+        android:layout_marginTop="@dimen/myButton_marginTOP"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/myButton_height"
+        android:text="record"/>
+
 </RelativeLayout>

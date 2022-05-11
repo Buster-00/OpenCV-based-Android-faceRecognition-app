@@ -1,5 +1,7 @@
 package com.fyp.student.fragment;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -20,7 +22,7 @@ public class studentViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new StudentHomeFragment();
             case 1:
-                return new StudentHomeFragment();
+                return new StudentAttendRecordFragment();
             case 2:
                 return new Fragment_profile();
             default:
