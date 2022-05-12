@@ -18,7 +18,7 @@
         android:layout_height="@dimen/myButton_height"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:text="Face Register"
         android:textColor="@color/black"
         app:backgroundTint="@color/white" />

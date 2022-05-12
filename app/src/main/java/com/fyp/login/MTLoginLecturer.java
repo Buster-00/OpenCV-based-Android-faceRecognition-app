@@ -217,7 +217,7 @@ public class MTLoginLecturer extends AppCompatActivity implements Validator.Vali
             //password current
             if(DB_password.equals(password)){
                 Toast.makeText(this, "Login successfully", Toast.LENGTH_SHORT).show();
-                initUser(LecturerID, DB);
+                initUser(LecturerID, lecturer);
                 return true;
             }
             //password inCurrent

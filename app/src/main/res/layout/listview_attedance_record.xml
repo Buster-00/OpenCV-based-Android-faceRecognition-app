@@ -24,13 +24,15 @@
             <LinearLayout
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:width="150dp"
-                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="LectureID"
@@ -38,8 +40,9 @@
                     />
 
                 <TextView
-                    android:width="150dp"
-                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="Date"
@@ -48,14 +51,17 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:gravity="center"
                     android:id="@+id/tv_lectureID"
-                    android:width="150dp"
+                    android:width="0dp"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -65,10 +71,12 @@
 
                 <TextView
                     android:id="@+id/tv_date"
-                    android:width="150dp"
+                    android:width="0dp"
+                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
+                    android:gravity="center"
                     android:text="/"
                     android:textSize="12dp"
                     />

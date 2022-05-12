@@ -82,7 +82,7 @@
             android:exported="false" />
         <activity
             android:screenOrientation="portrait"
-            android:name=".RecognizeSuccess"
+            android:name=".student.RecognizeSuccess"
             android:exported="false" />
         <activity android:name=".login.MTRegister" />
         <activity android:name=".TrainActivity" />

@@ -14,8 +14,8 @@ public class UserManager {
         currentUser = new User(ID, DB);
     }
 
-    public static void initUser(String ID, LecturerDB DB){
-        currentUser = new User(ID, DB);
+    public static void initUser(String ID, LecturerDB.Lecturer lecturer){
+        currentUser = new User(ID, lecturer);
     }
 
     public static class User{
@@ -31,9 +31,8 @@ public class UserManager {
             setLabel(DB.getLabelByID(ID));
         }
 
-        User(String ID, LecturerDB DB){
+        User(String ID, LecturerDB.Lecturer lecturer){
             setID(ID);
-            LecturerDB.Lecturer lecturer = DB.ReadByID(ID);
             setName(lecturer.getName());
         }
 

@@ -7,6 +7,7 @@ import android.view.SurfaceView;
 
 import com.fyp.databaseHelper.StudentDB;
 import com.fyp.helper.FaceDetectorHelper;
+import com.fyp.student.RecognizeSuccess;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;

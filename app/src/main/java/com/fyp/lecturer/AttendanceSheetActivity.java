@@ -1,6 +1,5 @@
 package com.fyp.lecturer;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,18 +10,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.fyp.FaceRecognitionActivity;
 import com.fyp.R;
-import com.fyp.RecognizeSuccess;
 import com.fyp.databaseHelper.AttendanceDB;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
-
-import org.mariadb.jdbc.internal.com.read.ReadInitialHandShakePacket;
 
 import java.util.Vector;
 
@@ -94,7 +89,7 @@ public class AttendanceSheetActivity extends AppCompatActivity {
 
         //initialize recycler_view student list
         if(studentName != null){
-            AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord(studentName, "swe1809223", "2022-1-1", "John", "D1-404");
+            AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord(studentName, "swe1809223", "2022-1-1", "John", "D1-404", "D123", "software engineering");
             data.add(attendanceRecord);
             Log.e("AttendanceSheet", ""+data.size());
             Log.e("AttendanceSheet", "studentName" + studentName);

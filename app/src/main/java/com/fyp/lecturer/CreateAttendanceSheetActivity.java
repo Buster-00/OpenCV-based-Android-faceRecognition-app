@@ -124,6 +124,7 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
         info.setDate(date[0]);
         info.setLectureID(lectureID);
         info.setLecturer(UserManager.getCurrentUser().getName());
+        info.setLecturerID(UserManager.getCurrentUser().getID());
         info.setLectureName(lectureName);
         info.setVenue(venue);
         info.setLatitude(location.getLatitude());

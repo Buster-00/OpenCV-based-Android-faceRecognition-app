@@ -10,6 +10,12 @@ import androidx.annotation.Nullable;
 
 import com.fyp.invariable.InVar;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
+
 public class LecturerDB {
 
     //Define names
@@ -23,6 +29,7 @@ public class LecturerDB {
 
     //local SQLite database
     SQLiteLecturerDB sqLiteLecturerDB;
+    MariaLecturer mariaLecturer;
     Context context;
 
     public LecturerDB(Context context){
@@ -31,7 +38,7 @@ public class LecturerDB {
             sqLiteLecturerDB = new SQLiteLecturerDB(context);
         }
         else{
-            //TODO REMOTE SERVER
+            mariaLecturer = new MariaLecturer();
         }
 
     }
@@ -41,8 +48,7 @@ public class LecturerDB {
             return sqLiteLecturerDB.insert(id, password, name);
         }
         else{
-            return false;
-            //TODO REMOTE SERVER
+            return mariaLecturer.insert(id, password, name);
         }
     }
 
@@ -51,8 +57,7 @@ public class LecturerDB {
             return sqLiteLecturerDB.ReadByID(id);
         }
         else{
-            return null;
-            //TODO REMOTE SERVER
+            return mariaLecturer.ReadByID(id);
         }
     }
 
@@ -114,12 +119,93 @@ public class LecturerDB {
         }
     }
 
+    private class MariaLecturer{
+
+        public boolean insert(String id, String password, String name){
+
+            final boolean[] isSuccess = {false};
+
+            //get Connection
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection mariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = mariaCon.createStatement();
+
+                        //create insert command
+                        String query = String.format("INSERT INTO %s(%s, %s, %s) VALUES('%s', '%s', '%s')",
+                                TABLE_NAME,COLUMN_1, COLUMN_2, COLUMN_3, id, password, name);
+                        int result = statement.executeUpdate(query);
+
+                        //close connection
+                        mariaCon.close();
+
+                        if(result > 0)
+                            isSuccess[0] = true;
+                        else
+                            isSuccess[0] = false;
+
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return isSuccess[0];
+        }
+
+        public Lecturer ReadByID(String id){
+
+            final Lecturer[] lecturer = new Lecturer[1];
+
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection mariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = mariaCon.createStatement();
+
+                        String query = String.format("SELECT * FROM %s WHERE %s='%s'",
+                                TABLE_NAME, COLUMN_1, id);
+
+                        ResultSet resultSet = statement.executeQuery(query);
+                        mariaCon.close();
+
+                        if (resultSet.next()){
+                             lecturer[0] = new Lecturer(resultSet.getString(COLUMN_1), resultSet.getString(COLUMN_2), resultSet.getString(COLUMN_3));
+                        }
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return lecturer[0];
+        }
+    }
+
     public class Lecturer{
         String id;
-        String name;
         String password;
+        String name;
 
-        public Lecturer(String id, String name, String password) {
+
+        public Lecturer(String id, String password, String name) {
             this.id = id;
             this.name = name;
             this.password = password;

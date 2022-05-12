@@ -98,6 +98,15 @@ public class QRCodeHelper {
         private String LectureID;
         private String LectureName;
         private String Lecturer;
+        private String lecturerID;
+
+        public String getLecturerID() {
+            return lecturerID;
+        }
+
+        public void setLecturerID(String lecturerID) {
+            this.lecturerID = lecturerID;
+        }
 
         public String getDate() {
             return date;

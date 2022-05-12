@@ -1,12 +1,9 @@
-package com.fyp;
+package com.fyp.student;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +12,10 @@ import android.widget.TextView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fyp.R;
 import com.fyp.databaseHelper.AttendanceDB;
 import com.fyp.databaseHelper.UserManager;
 import com.fyp.helper.QRCodeHelper;
-import com.fyp.lecturer.AttendanceSheetActivity;
-import com.fyp.student.Student_MainActivity;
 import com.github.chengang.library.TickView;
 
 public class RecognizeSuccess extends AppCompatActivity {
@@ -50,13 +46,15 @@ public class RecognizeSuccess extends AppCompatActivity {
         String Date = info.getDate();
         String lecturerName = info.getLecturer();
         String venue = info.getVenue();
+        String lecturerID = info.getLecturerID();
+
         tv_recognize_success.setText("Attend " + LectureID + " " + LectureName + "Success!");
 
 
 
         //add record data to database
         AttendanceDB attendanceDB = new AttendanceDB(this);
-        boolean isSuccess = attendanceDB.insert(LectureID, UserManager.getCurrentUser().getID(), Date, lecturerName, venue);
+        boolean isSuccess = attendanceDB.insert(LectureID, UserManager.getCurrentUser().getID(), Date, lecturerName, venue, lecturerID, LectureName);
         Log.e("Database", "Insert attendance" + LectureID + UserManager.getCurrentUser().getID() + Date + lecturerName + venue + " " +isSuccess);
 
         tickView.toggle();
