@@ -68,12 +68,18 @@ public class LecturerHomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lecturer_home, container, false);
 
         //Widget
-        Button btn_createNewAttendanceSheet;
-
-        //Initialize Widget
-        btn_createNewAttendanceSheet = view.findViewById(R.id.btn_newAttendanceSheet);
+        Button btn_createNewAttendanceSheet = view.findViewById(R.id.btn_newAttendanceSheet);
+        Button btn_viewAttendRecord = view.findViewById(R.id.btn_viewAttendRecord);
 
         btn_createNewAttendanceSheet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), CreateAttendanceSheetActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_viewAttendRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreateAttendanceSheetActivity.class);

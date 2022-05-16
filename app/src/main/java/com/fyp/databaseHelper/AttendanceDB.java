@@ -76,6 +76,16 @@ public class AttendanceDB {
         }
     }
 
+    public Vector<AttendanceRecord> getAttendanceByLecturerID(String lecturerID){
+        //using local database
+        if(!InVar.IS_CONNECT_TO_MARIA_DB){
+            return null;
+        }
+        else{
+            return mariaAttendance.getAttendanceByLecturerID(lecturerID);
+        }
+    }
+
     class SQLiteAttendance extends SQLiteOpenHelper {
 
         private static final int version = InVar.SQLite_version;
@@ -211,6 +221,52 @@ public class AttendanceDB {
                         //Retrieve by student ID
                         String query = String.format("SELECT * FROM %s WHERE %s='%s'",
                                 TABLE_NAME, COLUMN_2, studentID);
+                        ResultSet rs = statement.executeQuery(query);
+                        while(rs.next()){
+                            AttendanceRecord record = new AttendanceRecord(
+                                    rs.getString(COLUMN_1),
+                                    rs.getString(COLUMN_2),
+                                    rs.getString(COLUMN_3),
+                                    rs.getString(COLUMN_4),
+                                    rs.getString(COLUMN_5),
+                                    rs.getString(COLUMN_6),
+                                    rs.getString(COLUMN_7));
+
+                            records.add(record);
+                        }
+
+                        MariaCon.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Log.e("size", ""+records.size());
+            return records;
+        }
+
+        public Vector<AttendanceRecord> getAttendanceByLecturerID(String lecturerID){
+
+            Vector<AttendanceRecord> records = new Vector<>();
+
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = MariaCon.createStatement();
+
+                        //Retrieve by student ID
+                        String query = String.format("SELECT * FROM %s WHERE %s='%s'",
+                                TABLE_NAME, COLUMN_6, lecturerID);
                         ResultSet rs = statement.executeQuery(query);
                         while(rs.next()){
                             AttendanceRecord record = new AttendanceRecord(

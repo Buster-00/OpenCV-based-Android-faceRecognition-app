@@ -19,7 +19,7 @@ public class lecturerViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new LecturerHomeFragment();
             case 1:
-                return new LecturerHomeFragment();
+                return new LecturerAttendRecord();
             case 2:
                 return new Fragment_profile();
             default:

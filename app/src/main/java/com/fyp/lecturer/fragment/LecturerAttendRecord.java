@@ -3,12 +3,21 @@ package com.fyp.lecturer.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fyp.R;
+import com.fyp.databaseHelper.AttendanceDB;
+import com.fyp.databaseHelper.UserManager;
+import com.ramotion.foldingcell.FoldingCell;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
+
+import java.util.Vector;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +70,30 @@ public class LecturerAttendRecord extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lecturer_attend_record, container, false);
+        View view = inflater.inflate(R.layout.fragment_lecturer_attend_record, container, false);
+
+        //Widget
+        RecyclerView recyclerView = view.findViewById(R.id.recycle_view);
+
+        //Initialize recyclerView
+        AttendanceDB DB = new AttendanceDB(getActivity());
+        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(UserManager.getCurrentUser().getID());
+
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(getActivity(), R.layout.listview_carditem, data) {
+            @Override
+            protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord record, int position) {
+                FoldingCell foldingCell = holder.getView(R.id.folding_cell);
+                foldingCell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        foldingCell.toggle(false);
+                    }
+                });
+            }
+        });
+
+        return view;
     }
 }

@@ -22,7 +22,6 @@
 
         <LinearLayout
             android:backgroundTintMode="src_in"
-            android:background="@drawable/ploy3"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

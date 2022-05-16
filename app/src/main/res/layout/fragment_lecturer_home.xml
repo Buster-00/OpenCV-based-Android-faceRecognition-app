@@ -7,18 +7,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".lecturer.fragment.LecturerHomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="30dp"
+        android:id="@+id/card_view"
+        android:layout_marginHorizontal="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="Welcome,"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_userName"
+                android:textSize="40dp"
+                android:paddingLeft="20dp"
+                android:text="UserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_newAttendanceSheet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/myButton_height"
+        android:layout_below="@+id/card_view"
         android:layout_marginHorizontal="@dimen/myButton_marginLeft_left"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/myButton_bg_color"
         android:elevation="@dimen/myButton_elevation"
         android:text="Create attendance sheet"
@@ -27,6 +59,27 @@
         app:cornerRadius="@dimen/myButton_radius"
         app:elevation="10dp"
         app:icon="@drawable/ic_log_out"
+        app:iconGravity="textTop"
+        app:iconTint="@color/myButton_icon_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@color/black" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_below="@+id/btn_newAttendanceSheet"
+        android:id="@+id/btn_viewAttendRecord"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/myButton_height"
+        android:layout_marginHorizontal="@dimen/myButton_marginLeft_left"
+        android:layout_marginTop="@dimen/myButton_marginTOP"
+        android:backgroundTint="@color/myButton_bg_color"
+        android:elevation="@dimen/myButton_elevation"
+        android:text="View attendance Record"
+        android:textColor="@color/myButton_font_color"
+        android:textSize="12dp"
+        app:cornerRadius="@dimen/myButton_radius"
+        app:elevation="10dp"
+        app:icon="@drawable/ic_baseline_check_24"
         app:iconGravity="textTop"
         app:iconTint="@color/myButton_icon_color"
         app:layout_constraintStart_toStartOf="parent"
