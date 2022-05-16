@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
+import com.fyp.databaseHelper.LectureDB;
 import com.fyp.databaseHelper.UserManager;
 import com.fyp.helper.QRCodeHelper;
 import com.fyp.student.locationActivity;
@@ -109,6 +110,7 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
     public void onValidationSucceeded() {
 
         //Retrieve information
+        String lecturerID = UserManager.getCurrentUser().getID();
         String lectureID = et_LectureID.getText().toString();
         String lectureName = et_LectureName.getText().toString();
         String venue = et_Venue.getText().toString();
@@ -124,7 +126,7 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
         info.setDate(date[0]);
         info.setLectureID(lectureID);
         info.setLecturer(UserManager.getCurrentUser().getName());
-        info.setLecturerID(UserManager.getCurrentUser().getID());
+        info.setLecturerID(lecturerID);
         info.setLectureName(lectureName);
         info.setVenue(venue);
         info.setLatitude(location.getLatitude());
@@ -137,6 +139,10 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
             e.printStackTrace();
         }
 
+
+        //upload lecture Information to server
+        LectureDB DB = new LectureDB(this);
+        DB.insert(lectureID, lectureName, lecturerID, date[0], venue);
 
         //Turn to next activity
         Intent intent = new Intent(CreateAttendanceSheetActivity.this, LecturerQRCodeActivity.class);

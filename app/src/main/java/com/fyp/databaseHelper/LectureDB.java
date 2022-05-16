@@ -12,6 +12,14 @@ import androidx.annotation.Nullable;
 
 import com.fyp.invariable.InVar;
 
+import org.bytedeco.opencv.presets.opencv_core;
+
+import java.net.ConnectException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 import java.util.Vector;
 
 public class LectureDB {
@@ -23,9 +31,9 @@ public class LectureDB {
     //Define the column name
     public static final String COLUMN_1 = "lectureID";
     public static final String COLUMN_2 = "lectureName";
-    public static final String COLUMN_3 = "lecturer";
-    public static final String COLUMN_4 = "day";
-    public static final String COLUMN_5 = "time";
+    public static final String COLUMN_3 = "lecturerID";
+    public static final String COLUMN_4 = "date";
+    public static final String COLUMN_5 = "venue";
 
 
     //Context used for local database
@@ -40,6 +48,10 @@ public class LectureDB {
         if(!isConnect){
             //create local database helper
             sqLiteLectureDB = new SQLiteLectureDB(context);
+        }
+        else
+        {
+            mariaLecture = new MariaLecture();
         }
     }
 
@@ -61,13 +73,13 @@ public class LectureDB {
         }
     }
 
-    public Lecture getLectureByID(String ID){
+    public Vector<Lecture> getLectureByID(String ID){
         if(isConnect){
             //TODO
-            return null;
+            return mariaLecture.getLectureByID(ID);
         }
         else{
-            return sqLiteLectureDB.getLectureByID(ID);
+           return null;
         }
     }
 
@@ -173,13 +185,83 @@ public class LectureDB {
 
     class MariaLecture{
         public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5){
-            //TODO
-            return false;
+            final boolean[] isSuccess = {false};
+
+            Thread thread = new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        Connection mariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement= mariaCon.createStatement();
+
+                        String query = String.format("INSERT INTO %s(%s, %s, %s, %s, %s) VALUES('%s', '%s', '%s', '%s', '%s')",
+                                TABLE_NAME, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5, col_1, col_2, col_3, col_4, col_5);
+                        long rs = statement.executeUpdate(query);
+                        mariaCon.close();
+                        if(rs > 0){
+                            isSuccess[0] = true;
+                        }
+                        else {
+                            isSuccess[0] = false;
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return isSuccess[0];
         }
 
         public Vector<Lecture> getAllLecture() {
-            //TODO
             return null;
+        }
+
+        public Vector<Lecture> getLectureByID(String ID){
+            Vector<Lecture> lectureVector = new Vector<>();
+
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection mariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = mariaCon.createStatement();
+
+                        String query = String.format("SELECT * FROM %s WHERE %s = '%s'",
+                                TABLE_NAME, COLUMN_3, ID);
+
+                        ResultSet rs = statement.executeQuery(query);
+                        mariaCon.close();
+                        while (rs.next()){
+                            Lecture lecture = new Lecture(
+                                    rs.getString(COLUMN_1),
+                                    rs.getString(COLUMN_2),
+                                    rs.getString(COLUMN_3),
+                                    rs.getString(COLUMN_4),
+                                    rs.getString(COLUMN_5));
+
+                            lectureVector.add(lecture);
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return lectureVector;
         }
     }
 }

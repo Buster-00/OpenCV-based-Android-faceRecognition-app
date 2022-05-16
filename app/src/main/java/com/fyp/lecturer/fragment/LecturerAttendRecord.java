@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.fyp.R;
 import com.fyp.databaseHelper.AttendanceDB;
+import com.fyp.databaseHelper.Lecture;
+import com.fyp.databaseHelper.LectureDB;
 import com.fyp.databaseHelper.UserManager;
 import com.ramotion.foldingcell.FoldingCell;
 import com.zhy.adapter.recyclerview.CommonAdapter;
@@ -76,15 +79,20 @@ public class LecturerAttendRecord extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view);
 
         //Initialize recyclerView
-        AttendanceDB DB = new AttendanceDB(getActivity());
-        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(UserManager.getCurrentUser().getID());
+        LectureDB DB = new LectureDB(getActivity());
+        Vector<Lecture> data = DB.getLectureByID(UserManager.getCurrentUser().getID());
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(getActivity(), R.layout.listview_carditem, data) {
+        recyclerView.setAdapter(new CommonAdapter<Lecture>(getActivity(), R.layout.listview_carditem, data) {
             @Override
-            protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord record, int position) {
+            protected void convert(ViewHolder holder, Lecture record, int position) {
                 FoldingCell foldingCell = holder.getView(R.id.folding_cell);
+                holder.setText(R.id.tv_lectureName, record.getLectureName());
+                holder.setText(R.id.tv_lectureID,record.getLectureID());
+                holder.setText(R.id.tv_date, record.getDate());
+                holder.setText(R.id.tv_venue, record.getVenue());
+
                 foldingCell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -3,66 +3,55 @@ package com.fyp.databaseHelper;
 public class Lecture {
     private String lectureID;
     private String lectureName;
-    private String lecturer;
-    private String day;
+    private String lecturerID;
+    private String date;
+    private String venue;
 
-    public String getDay() {
-        return day;
+    public Lecture(String lectureID, String lectureName, String lecturerID, String date, String venue) {
+        this.lectureID = lectureID;
+        this.lectureName = lectureName;
+        this.lecturerID = lecturerID;
+        this.date = date;
+        this.venue = venue;
     }
 
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    private String time;
-
-
-    /**
-     * @param s1 lectureID
-     * @param s2 lectureName
-     * @param s3 lecturer
-     * @param s4 day
-     * @param s5 time
-     */
-    Lecture(String s1, String s2, String s3, String s4, String s5){
-        lectureID = s1;
-        lectureName = s2;
-        lecturer = s3;
-        day = s4;
-        time = s5;
-    }
-
-    public void setLectureID(String str){
-        lectureID = str;
-    }
-
-    public String getLectureID(){
+    public String getLectureID() {
         return lectureID;
     }
 
-    public void setLectureName(String str){
-        lectureName = str;
+    public void setLectureID(String lectureID) {
+        this.lectureID = lectureID;
     }
 
-    public String getLectureName(){
+    public String getLectureName() {
         return lectureName;
     }
 
-    public void setLecturer(String str){
-        lectureName = str;
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
     }
 
-    public String getLecturer(){
-        return lecturer;
+    public String getLecturerID() {
+        return lecturerID;
     }
 
+    public void setLecturerID(String lecturerID) {
+        this.lecturerID = lecturerID;
+    }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
 }
