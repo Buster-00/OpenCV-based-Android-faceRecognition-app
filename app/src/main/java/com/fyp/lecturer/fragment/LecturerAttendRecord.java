@@ -1,5 +1,6 @@
 package com.fyp.lecturer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.fyp.R;
@@ -16,6 +18,7 @@ import com.fyp.databaseHelper.AttendanceDB;
 import com.fyp.databaseHelper.Lecture;
 import com.fyp.databaseHelper.LectureDB;
 import com.fyp.databaseHelper.UserManager;
+import com.fyp.lecturer.AttendanceSheetActivity;
 import com.ramotion.foldingcell.FoldingCell;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -92,6 +95,16 @@ public class LecturerAttendRecord extends Fragment {
                 holder.setText(R.id.tv_lectureID,record.getLectureID());
                 holder.setText(R.id.tv_date, record.getDate());
                 holder.setText(R.id.tv_venue, record.getVenue());
+                Button btn_viewDetail = holder.getView(R.id.btn_click);
+
+                btn_viewDetail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), AttendanceSheetActivity.class);
+                        intent.putExtra("LectureID", record.getLectureID());
+                        startActivity(intent);
+                    }
+                });
 
                 foldingCell.setOnClickListener(new View.OnClickListener() {
                     @Override

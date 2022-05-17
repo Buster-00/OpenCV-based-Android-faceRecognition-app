@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:don="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <com.ramotion.foldingcell.FoldingCell
         android:elevation="10dp"
@@ -49,14 +49,9 @@
             <TextView
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Please select the attendance time"/>
+                android:layout_height="200dp"
+                android:text=""/>
 
-
-            <CalendarView
-                android:id="@+id/calendar_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_gravity="end"
@@ -65,7 +60,7 @@
                 android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
                 android:layout_marginRight="10dp"
-                android:text="Attendance"/>
+                android:text="View detail"/>
 
         </LinearLayout>
 
@@ -122,13 +117,13 @@
 
                     <TextView
                         android:textColor="@color/black"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:id="@+id/tv_lectureName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:paddingLeft="15dp"
-                        android:textSize="25dp"
+                        android:textSize="20dp"
                         android:text="LectureName" />
 
 

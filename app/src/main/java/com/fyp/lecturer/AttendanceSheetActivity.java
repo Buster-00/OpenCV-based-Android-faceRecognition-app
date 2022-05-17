@@ -30,8 +30,6 @@ public class AttendanceSheetActivity extends AppCompatActivity {
     RecyclerView recycle_student_list;
     Toolbar toolbar;
 
-    //Recycler view data
-    Vector<AttendanceDB.AttendanceRecord> data = new Vector<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +84,13 @@ public class AttendanceSheetActivity extends AppCompatActivity {
         Log.e("AttendanceSheet", "onResume");
         Intent intent = getIntent();
         String studentName = intent.getStringExtra("NAME");
+        String lectureID = intent.getStringExtra("LectureID");
+        Log.e("lectureID", lectureID);
 
         //initialize recycler_view student list
-        if(studentName != null){
-            AttendanceDB.AttendanceRecord attendanceRecord = new AttendanceDB.AttendanceRecord(studentName, "swe1809223", "2022-1-1", "John", "D1-404", "D123", "software engineering");
-            data.add(attendanceRecord);
-            Log.e("AttendanceSheet", ""+data.size());
-            Log.e("AttendanceSheet", "studentName" + studentName);
-        }
-
+        AttendanceDB DB = new AttendanceDB(this);
+        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(lectureID);
+        Log.e("lectureID", "size" + data.size());
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recycle_student_list.setLayoutManager(mLayoutManager);

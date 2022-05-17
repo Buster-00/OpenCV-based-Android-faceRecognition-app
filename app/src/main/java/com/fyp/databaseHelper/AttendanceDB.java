@@ -266,7 +266,7 @@ public class AttendanceDB {
 
                         //Retrieve by student ID
                         String query = String.format("SELECT * FROM %s WHERE %s='%s'",
-                                TABLE_NAME, COLUMN_6, lecturerID);
+                                TABLE_NAME, COLUMN_1, lecturerID);
                         ResultSet rs = statement.executeQuery(query);
                         while(rs.next()){
                             AttendanceRecord record = new AttendanceRecord(
