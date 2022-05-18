@@ -46,21 +46,43 @@
             </androidx.appcompat.widget.Toolbar>
 
 
-            <TextView
-                android:layout_margin="5dp"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:text=""/>
+                android:layout_height="250dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="50dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/btn_click"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="View detail"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="50dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="View detail"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="50dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="View detail"/>
+
+            </LinearLayout>
 
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_gravity="end"
-                android:id="@+id/btn_click"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="15dp"
-                android:layout_marginRight="10dp"
-                android:text="View detail"/>
+
 
         </LinearLayout>
 

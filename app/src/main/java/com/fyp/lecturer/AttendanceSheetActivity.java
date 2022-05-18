@@ -97,7 +97,7 @@ public class AttendanceSheetActivity extends AppCompatActivity {
         recycle_student_list.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(this, R.layout.listview_attedance_record, data) {
             @Override
             protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord o, int position) {
-                holder.setText(R.id.tv_lectureID, o.getLectureID());
+                holder.setText(R.id.tv_studentID, o.getStudentID());
                 holder.setText(R.id.tv_date,o.getDate());
             }
         });

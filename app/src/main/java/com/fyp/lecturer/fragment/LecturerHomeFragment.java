@@ -14,6 +14,12 @@ import com.fyp.R;
 import com.fyp.lecturer.AttendanceSheetActivity;
 import com.fyp.lecturer.CreateAttendanceSheetActivity;
 
+import java.util.Calendar;
+
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.HorizontalCalendarView;
+import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LecturerHomeFragment#newInstance} factory method to
@@ -71,6 +77,9 @@ public class LecturerHomeFragment extends Fragment {
         Button btn_createNewAttendanceSheet = view.findViewById(R.id.btn_newAttendanceSheet);
         Button btn_viewAttendRecord = view.findViewById(R.id.btn_viewAttendRecord);
 
+        //Initialization
+        setCalendarView(view);
+
         btn_createNewAttendanceSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,5 +98,39 @@ public class LecturerHomeFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private void setCalendarView(View view){
+        /* starts before 1 month from now */
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.MONTH, -1);
+
+        /* ends after 1 month from now */
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 1);
+
+        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(view, R.id.calendar_view)
+                .range(startDate, endDate)
+                .datesNumberOnScreen(1)
+                .build();
+
+
+        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
+            @Override
+            public void onDateSelected(Calendar date, int position) {
+
+            }
+
+            @Override
+            public void onCalendarScroll(HorizontalCalendarView calendarView,
+                                         int dx, int dy) {
+
+            }
+
+            @Override
+            public boolean onDateLongClicked(Calendar date, int position) {
+                return true;
+            }
+        });
     }
 }
