@@ -9,10 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.fyp.R;
+import com.fyp.databaseHelper.UserManager;
 import com.fyp.lecturer.AttendanceSheetActivity;
 import com.fyp.lecturer.CreateAttendanceSheetActivity;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -76,9 +80,10 @@ public class LecturerHomeFragment extends Fragment {
         //Widget
         Button btn_createNewAttendanceSheet = view.findViewById(R.id.btn_newAttendanceSheet);
         Button btn_viewAttendRecord = view.findViewById(R.id.btn_viewAttendRecord);
+        TextView tv_username = view.findViewById(R.id.tv_userName);
 
         //Initialization
-        setCalendarView(view);
+        //setCalendarView(view);
 
         btn_createNewAttendanceSheet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +100,8 @@ public class LecturerHomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        tv_username.setText(UserManager.getCurrentUser().getName());
 
         // Inflate the layout for this fragment
         return view;

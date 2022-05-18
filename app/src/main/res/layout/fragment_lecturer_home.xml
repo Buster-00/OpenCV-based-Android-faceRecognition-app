@@ -9,6 +9,7 @@
 
 
     <androidx.cardview.widget.CardView
+        app:cardCornerRadius="10dp"
         android:layout_marginTop="30dp"
         android:id="@+id/card_view"
         android:layout_marginHorizontal="20dp"
@@ -36,10 +37,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <devs.mulham.horizontalcalendar.HorizontalCalendarView
-                android:id="@+id/calendar_view"
+
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="5dp"
+                android:backgroundTint="@color/purple_700"
+                android:layout_margin="20dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+
+                <TextClock
+
+                    android:background="@color/purple_700"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="center"
+                    android:format24Hour ="HH:mm"
+                    android:format12Hour ="hh:mm"
+                    android:textColor="@color/white"
+                    android:textSize="70dp" />
+
+                <TextClock
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/purple_700"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_time"
+                    android:layout_centerHorizontal="true"
+                    android:format12Hour="MMM dd, yyyy"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+            </androidx.cardview.widget.CardView>
+
+
+
 
         </LinearLayout>
 

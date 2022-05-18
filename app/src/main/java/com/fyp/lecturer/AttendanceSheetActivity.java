@@ -24,9 +24,6 @@ import java.util.Vector;
 public class AttendanceSheetActivity extends AppCompatActivity {
 
     //widget
-    FloatingActionButton btn_add_student;
-    FloatingActionButton btn_cancel;
-    FloatingActionButton btn_done;
     RecyclerView recycle_student_list;
     Toolbar toolbar;
 
@@ -37,29 +34,9 @@ public class AttendanceSheetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_attendance_sheet);
 
         //initialize widget
-        btn_add_student = findViewById(R.id.btn_add_student);
-        btn_cancel = findViewById(R.id.btn_cancel);
-        btn_done = findViewById(R.id.btn_done);
         recycle_student_list = findViewById(R.id.recycle_student_list);
         toolbar = findViewById(R.id.toolbar);
 
-        btn_add_student.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AttendanceSheetActivity.this, FaceRecognitionActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(AttendanceSheetActivity.this, CreateAttendanceSheetActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Toast.makeText(AttendanceSheetActivity.this, "Cancel the attendance sheet", Toast.LENGTH_LONG).show();
-                startActivity(intent);
-            }
-        });
 
         Log.e("AttendanceSheet", "onCreate");
 
@@ -88,17 +65,24 @@ public class AttendanceSheetActivity extends AppCompatActivity {
         Log.e("lectureID", lectureID);
 
         //initialize recycler_view student list
-        AttendanceDB DB = new AttendanceDB(this);
-        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(lectureID);
-        Log.e("lectureID", "size" + data.size());
+//        AttendanceDB DB = new AttendanceDB(this);
+//        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(lectureID);
+//        Log.e("lectureID", "size" + data.size());
 
-        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+        Vector<AttendanceDB.AttendanceRecord> data = new Vector<>();
+        for(int i = 0; i < 30; i++){
+            data.add(new AttendanceDB.AttendanceRecord("test", "test", "test", "test", "test", "test", "test"));
+        }
+
+
+
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recycle_student_list.setLayoutManager(mLayoutManager);
-        recycle_student_list.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(this, R.layout.listview_attedance_record, data) {
+        recycle_student_list.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(this, R.layout.recycleview_student_item, data) {
             @Override
             protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord o, int position) {
                 holder.setText(R.id.tv_studentID, o.getStudentID());
-                holder.setText(R.id.tv_date,o.getDate());
+                holder.setText(R.id.tv_studentName,o.getLectureName());
             }
         });
     }
