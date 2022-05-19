@@ -9,6 +9,7 @@
     tools:context=".lecturer.AttendanceSheetActivity">
 
    <androidx.appcompat.widget.Toolbar
+       app:titleMarginStart="50dp"
        app:title="Attendance Sheet"
        app:titleTextColor="@color/white"
        android:id="@+id/toolbar"

@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.fyp.R;
+import com.fyp.databaseHelper.Lecture;
+import com.fyp.databaseHelper.LectureDB;
 import com.fyp.databaseHelper.UserManager;
 import com.fyp.lecturer.AttendanceSheetActivity;
 import com.fyp.lecturer.CreateAttendanceSheetActivity;
@@ -19,6 +21,7 @@ import com.fyp.lecturer.CreateAttendanceSheetActivity;
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
+import java.util.Vector;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarView;
@@ -81,6 +84,7 @@ public class LecturerHomeFragment extends Fragment {
         Button btn_createNewAttendanceSheet = view.findViewById(R.id.btn_newAttendanceSheet);
         Button btn_viewAttendRecord = view.findViewById(R.id.btn_viewAttendRecord);
         TextView tv_username = view.findViewById(R.id.tv_userName);
+        TextView tv_records = view.findViewById(R.id.tv_records);
 
         //Initialization
         //setCalendarView(view);
@@ -98,10 +102,17 @@ public class LecturerHomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreateAttendanceSheetActivity.class);
                 startActivity(intent);
+
             }
         });
 
-        tv_username.setText(UserManager.getCurrentUser().getName());
+        tv_username.setText(UserManager.userName);
+
+        //set sheets number
+        LectureDB DB = new LectureDB(getActivity());
+        Vector<Lecture> lectures = DB.getLectureByID(UserManager.getCurrentUser().getID());
+        int size = lectures.size();
+        tv_records.setText(String.valueOf(size));
 
         // Inflate the layout for this fragment
         return view;

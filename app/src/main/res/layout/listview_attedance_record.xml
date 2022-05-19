@@ -35,7 +35,7 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:text="StudentID"
+                    android:text="LectureID"
                     android:textSize="18dp"
                     />
 
@@ -59,7 +59,7 @@
 
                 <TextView
                     android:gravity="center"
-                    android:id="@+id/tv_studentID"
+                    android:id="@+id/tv_lectureID"
                     android:width="0dp"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"

@@ -35,6 +35,7 @@ public class AttendanceDB {
     public static final String COLUMN_5 = "venue";
     public static final String COLUMN_6 = "lecturerID";
     public static final String COLUMN_7 = "lectureName";
+    public static final String COLUMN_8 = "studentName";
 
     //local database
     SQLiteAttendance sqLiteAttendance;
@@ -55,14 +56,14 @@ public class AttendanceDB {
     }
 
     //Param
-    public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7){
+    public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7, String col_8){
 
         //using local database
         if(!InVar.IS_CONNECT_TO_MARIA_DB){
-            return sqLiteAttendance.insert(col_1, col_2, col_3, col_4, col_5, col_6, col_7);
+            return sqLiteAttendance.insert(col_1, col_2, col_3, col_4, col_5, col_6, col_7, col_8);
         }
         else{
-            return mariaAttendance.insert(col_1, col_2, col_3, col_4, col_5, col_6, col_7);
+            return mariaAttendance.insert(col_1, col_2, col_3, col_4, col_5, col_6, col_7, col_8);
         }
     }
 
@@ -114,7 +115,7 @@ public class AttendanceDB {
                     " UNIQUE(lectureID, studentID, date, lecturerName, venue))");
         }
 
-        public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7){
+        public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7, String col_8){
 
             //get database reference
             SQLiteDatabase DB = getWritableDatabase();
@@ -126,6 +127,7 @@ public class AttendanceDB {
             contentValues.put(COLUMN_5, col_5);
             contentValues.put(COLUMN_6, col_6);
             contentValues.put(COLUMN_7, col_7);
+            contentValues.put(COLUMN_8, col_8);
 
             //insert data into database
             long result = DB.insert(TABLE_NAME, null, contentValues);
@@ -157,7 +159,8 @@ public class AttendanceDB {
                         cursor.getString(cursor.getColumnIndex(COLUMN_4)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_5)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_6)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_7)));
+                        cursor.getString(cursor.getColumnIndex(COLUMN_7)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_8)));
                 data.add(record);
             }
 
@@ -168,7 +171,7 @@ public class AttendanceDB {
 
     class MariaAttendance{
 
-        public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7){
+        public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7, String col_8){
 
             final boolean[] isSuccess = {false};
 
@@ -179,8 +182,8 @@ public class AttendanceDB {
                         Statement statement = MariaCon.createStatement();
 
                         //Insert new attendance record into statement
-                        String query = String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                                TABLE_NAME, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5, COLUMN_6, COLUMN_7, col_1, col_2, col_3, col_4, col_5, col_6, col_7);
+                        String query = String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                                TABLE_NAME, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5, COLUMN_6, COLUMN_7, COLUMN_8, col_1, col_2, col_3, col_4, col_5, col_6, col_7, col_8);
                         int rs = statement.executeUpdate(query);
                         if(rs > 0){
                             isSuccess[0] = true;
@@ -230,7 +233,8 @@ public class AttendanceDB {
                                     rs.getString(COLUMN_4),
                                     rs.getString(COLUMN_5),
                                     rs.getString(COLUMN_6),
-                                    rs.getString(COLUMN_7));
+                                    rs.getString(COLUMN_7),
+                                    rs.getString(COLUMN_8));
 
                             records.add(record);
                         }
@@ -276,7 +280,8 @@ public class AttendanceDB {
                                     rs.getString(COLUMN_4),
                                     rs.getString(COLUMN_5),
                                     rs.getString(COLUMN_6),
-                                    rs.getString(COLUMN_7));
+                                    rs.getString(COLUMN_7),
+                                    rs.getString(COLUMN_8));
 
                             records.add(record);
                         }
@@ -311,8 +316,9 @@ public class AttendanceDB {
         String venue;
         String lecturerID;
         String lectureName;
+        String studentName;
 
-        public AttendanceRecord(String lectureID, String studentID, String date, String lecturerName, String venue, String lecturerID, String lectureName) {
+        public AttendanceRecord(String lectureID, String studentID, String date, String lecturerName, String venue, String lecturerID, String lectureName, String studentName) {
             this.lectureID = lectureID;
             this.studentID = studentID;
             this.date = date;
@@ -320,6 +326,15 @@ public class AttendanceDB {
             this.venue = venue;
             this.lecturerID = lecturerID;
             this.lectureName = lectureName;
+            this.studentName = studentName;
+        }
+
+        public String getStudentName() {
+            return studentName;
+        }
+
+        public void setStudentName(String studentName) {
+            this.studentName = studentName;
         }
 
         public String getLectureName() {

@@ -65,14 +65,11 @@ public class AttendanceSheetActivity extends AppCompatActivity {
         Log.e("lectureID", lectureID);
 
         //initialize recycler_view student list
-//        AttendanceDB DB = new AttendanceDB(this);
-//        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(lectureID);
-//        Log.e("lectureID", "size" + data.size());
+        AttendanceDB DB = new AttendanceDB(this);
+        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(lectureID);
+        Log.e("lectureID", "size" + data.size());
 
-        Vector<AttendanceDB.AttendanceRecord> data = new Vector<>();
-        for(int i = 0; i < 30; i++){
-            data.add(new AttendanceDB.AttendanceRecord("test", "test", "test", "test", "test", "test", "test"));
-        }
+
 
 
 
@@ -82,7 +79,7 @@ public class AttendanceSheetActivity extends AppCompatActivity {
             @Override
             protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord o, int position) {
                 holder.setText(R.id.tv_studentID, o.getStudentID());
-                holder.setText(R.id.tv_studentName,o.getLectureName());
+                holder.setText(R.id.tv_studentName,o.getStudentName());
             }
         });
     }

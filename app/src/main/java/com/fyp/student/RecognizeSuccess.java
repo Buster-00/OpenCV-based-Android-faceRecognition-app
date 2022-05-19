@@ -47,6 +47,7 @@ public class RecognizeSuccess extends AppCompatActivity {
         String lecturerName = info.getLecturer();
         String venue = info.getVenue();
         String lecturerID = info.getLecturerID();
+        String studentName = UserManager.getCurrentUser().getName();
 
         tv_recognize_success.setText("Attend " + LectureID + " " + LectureName + "Success!");
 
@@ -54,7 +55,7 @@ public class RecognizeSuccess extends AppCompatActivity {
 
         //add record data to database
         AttendanceDB attendanceDB = new AttendanceDB(this);
-        boolean isSuccess = attendanceDB.insert(LectureID, UserManager.getCurrentUser().getID(), Date, lecturerName, venue, lecturerID, LectureName);
+        boolean isSuccess = attendanceDB.insert(LectureID, UserManager.getCurrentUser().getID(), Date, lecturerName, venue, lecturerID, LectureName,studentName);
         Log.e("Database", "Insert attendance" + LectureID + UserManager.getCurrentUser().getID() + Date + lecturerName + venue + " " +isSuccess);
 
         tickView.toggle();

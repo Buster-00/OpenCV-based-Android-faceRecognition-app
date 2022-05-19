@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".lecturer.LecturerQRCodeActivity"
+    android:layout_width="wrap_content"
+   android:layout_height="wrap_content">
+
+
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg2"
-    tools:context=".lecturer.LecturerQRCodeActivity">
+    >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,19 +25,77 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <ImageView
-        android:id="@+id/img_QRCode"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="320dp"
-        android:layout_height="320dp"/>
-
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/img_QRCode"
-        android:textColor="@color/white"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please scan the QR code to continue attendance"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:elevation="20dp"
+        app:cardCornerRadius="15dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Please scan the QR code to continue attendance"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/img_QRCode"
+                android:layout_width="320dp"
+                android:layout_height="320dp"
+                android:layout_below="@+id/tv_title"
+                android:layout_centerInParent="true" />
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_below="@+id/card_view"
+        android:id="@+id/btn_settings"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_baseline_settings_24"
+        android:backgroundTint="@android:color/holo_orange_dark"
+        android:layout_centerHorizontal="true"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/card_view2"
+        android:layout_below="@+id/btn_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_margin="20dp"
+            android:layout_width="320dp"
+            android:layout_height="500dp"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_view2"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_baseline_add_24" />
+
+
 
 </RelativeLayout>
+
+</ScrollView>

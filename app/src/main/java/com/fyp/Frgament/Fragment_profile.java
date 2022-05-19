@@ -67,10 +67,12 @@ public class Fragment_profile extends Fragment {
 
         //widget
         TextView tv_userName;
+        TextView tv_userID = view.findViewById(R.id.tv_userID);
 
         //initialize widget;
         tv_userName = view.findViewById(R.id.tv_userName);
         tv_userName.setText(UserManager.getCurrentUser().getName());
+        tv_userID.setText(UserManager.getCurrentUser().getID());
 
         return view;
     }

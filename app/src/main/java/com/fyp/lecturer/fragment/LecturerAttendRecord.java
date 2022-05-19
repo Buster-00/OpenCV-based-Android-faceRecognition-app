@@ -13,12 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
 import com.fyp.databaseHelper.AttendanceDB;
 import com.fyp.databaseHelper.Lecture;
 import com.fyp.databaseHelper.LectureDB;
 import com.fyp.databaseHelper.UserManager;
+import com.fyp.helper.QRCodeHelper;
 import com.fyp.lecturer.AttendanceSheetActivity;
+import com.fyp.lecturer.LecturerQRCodeActivity;
 import com.ramotion.foldingcell.FoldingCell;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -96,12 +101,41 @@ public class LecturerAttendRecord extends Fragment {
                 holder.setText(R.id.tv_date, record.getDate());
                 holder.setText(R.id.tv_venue, record.getVenue());
                 Button btn_viewDetail = holder.getView(R.id.btn_click);
+                Button btn_addStudent = holder.getView(R.id.btn_addStudent);
 
                 btn_viewDetail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getActivity(), AttendanceSheetActivity.class);
                         intent.putExtra("LectureID", record.getLectureID());
+                        startActivity(intent);
+                    }
+                });
+
+                btn_addStudent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), LecturerQRCodeActivity.class);
+
+                        //set info
+                        QRCodeHelper.QRInformation info = new QRCodeHelper.QRInformation();
+                        info.setDate(record.getDate());
+                        info.setLectureID(record.getLectureID());
+                        info.setLecturer(UserManager.getCurrentUser().getName());
+                        info.setLecturerID(record.getLectureID());
+                        info.setLectureName(record.getLectureName());
+                        info.setVenue(record.getVenue());
+                        info.setLatitude(UserManager.location.getLatitude());
+                        info.setLongitude(UserManager.location.getLongitude());
+                        ObjectMapper mapper = new JsonMapper();
+                        String json = new String();
+                        try {
+                            json = mapper.writeValueAsString(info);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+
+                        intent.putExtra("INFO", json);
                         startActivity(intent);
                     }
                 });

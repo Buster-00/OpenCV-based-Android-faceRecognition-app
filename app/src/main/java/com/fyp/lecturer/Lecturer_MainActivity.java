@@ -51,9 +51,9 @@ public class Lecturer_MainActivity extends DrawerActivity {
 
         //Initialize bottom navigation bar
         mNavigationController = pageNavigationView.material()
-                .addItem(R.drawable.ic_audiotrack_black_24dp, "Home1")
-                .addItem(R.drawable.ic_audiotrack_black_24dp, "Home2")
-                .addItem(R.drawable.ic_audiotrack_black_24dp, "Home3")
+                .addItem(R.drawable.ic_home, "Home")
+                .addItem(R.drawable.ic_baseline_table_rows_24, "AttendanceSheet")
+                .addItem(R.drawable.ic_baseline_person_24, "Profile")
                 .build();
 
         mNavigationController.setMessageNumber(0, 8);

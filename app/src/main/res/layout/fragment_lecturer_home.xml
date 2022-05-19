@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/tv_userName"
                 android:textSize="40dp"
                 android:paddingLeft="20dp"
@@ -37,40 +38,88 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-
-            <androidx.cardview.widget.CardView
-                app:cardCornerRadius="5dp"
-                android:backgroundTint="@color/purple_700"
-                android:layout_margin="20dp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextClock
-
-                    android:background="@color/purple_700"
+                <androidx.cardview.widget.CardView
+                    android:elevation="20dp"
+                    app:cardCornerRadius="5dp"
+                    android:layout_margin="20dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
-                    android:layout_gravity="center"
-                    android:format24Hour ="HH:mm"
-                    android:format12Hour ="hh:mm"
-                    android:textColor="@color/white"
-                    android:textSize="70dp" />
+                    android:layout_height="wrap_content">
 
-                <TextClock
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@color/purple_700"
+                    <RelativeLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="100dp">
+
+                        <TextClock
+                            android:id="@+id/tv_month"
+                            android:textAlignment="center"
+                            android:background="@color/purple_700"
+                            android:paddingHorizontal="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:format12Hour="MMM"
+                            android:textColor="@color/white"
+                            android:textSize="20dp" />
+
+                        <TextClock
+                            android:layout_below="@+id/tv_month"
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="0dp"
+                            android:format12Hour ="dd"
+                            android:textColor="@color/black"
+                            android:textSize="70dp" />
+
+                        <TextClock
+                            android:background="@color/purple_700"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_time"
+                            android:paddingBottom="5dp"
+                            android:format12Hour="yyyy"
+                            android:textColor="@color/white"
+                            android:textAlignment="center" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_time"
-                    android:layout_centerHorizontal="true"
-                    android:format12Hour="MMM dd, yyyy"
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
+                    android:layout_height="wrap_content">
 
-            </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Existing Attendance Sheets"/>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:textSize="70dp"
+                        android:textColor="@color/green"
+                        android:id="@+id/tv_records"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1"/>
+
+                </LinearLayout>
+
+
+
+
+
+
+            </LinearLayout>
 
 
 
@@ -93,29 +142,30 @@
         android:textSize="12dp"
         app:cornerRadius="@dimen/myButton_radius"
         app:elevation="10dp"
-        app:icon="@drawable/ic_log_out"
-        app:iconGravity="textTop"
+        app:icon="@drawable/qr_code_"
+        app:iconSize="30dp"
+        app:iconGravity="textStart"
         app:iconTint="@color/myButton_icon_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:rippleColor="@color/black" />
 
     <com.google.android.material.button.MaterialButton
-        android:layout_below="@+id/btn_newAttendanceSheet"
         android:id="@+id/btn_viewAttendRecord"
         android:layout_width="match_parent"
         android:layout_height="@dimen/myButton_height"
+        android:layout_below="@+id/btn_newAttendanceSheet"
         android:layout_marginHorizontal="@dimen/myButton_marginLeft_left"
         android:layout_marginTop="@dimen/myButton_marginTOP"
         android:backgroundTint="@color/myButton_bg_color"
         android:elevation="@dimen/myButton_elevation"
-        android:text="View attendance Record"
+        android:text="View attendance SHEET"
         android:textColor="@color/myButton_font_color"
         android:textSize="12dp"
         app:cornerRadius="@dimen/myButton_radius"
         app:elevation="10dp"
         app:icon="@drawable/ic_baseline_check_24"
-        app:iconGravity="textTop"
+        app:iconGravity="textStart"
         app:iconTint="@color/myButton_icon_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
