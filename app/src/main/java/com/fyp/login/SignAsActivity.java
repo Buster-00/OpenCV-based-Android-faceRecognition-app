@@ -27,8 +27,8 @@ import java.util.List;
 public class SignAsActivity extends AppCompatActivity {
 
     //Widget
-    ImageButton btn_logInAsStudent;
-    ImageButton btn_logInAsLecturer;
+    Button btn_logInAsStudent;
+    Button btn_logInAsLecturer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

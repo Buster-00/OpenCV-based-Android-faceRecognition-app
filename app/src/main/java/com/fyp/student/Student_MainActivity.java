@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fyp.MainActivity;
@@ -52,9 +53,9 @@ public class Student_MainActivity extends DrawerActivity {
 
         //Initialize bottom navigation bar
         mNavigationController = pageNavigationView.material()
-                .addItem(R.drawable.ic_home, "Home1")
-                .addItem(R.drawable.ic_home, "Home2")
-                .addItem(R.drawable.ic_baseline_person_24, "Home3")
+                .addItem(R.drawable.ic_home, "Home")
+                .addItem(R.drawable.ic_baseline_receipt_24, "records")
+                .addItem(R.drawable.ic_baseline_person_24, "profile")
                 .build();
 
         mNavigationController.setMessageNumber(0, 8);

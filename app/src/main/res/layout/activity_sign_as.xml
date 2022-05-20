@@ -1,47 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:orientation="vertical"
     tools:context=".login.SignAsActivity">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_loginAsStudent"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="80dp"
-        android:background="@drawable/student"
-        android:backgroundTint="@color/white"
-        />
-
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_loginAsStudent"
-        android:layout_alignLeft="@+id/btn_loginAsStudent"
-        android:text="Log in as student" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btn_loginAsLecturer"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="230dp"
-        android:background="@drawable/lecturer"
-        android:backgroundTint="@color/white"
-        />
+        android:textColor="@color/blue"
+        android:text="welcome,"
+        android:textSize="60dp"/>
 
     <TextView
-        android:layout_marginTop="10dp"
+        android:textColor="@color/blue"
+        android:layout_marginLeft="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_loginAsStudent"
-        android:layout_alignLeft="@+id/btn_loginAsLecturer"
-        android:text="Log in as lecturer" />
+        android:gravity="left"
+        android:textSize="20dp"
+        android:paddingRight="20dp"
+        android:text="Please select your account type"/>
+
+    <View
+        android:backgroundTint="@color/red"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="?android:attr/listDivider" />
+
+        <LinearLayout
+            android:layout_marginTop="150dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginLeft="10dp"
+                    android:elevation="10dp"
+                    android:backgroundTint="@color/white"
+                    app:iconTint="@color/blue"
+                    android:textColor="@color/blue"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:id="@+id/btn_loginAsStudent"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:text="Log in as student"
+                    android:textSize="10dp"
+                    app:icon="@drawable/student"
+                    app:iconGravity="textTop"
+                    app:iconSize="50dp" />
+
+            </FrameLayout>
 
 
-</RelativeLayout>
+
+            <FrameLayout
+                android:elevation="1dp"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginRight="10dp"
+                    android:backgroundTint="@color/white"
+                    app:iconTint="@color/blue"
+                    android:textColor="@color/blue"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_loginAsLecturer"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    app:icon="@drawable/lecturer"
+                    app:iconSize="50dp"
+                    app:iconGravity="textTop"
+                    app:iconPadding="10dp"
+                    android:text="Log in as lecturer"
+                    android:textSize="10dp"
+
+                    />
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+
+
+
+</LinearLayout>

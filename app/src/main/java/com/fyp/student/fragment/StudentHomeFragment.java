@@ -9,12 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.fyp.FaceRegisterActivity;
 import com.fyp.R;
+import com.fyp.databaseHelper.AttendanceDB;
+import com.fyp.databaseHelper.UserManager;
 import com.fyp.student.locationActivity;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
+import java.util.Vector;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +79,8 @@ public class StudentHomeFragment extends Fragment {
         Button btn_face_register;
         Button btn_location;
         Button btn_record;
+        TextView tv_username = view.findViewById(R.id.tv_userName);
+        TextView tv_records = view.findViewById(R.id.tv_records);
 
         //initialize widgets
         btn_face_register = view.findViewById(R.id.btn_face_register);
@@ -94,6 +102,10 @@ public class StudentHomeFragment extends Fragment {
             }
         });
 
+        tv_username.setText(UserManager.getCurrentUser().getName());
+        AttendanceDB DB = new AttendanceDB(getActivity());
+        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByStudentID(UserManager.getCurrentUser().getID());
+        tv_records.setText(String.valueOf(data.size()));
 
         return view;
     }
