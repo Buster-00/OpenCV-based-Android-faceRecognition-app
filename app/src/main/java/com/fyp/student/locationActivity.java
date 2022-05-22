@@ -57,8 +57,7 @@ public class locationActivity extends AppCompatActivity {
 
 
         location = getLocation();
-        double distance = GetDistanceUtils.distanceInMi(22.84, 108.33, location.getLatitude(), location.getLongitude());
-        tv_distance.setText(""+distance);
+        tv_distance.setText("longitude: "+ location.getLongitude()+"latitude: "+location.getLatitude());
         imageView_QRCode.setImageBitmap(createQRCodeBitmap("latitude: " + location.getLatitude() + "longitude: " + location.getLongitude(), 640,640));
 
         //set scan button

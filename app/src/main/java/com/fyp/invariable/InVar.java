@@ -5,5 +5,5 @@ public class InVar {
     public static final String STORE_PATH = "/facerecOPCV/";
     public static boolean IS_CONNECT_TO_MARIA_DB = true;
     public static final int SQLite_version = 2;
-    public static final double MAX_DISTANCE = 1.0;
+    public static final double MAX_DISTANCE = 300;
 }

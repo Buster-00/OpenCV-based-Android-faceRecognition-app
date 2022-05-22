@@ -52,7 +52,8 @@ public class GetDistanceUtils {
 
         double distanceInKm = distanceInKm(startLati, startLong, endLati, endLong);
 
+
         // A simple conversion solve the calc.
-        return distanceInKm * 0.621371;
+        return distanceInKm * 0.621371 * 1000;
     }
 }
