@@ -1,0 +1,411 @@
+@startuml
+
+title __DATABASEHELPER's Class Diagram__\n
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.AttendanceDB {
+          {static} + COLUMN_1 : String
+          {static} + COLUMN_2 : String
+          {static} + COLUMN_3 : String
+          {static} + COLUMN_4 : String
+          {static} + COLUMN_5 : String
+          {static} + COLUMN_6 : String
+          {static} + COLUMN_7 : String
+          {static} + COLUMN_8 : String
+          {static} + DB_NAME : String
+          {static} + TABLE_NAME : String
+          + AttendanceDB()
+          + getAttendanceByLecturerID()
+          + getAttendanceByStudentID()
+          + insert()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.AttendanceDB.AttendanceRecord {
+          ~ date : String
+          ~ lectureID : String
+          ~ lectureName : String
+          ~ lecturerID : String
+          ~ lecturerName : String
+          ~ studentID : String
+          ~ studentName : String
+          ~ venue : String
+          + AttendanceRecord()
+          + getDate()
+          + getLectureID()
+          + getLectureName()
+          + getLecturerID()
+          + getLecturerName()
+          + getStudentID()
+          + getStudentName()
+          + getVenue()
+          + setDate()
+          + setLectureID()
+          + setLectureName()
+          + setLecturerID()
+          + setLecturerName()
+          + setStudentID()
+          + setStudentName()
+          + setVenue()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.AttendanceDB.MariaAttendance {
+          + getAttendanceByLecturerID()
+          + getAttendanceByStudentID()
+          + insert()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.AttendanceDB.SQLiteAttendance {
+          {static} - version : int
+          + SQLiteAttendance()
+          + getAttendanceByStudentID()
+          + insert()
+          + onCreate()
+          + onOpen()
+          + onUpgrade()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.Lecture {
+          - date : String
+          - lectureID : String
+          - lectureName : String
+          - lecturerID : String
+          - venue : String
+          + Lecture()
+          + getDate()
+          + getLectureID()
+          + getLectureName()
+          + getLecturerID()
+          + getVenue()
+          + setDate()
+          + setLectureID()
+          + setLectureName()
+          + setLecturerID()
+          + setVenue()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LectureDB {
+          {static} + COLUMN_1 : String
+          {static} + COLUMN_2 : String
+          {static} + COLUMN_3 : String
+          {static} + COLUMN_4 : String
+          {static} + COLUMN_5 : String
+          {static} + DB_NAME : String
+          {static} + TABLE_NAME : String
+          ~ context : Context
+          ~ isConnect : boolean
+          + LectureDB()
+          + getAllLecture()
+          + getLectureByID()
+          + insert()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LectureDB.MariaLecture {
+          + getAllLecture()
+          + getLectureByID()
+          + insert()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LectureDB.SQLiteLectureDB {
+          {static} - version : int
+          + SQLiteLectureDB()
+          + getAllLecture()
+          + getLectureByID()
+          + insert()
+          + onCreate()
+          + onOpen()
+          + onUpgrade()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LecturerDB {
+          {static} + COLUMN_1 : String
+          {static} + COLUMN_2 : String
+          {static} + COLUMN_3 : String
+          {static} + DB_NAME : String
+          {static} + TABLE_NAME : String
+          ~ context : Context
+          + LecturerDB()
+          + ReadByID()
+          + insert()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LecturerDB.Lecturer {
+          ~ id : String
+          ~ name : String
+          ~ password : String
+          + Lecturer()
+          + getId()
+          + getName()
+          + getPassword()
+          + setId()
+          + setName()
+          + setPassword()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LecturerDB.MariaLecturer {
+          + ReadByID()
+          + insert()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LecturerDB.SQLiteLecturerDB {
+          + ReadByID()
+          + SQLiteLecturerDB()
+          + insert()
+          + onCreate()
+          + onOpen()
+          + onUpgrade()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.MariaDBconnector {
+          ~ database : String
+          ~ host : String
+          ~ password : String
+          ~ port : String
+          ~ table_name : String
+          ~ username : String
+          + connectNOSSL()
+          + connectSSLWithoutValidation()
+          + getConnection()
+          - testConnect()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.MariaStudent {
+          ~ COLUMN_1 : String
+          ~ COLUMN_2 : String
+          ~ COLUMN_3 : String
+          ~ COLUMN_4 : String
+          ~ DB_NAME : String
+          ~ TABLE_NAME : String
+          + MariaStudent()
+          + ReadAll()
+          + deleteByID()
+          + getLabelByID()
+          + getNameByLabel()
+          + insert()
+          + readById()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.SQLiteStudent {
+          ~ COLUMN_1 : String
+          ~ COLUMN_2 : String
+          ~ COLUMN_3 : String
+          ~ COLUMN_4 : String
+          ~ DB_NAME : String
+          ~ TABLE_NAME : String
+          {static} - version : int
+          + ReadAll()
+          + SQLiteStudent()
+          + deleteByID()
+          + getLabelByID()
+          + getNameByLabel()
+          + insert()
+          + onCreate()
+          + onUpgrade()
+          + readById()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.StudentDB {
+          {static} + COLUMN_1 : String
+          {static} + COLUMN_2 : String
+          {static} + COLUMN_3 : String
+          {static} + COLUMN_4 : String
+          {static} + DB_NAME : String
+          {static} + TABLE_NAME : String
+          {static} - IS_CONNECT_TO_MARIA_DB : boolean
+          - context : Context
+          + IsConnectToServer()
+          + StudentDB()
+          + StudentDB()
+          + deleteByID()
+          {static} + getISConnectToNetwork()
+          + getLabelByID()
+          + getNameByLabel()
+          + insert()
+          + readAll()
+          + readById()
+          + setConnectToServer()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.StudentLectureDB {
+          {static} + COLUMN_1 : String
+          {static} + COLUMN_2 : String
+          {static} + DB_NAME : String
+          {static} + TABLE_NAME : String
+          ~ context : Context
+          ~ isConnect : boolean
+          + StudentLectureDB()
+          + getLecturesIDsByStudentID()
+          + insert()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.StudentLectureDB.SQLiteStudentLectureDB {
+          + SQLiteStudentLectureDB()
+          + getLecturesIDsByStudentID()
+          + insert()
+          + onCreate()
+          + onOpen()
+          + onUpgrade()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.UserManager {
+          {static} + location : Location
+          {static} + userName : String
+          {static} - currentUser : User
+          {static} + getCurrentUser()
+          {static} + initUser()
+          {static} + initUser()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.UserManager.User {
+          - ID : String
+          - label : int
+          - location : Location
+          - name : String
+          + getID()
+          + getLabel()
+          + getLocation()
+          + getName()
+          + setID()
+          + setLabel()
+          + setLocation()
+          + setName()
+          ~ User()
+          ~ User()
+      }
+    }
+  }
+  
+
+
+  
+
+  com.fyp.databaseHelper.AttendanceDB o-- com.fyp.databaseHelper.AttendanceDB.MariaAttendance : mariaAttendance
+  com.fyp.databaseHelper.AttendanceDB o-- com.fyp.databaseHelper.AttendanceDB.SQLiteAttendance : sqLiteAttendance
+  com.fyp.databaseHelper.AttendanceDB +-down- com.fyp.databaseHelper.AttendanceDB.AttendanceRecord
+  com.fyp.databaseHelper.AttendanceDB +-down- com.fyp.databaseHelper.AttendanceDB.MariaAttendance
+  com.fyp.databaseHelper.AttendanceDB +-down- com.fyp.databaseHelper.AttendanceDB.SQLiteAttendance
+  com.fyp.databaseHelper.AttendanceDB.SQLiteAttendance -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.fyp.databaseHelper.LectureDB o-- com.fyp.databaseHelper.LectureDB.MariaLecture : mariaLecture
+  com.fyp.databaseHelper.LectureDB o-- com.fyp.databaseHelper.LectureDB.SQLiteLectureDB : sqLiteLectureDB
+  com.fyp.databaseHelper.LectureDB +-down- com.fyp.databaseHelper.LectureDB.MariaLecture
+  com.fyp.databaseHelper.LectureDB +-down- com.fyp.databaseHelper.LectureDB.SQLiteLectureDB
+  com.fyp.databaseHelper.LectureDB.SQLiteLectureDB -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.fyp.databaseHelper.LecturerDB o-- com.fyp.databaseHelper.LecturerDB.MariaLecturer : mariaLecturer
+  com.fyp.databaseHelper.LecturerDB o-- com.fyp.databaseHelper.LecturerDB.SQLiteLecturerDB : sqLiteLecturerDB
+  com.fyp.databaseHelper.LecturerDB +-down- com.fyp.databaseHelper.LecturerDB.Lecturer
+  com.fyp.databaseHelper.LecturerDB +-down- com.fyp.databaseHelper.LecturerDB.MariaLecturer
+  com.fyp.databaseHelper.LecturerDB +-down- com.fyp.databaseHelper.LecturerDB.SQLiteLecturerDB
+  com.fyp.databaseHelper.LecturerDB.SQLiteLecturerDB -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.fyp.databaseHelper.MariaStudent o-- com.fyp.databaseHelper.MariaDBconnector : connector
+  com.fyp.databaseHelper.SQLiteStudent -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.fyp.databaseHelper.StudentDB o-- com.fyp.databaseHelper.MariaStudent : mariaStudent
+  com.fyp.databaseHelper.StudentDB o-- com.fyp.databaseHelper.SQLiteStudent : sqLiteStudent
+  com.fyp.databaseHelper.StudentLectureDB o-- com.fyp.databaseHelper.StudentLectureDB.SQLiteStudentLectureDB : sqLiteStudentLectureDB
+  com.fyp.databaseHelper.StudentLectureDB +-down- com.fyp.databaseHelper.StudentLectureDB.SQLiteStudentLectureDB
+  com.fyp.databaseHelper.StudentLectureDB.SQLiteStudentLectureDB -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.fyp.databaseHelper.UserManager +-down- com.fyp.databaseHelper.UserManager.User
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

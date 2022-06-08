@@ -1,0 +1,195 @@
+@startuml
+
+title __FRGAMENT's Class Diagram__\n
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragemnt_attedance_record {
+          {static} - ARG_PARAM1 : String
+          {static} - ARG_PARAM2 : String
+          - mParam1 : String
+          - mParam2 : String
+          + Fragemnt_attedance_record()
+          {static} + newInstance()
+          + onCreate()
+          + onCreateView()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_course_list {
+          ~ mDatas : Vector<CourseData>
+          ~ mLayoutManager : LayoutManager
+          ~ rec_course : RecyclerView
+          ~ recyclerRefreshLayout : RecyclerRefreshLayout
+          {static} - ARG_PARAM1 : String
+          {static} - ARG_PARAM2 : String
+          - mParam1 : String
+          - mParam2 : String
+          + Fragment_course_list()
+          {static} + newInstance()
+          + onCreate()
+          + onCreateView()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_course_list.CourseData {
+          + courseID : String
+          + courseName : String
+          + lecturer : String
+          + time : String
+          + equals()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_home {
+          ~ btn_delete : Button
+          ~ btn_recognition : Button
+          ~ btn_register : Button
+          ~ btn_testConnect : Button
+          ~ btn_testHttp : Button
+          ~ btn_testHttp_response : Button
+          ~ btn_viewPager : Button
+          ~ handler : Handler
+          {static} - ARG_PARAM1 : String
+          {static} - ARG_PARAM2 : String
+          - mParam1 : String
+          - mParam2 : String
+          + Fragment_home()
+          {static} + newInstance()
+          + onCreate()
+          + onCreateView()
+          # setBtn_recognition()
+          # setBtn_register()
+          # setBtn_testConnect()
+          # setBtn_testHttp()
+          # setBtn_testHttp_response()
+          - deleteUserData()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_profile {
+          {static} - ARG_PARAM1 : String
+          {static} - ARG_PARAM2 : String
+          - mParam1 : String
+          - mParam2 : String
+          + Fragment_profile()
+          {static} + newInstance()
+          + onCreate()
+          + onCreateView()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_student_course_list {
+          ~ listView : ListView
+          {static} - ARG_PARAM1 : String
+          {static} - ARG_PARAM2 : String
+          - mParam1 : String
+          - mParam2 : String
+          + Fragment_student_course_list()
+          {static} + newInstance()
+          + onCreate()
+          + onCreateView()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_student_course_list.CardItem {
+          - icon : int
+          - name : String
+          + CardItem()
+          + getID()
+          + getIcon()
+          + getName()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_student_course_list.CardItemAdapter {
+          {static} ~ HANDLE_MSG_TOGGLE : int
+          {static} ~ TOGGLE_DELAY_TIME : int
+          - resourceID : int
+          + CardItemAdapter()
+          + getView()
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_student_course_list.CardItemAdapter.ViewHolder {
+          + btn_click : Button
+          + calendarView : CalendarView
+          + fc : FoldingCell
+          + tk : TickView
+          + tvCardItem : TextView
+          + tv_lectureID : TextView
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.myAdapter {
+          ~ mFragments : Vector<Fragment>
+          + getCount()
+          + getItem()
+          + getItemId()
+          + getItemPosition()
+          + myAdapter()
+      }
+    }
+  }
+  
+
+  com.fyp.Frgament.Fragemnt_attedance_record -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_course_list -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_course_list +-down- com.fyp.Frgament.Fragment_course_list.CourseData
+  com.fyp.Frgament.Fragment_home -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_profile -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_student_course_list -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_student_course_list o-- com.fyp.databaseHelper.LectureDB : lectureDB
+  com.fyp.Frgament.Fragment_student_course_list o-- com.fyp.databaseHelper.StudentLectureDB : studentLectureDB
+  com.fyp.Frgament.Fragment_student_course_list +-down- com.fyp.Frgament.Fragment_student_course_list.CardItem
+  com.fyp.Frgament.Fragment_student_course_list +-down- com.fyp.Frgament.Fragment_student_course_list.CardItemAdapter
+  com.fyp.Frgament.Fragment_student_course_list.CardItem o-- com.fyp.databaseHelper.Lecture : lecture
+  com.fyp.Frgament.Fragment_student_course_list.CardItemAdapter -up-|> android.widget.ArrayAdapter
+  com.fyp.Frgament.Fragment_student_course_list.CardItemAdapter +-down- com.fyp.Frgament.Fragment_student_course_list.CardItemAdapter.ViewHolder
+  com.fyp.Frgament.myAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
