@@ -86,6 +86,7 @@ public class StudentAttendRecordFragment extends Fragment {
             protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord o, int position) {
                 holder.setText(R.id.tv_lectureID, o.getLectureID());
                 holder.setText(R.id.tv_date, o.getDate());
+                holder.setText(R.id.tv_lectureName, o.getLectureName());
             }
         });
 

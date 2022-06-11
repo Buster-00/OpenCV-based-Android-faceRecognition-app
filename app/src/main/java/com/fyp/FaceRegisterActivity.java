@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 
-import com.fyp.helper.FaceDetectorHelper;
+import com.fyp.utilities.FaceDetectorHelper;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.fyp.databaseHelper.UserManager.getCurrentUser;
-import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
+import static com.fyp.utilities.FaceDetectorHelper.loadClassifier;
 import static org.opencv.core.Core.ROTATE_180;
 import static org.opencv.core.Core.flip;
 import static org.opencv.core.Core.rotate;

@@ -11,17 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
-import com.fyp.databaseHelper.AttendanceDB;
 import com.fyp.databaseHelper.Lecture;
 import com.fyp.databaseHelper.LectureDB;
 import com.fyp.databaseHelper.UserManager;
-import com.fyp.helper.QRCodeHelper;
+import com.fyp.utilities.QRCodeHelper;
 import com.fyp.lecturer.AttendanceSheetActivity;
 import com.fyp.lecturer.LecturerQRCodeActivity;
 import com.ramotion.foldingcell.FoldingCell;

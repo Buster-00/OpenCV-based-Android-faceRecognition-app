@@ -101,7 +101,7 @@ public class LecturerHomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), CreateAttendanceSheetActivity.class);
-                startActivity(intent);
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.ViewPager, new LecturerAttendRecord()).commit();
 
             }
         });

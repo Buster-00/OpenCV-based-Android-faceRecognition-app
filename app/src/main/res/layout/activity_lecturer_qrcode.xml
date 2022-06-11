@@ -25,23 +25,27 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="100dp"
         android:elevation="20dp"
-        app:cardCornerRadius="15dp">
+        app:cardCornerRadius="10dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:text="Please scan the QR code to continue attendance"
                 android:textColor="@color/black" />
 
@@ -49,37 +53,46 @@
                 android:id="@+id/img_QRCode"
                 android:layout_width="320dp"
                 android:layout_height="320dp"
-                android:layout_below="@+id/tv_title"
-                android:layout_centerInParent="true" />
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
 
 
-        </RelativeLayout>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="right"
+            android:text="change"
+            android:textColor="@color/purple_700" />
+
 
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_below="@+id/card_view"
         android:id="@+id/btn_settings"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_baseline_settings_24"
+        android:layout_below="@+id/card_view"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@android:color/holo_orange_dark"
-        android:layout_centerHorizontal="true"/>
+        android:src="@drawable/ic_baseline_settings_24" />
 
     <androidx.cardview.widget.CardView
-        android:layout_centerHorizontal="true"
         android:id="@+id/card_view2"
-        android:layout_below="@+id/btn_settings"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_settings"
+        android:layout_centerHorizontal="true">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view"
-            android:layout_margin="20dp"
             android:layout_width="320dp"
-            android:layout_height="500dp"/>
+            android:layout_height="500dp"
+            android:layout_margin="20dp" />
 
 
     </androidx.cardview.widget.CardView>

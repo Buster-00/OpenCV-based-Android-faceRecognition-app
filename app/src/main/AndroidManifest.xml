@@ -41,7 +41,7 @@
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
         <activity
-            android:name=".student.locationActivity"
+            android:name=".student.QRScanActivity"
             android:exported="false" />
         <activity
             android:name=".lecturer.CreateAttendanceSheetActivity"

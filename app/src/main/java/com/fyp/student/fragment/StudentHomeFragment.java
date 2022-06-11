@@ -15,11 +15,8 @@ import com.fyp.FaceRegisterActivity;
 import com.fyp.R;
 import com.fyp.databaseHelper.AttendanceDB;
 import com.fyp.databaseHelper.UserManager;
-import com.fyp.student.locationActivity;
+import com.fyp.student.QRScanActivity;
 
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
 import java.util.Vector;
 
 /**
@@ -98,7 +95,7 @@ public class StudentHomeFragment extends Fragment {
         btn_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), locationActivity.class));
+                startActivity(new Intent(getActivity(), QRScanActivity.class));
             }
         });
 

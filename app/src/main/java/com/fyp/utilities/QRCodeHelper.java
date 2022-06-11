@@ -1,4 +1,4 @@
-package com.fyp.helper;
+package com.fyp.utilities;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;

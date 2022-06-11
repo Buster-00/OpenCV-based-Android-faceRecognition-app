@@ -1,4 +1,4 @@
-package com.fyp.helper;
+package com.fyp.utilities;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,13 +9,11 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.objdetect.CascadeClassifier;
 import org.opencv.objdetect.FaceDetectorYN;
-import org.opencv.objdetect.FaceRecognizerSF;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 
 public class FaceDetectorHelper {

@@ -106,7 +106,7 @@ public class Student_MainActivity extends DrawerActivity {
     private void initMaterialDrawer() {
         addProfile(
                 new DrawerProfile()
-                        .setRoundedAvatar((BitmapDrawable)this.getDrawable(R.drawable.cat_1))
+                        .setRoundedAvatar((BitmapDrawable)this.getDrawable(R.drawable.user2))
                         .setBackground(this.getDrawable(R.drawable.bg))
                         .setName(getString(R.string.profile_name))
                         .setDescription(getString(R.string.profile_description))
@@ -114,19 +114,6 @@ public class Student_MainActivity extends DrawerActivity {
                             @Override
                             public void onClick(DrawerProfile drawerProfile, long id) {
                                 //Toast.makeText(MainActivity.this, "Clicked profile #" + id, Toast.LENGTH_SHORT).show();
-                            }
-                        })
-        );
-
-        addItem(
-                new DrawerItem()
-                        .setImage(this.getDrawable(R.drawable.ic_first_item))
-                        .setTextPrimary(getString(R.string.title_first_item))
-                        .setTextSecondary(getString(R.string.description_first_item))
-                        .setOnItemClickListener(new DrawerItem.OnItemClickListener() {
-                            @Override
-                            public void onClick(DrawerItem drawerItem, long id, int position) {
-                                //Toast.makeText(MainActivity.this, "Clicked first item #" + id, Toast.LENGTH_SHORT).show();
                             }
                         })
         );

@@ -26,14 +26,12 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
 import com.fyp.databaseHelper.LectureDB;
 import com.fyp.databaseHelper.UserManager;
-import com.fyp.helper.QRCodeHelper;
-import com.fyp.student.locationActivity;
+import com.fyp.utilities.QRCodeHelper;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CreateAttendanceSheetActivity extends AppCompatActivity implements Validator.ValidationListener {

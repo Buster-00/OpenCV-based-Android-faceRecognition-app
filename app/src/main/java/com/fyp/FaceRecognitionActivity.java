@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.SurfaceView;
 
 import com.fyp.databaseHelper.StudentDB;
-import com.fyp.helper.FaceDetectorHelper;
+import com.fyp.utilities.FaceDetectorHelper;
 import com.fyp.student.RecognizeSuccess;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -33,8 +33,8 @@ import java.util.Vector;
 
 
 import static com.fyp.databaseHelper.UserManager.getCurrentUser;
-import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
-import static com.fyp.helper.FrameFlipHelper.FlipRotateFrameHorizental;
+import static com.fyp.utilities.FaceDetectorHelper.loadClassifier;
+import static com.fyp.utilities.FrameFlipHelper.FlipRotateFrameHorizental;
 import static org.opencv.imgproc.Imgproc.FONT_HERSHEY_COMPLEX;
 import static org.opencv.imgproc.Imgproc.putText;
 import static org.opencv.imgproc.Imgproc.rectangle;

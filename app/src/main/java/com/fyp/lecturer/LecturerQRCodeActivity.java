@@ -5,18 +5,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fyp.R;
 import com.fyp.databaseHelper.AttendanceDB;
-import com.fyp.databaseHelper.Lecture;
-import com.fyp.helper.QRCodeHelper;
+import com.fyp.utilities.QRCodeHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;

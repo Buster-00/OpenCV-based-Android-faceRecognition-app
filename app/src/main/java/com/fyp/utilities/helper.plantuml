@@ -1,6 +1,6 @@
 @startuml
 
-title __HELPER's Class Diagram__\n
+title __Utilities Class Diagram__\n
 
   namespace com.fyp {
     namespace helper {
@@ -38,12 +38,7 @@ title __HELPER's Class Diagram__\n
   }
   
 
-  namespace com.fyp {
-    namespace helper {
-      class com.fyp.helper.LocationHelper {
-      }
-    }
-  }
+
   
 
   namespace com.fyp {

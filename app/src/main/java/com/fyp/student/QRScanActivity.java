@@ -1,6 +1,6 @@
 package com.fyp.student;
 
-import static com.fyp.helper.QRCodeHelper.createQRCodeBitmap;
+import static com.fyp.utilities.QRCodeHelper.createQRCodeBitmap;
 import static com.fyp.invariable.InVar.MAX_DISTANCE;
 
 import androidx.annotation.RequiresApi;
@@ -25,16 +25,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
-import com.fyp.helper.GetDistanceUtils;
-import com.fyp.helper.QRCodeHelper;
+import com.fyp.utilities.GetDistanceUtils;
+import com.fyp.utilities.QRCodeHelper;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.google.zxing.qrcode.encoder.QRCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class locationActivity extends AppCompatActivity {
+public class QRScanActivity extends AppCompatActivity {
 
     TextView tv_distance;
     ImageView imageView_QRCode;
@@ -64,7 +63,7 @@ public class locationActivity extends AppCompatActivity {
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(locationActivity.this);
+                IntentIntegrator intentIntegrator = new IntentIntegrator(QRScanActivity.this);
                 intentIntegrator.setPrompt("Scan the QRcode");
                 intentIntegrator.setOrientationLocked(false);
                 intentIntegrator.initiateScan();
@@ -76,10 +75,10 @@ public class locationActivity extends AppCompatActivity {
     private Location getLocation() {
         //检查定位权限
         ArrayList<String> permissions = new ArrayList<>();
-        if (ActivityCompat.checkSelfPermission(locationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(QRScanActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        if (ActivityCompat.checkSelfPermission(locationActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(QRScanActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
         }
 
@@ -193,13 +192,13 @@ public class locationActivity extends AppCompatActivity {
 
                     //if distance more than certain value
                     if(distance >= MAX_DISTANCE){
-                        Intent intent = new Intent(locationActivity.this, DistanceFailedActivity.class);
+                        Intent intent = new Intent(QRScanActivity.this, DistanceFailedActivity.class);
                         intent.putExtra("DISTANCE", distance);
                         startActivity(intent);
                     }
                     //go on to next step
                     else{
-                        Intent intent = new Intent(locationActivity.this, DistanceSuccessActivity.class);
+                        Intent intent = new Intent(QRScanActivity.this, DistanceSuccessActivity.class);
                         intent.putExtra("DISTANCE", distance);
                         intent.putExtra("JSON", json);
                         startActivity(intent);

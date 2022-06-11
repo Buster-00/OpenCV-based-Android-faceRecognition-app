@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fyp.R;
 import com.fyp.databaseHelper.AttendanceDB;
 import com.fyp.databaseHelper.UserManager;
-import com.fyp.helper.QRCodeHelper;
+import com.fyp.utilities.QRCodeHelper;
 import com.github.chengang.library.TickView;
 
 public class RecognizeSuccess extends AppCompatActivity {

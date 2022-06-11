@@ -51,7 +51,7 @@ title __STUDENT's Class Diagram__\n
 
   namespace com.fyp {
     namespace student {
-      class com.fyp.student.locationActivity {
+      class com.fyp.student.QRscanActivity {
           ~ btn_scan : Button
           ~ imageView_QRCode : ImageView
           ~ location : Location
