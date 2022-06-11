@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -35,8 +36,8 @@ public class LecturerQRCodeActivity extends AppCompatActivity {
 
         //Initialize widget
         img_QRCode = findViewById(R.id.img_QRCode);
-        FloatingActionButton btn_settings = findViewById(R.id.btn_settings);
-        FloatingActionButton btn_refresh = findViewById(R.id.btn_refresh);
+        Button btn_settings = findViewById(R.id.btn_settings);
+        Button btn_refresh = findViewById(R.id.btn_refresh);
         RecyclerView recyclerView = findViewById(R.id.recycle_view);
 
         //Initialize QR Code
@@ -49,6 +50,21 @@ public class LecturerQRCodeActivity extends AppCompatActivity {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        //Initialize student list
+        AttendanceDB DB = new AttendanceDB(LecturerQRCodeActivity.this);
+        Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(info.getLectureID());
+
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(LecturerQRCodeActivity.this, R.layout.recycleview_student_item, data) {
+            @Override
+            protected void convert(ViewHolder holder, AttendanceDB.AttendanceRecord record, int position) {
+                holder.setText(R.id.tv_studentName, record.getStudentName());
+                holder.setText(R.id.tv_studentID, record.getStudentID());
+            }
+        });
 
 
         btn_settings.setOnClickListener(new View.OnClickListener() {
