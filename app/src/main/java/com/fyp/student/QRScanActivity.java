@@ -56,8 +56,8 @@ public class QRScanActivity extends AppCompatActivity {
 
 
         location = getLocation();
-        tv_distance.setText("longitude: "+ location.getLongitude()+"latitude: "+location.getLatitude());
-        imageView_QRCode.setImageBitmap(createQRCodeBitmap("latitude: " + location.getLatitude() + "longitude: " + location.getLongitude(), 640,640));
+        tv_distance.setText("longitude: "+ location.getLongitude()+" latitude: "+location.getLatitude());
+        //imageView_QRCode.setImageBitmap(createQRCodeBitmap("latitude: " + location.getLatitude() + "longitude: " + location.getLongitude(), 640,640));
 
         //set scan button
         btn_scan.setOnClickListener(new View.OnClickListener() {

@@ -132,7 +132,7 @@ public class RegisterSuccessActivity extends AppCompatActivity {
         labels.Save();
 
         //display
-        tv_labels.setText(labels.display());
+        //tv_labels.setText(labels.display());
 
         //
         Loader.load(opencv_java.class);

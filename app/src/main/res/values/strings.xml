@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name">FaceAttendance</string>
     <string name="barSize">50dp</string>
     <string name="profile_name" />
     <string name="profile_description" />

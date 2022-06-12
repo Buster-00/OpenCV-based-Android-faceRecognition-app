@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".lecturer.LecturerQRCodeActivity"
-    android:background="@drawable/bg2"
+    android:background="@color/teal_200"
     android:layout_width="wrap_content"
    android:layout_height="wrap_content">
 
@@ -40,22 +40,28 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_orange_dark"
                     android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Please scan the QR code to continue attendance"
-                    android:textColor="@color/black" />
+                    android:textSize="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingVertical="5dp"
+                    android:text="Lecture QR code"
+                    android:textColor="@color/white" />
 
                 <ImageView
+                    android:layout_marginVertical="20dp"
+                    android:layout_gravity="center"
                     android:id="@+id/img_QRCode"
                     android:layout_width="320dp"
                     android:layout_height="320dp"
@@ -73,6 +79,7 @@
                 android:layout_gravity="bottom"
                 android:gravity="right"
                 android:text="option"
+                app:rippleColor="@color/white"
                 android:textColor="@color/purple_700" />
 
 
