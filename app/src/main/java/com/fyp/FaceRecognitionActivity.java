@@ -43,6 +43,7 @@ import static org.opencv.imgproc.Imgproc.rectangle;
 public class FaceRecognitionActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     private static final int SUCCESS_TIMES = 10;
+    private static final int CONFIDENCE_SUCCESS = 20;
 
     //Hash map of label and name
     HashMap<Integer, String> mapLabelName;
@@ -196,15 +197,17 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
             //Render image
             if(label[0] != -1){
-                Log.e("The label is ", String.valueOf(label[0]));
-//                if(label[0] == getCurrentUser().getLabel()){
-//                    counter++;
-//                }
-                counter++;
-                putText(flippedFrame, getCurrentUser().getName(), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
-            }else{
-                putText(flippedFrame, "unregister face", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
-                failure_counter++;
+                Log.e("The confidence is ", String.valueOf(confidence[0]));
+                Log.e("The predict label is ", String.valueOf(label[0]));
+                Log.e("The user label is ", String.valueOf(getCurrentUser().getLabel()));
+                if(label[0] == getCurrentUser().getLabel() && confidence[0] < CONFIDENCE_SUCCESS){
+                    counter++;
+                    putText(flippedFrame, getCurrentUser().getName(), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
+                }
+                else {
+                    putText(flippedFrame, " Inconsistent face", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2, FaceDetectorHelper.FONT_COLOR);
+                }
+
 
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());

@@ -135,9 +135,6 @@
         app:backgroundTint="@color/white" />
 
     <com.google.android.material.button.MaterialButton
-        app:icon="@drawable/ic_baseline_qr_code_scanner_24"
-        app:iconTint="@color/black"
-        app:iconGravity="textStart"
         android:id="@+id/btn_location"
         android:layout_width="match_parent"
         android:layout_height="@dimen/myButton_height"
@@ -145,9 +142,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="@dimen/myButton_marginTOP"
-        android:text="Scan attendance"
+        android:text="Scan &amp; attendance"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white" />
+        app:backgroundTint="@color/white"
+        app:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        app:iconGravity="textStart"
+        app:iconTint="@color/black" />
 
     <com.google.android.material.button.MaterialButton
         app:icon="@drawable/ic_baseline_receipt_24"

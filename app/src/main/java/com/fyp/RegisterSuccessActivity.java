@@ -261,7 +261,7 @@ public class RegisterSuccessActivity extends AppCompatActivity {
 
         //Generate mat of labels
         int[] labels = new int[1];
-        labels[0] = 1;
+        labels[0] = getCurrentUser().getLabel();
         Mat matOfLabels = new MatOfInt(labels);
 
         //LBPH train
