@@ -55,7 +55,7 @@ public class LecturerQRCodeActivity extends AppCompatActivity {
         AttendanceDB DB = new AttendanceDB(LecturerQRCodeActivity.this);
         Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(info.getLectureID());
 
-        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(LecturerQRCodeActivity.this, R.layout.recycleview_student_item, data) {
@@ -83,7 +83,7 @@ public class LecturerQRCodeActivity extends AppCompatActivity {
                 AttendanceDB DB = new AttendanceDB(LecturerQRCodeActivity.this);
                 Vector<AttendanceDB.AttendanceRecord> data = DB.getAttendanceByLecturerID(info.getLectureID());
 
-                RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
+                RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(layoutManager);
 
                 recyclerView.setAdapter(new CommonAdapter<AttendanceDB.AttendanceRecord>(LecturerQRCodeActivity.this, R.layout.recycleview_student_item, data) {

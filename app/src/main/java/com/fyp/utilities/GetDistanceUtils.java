@@ -54,6 +54,6 @@ public class GetDistanceUtils {
 
 
         // A simple conversion solve the calc.
-        return distanceInKm * 0.621371 * 1000;
+        return distanceInKm * 0.621371 * 1609.344;
     }
 }

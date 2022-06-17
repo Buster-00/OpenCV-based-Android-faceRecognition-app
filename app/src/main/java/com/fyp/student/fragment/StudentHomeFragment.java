@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fyp.FaceRecognitionActivity;
 import com.fyp.FaceRegisterActivity;
 import com.fyp.R;
 import com.fyp.databaseHelper.AttendanceDB;
 import com.fyp.databaseHelper.UserManager;
+import com.fyp.invariable.InVar;
 import com.fyp.student.QRScanActivity;
 
 import java.util.Vector;
@@ -95,7 +97,14 @@ public class StudentHomeFragment extends Fragment {
         btn_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), QRScanActivity.class));
+                if(InVar.DEBUG)
+                {
+                    startActivity(new Intent(getActivity(), FaceRecognitionActivity.class));
+                }
+                else{
+                    startActivity(new Intent(getActivity(), QRScanActivity.class));
+                }
+
             }
         });
 

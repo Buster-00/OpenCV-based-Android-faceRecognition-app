@@ -79,6 +79,7 @@ public class RegisterSuccessActivity extends AppCompatActivity {
         tv_success = findViewById(R.id.tv_success);
         tv_labels = findViewById(R.id.tv_labels);
         img_capturedFace = findViewById(R.id.img_capturedFace);
+        Button btn_register_again = findViewById(R.id.btn_register_again);
 
         //Initialize widget
         tv_success.setText("The face is captured successfully");
@@ -90,6 +91,14 @@ public class RegisterSuccessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setBtn_confirm();
+            }
+        });
+
+        btn_register_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterSuccessActivity.this, FaceRegisterActivity.class);
+                startActivity(intent);
             }
         });
 
