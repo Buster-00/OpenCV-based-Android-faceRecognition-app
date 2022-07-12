@@ -81,6 +81,7 @@
                     android:text="Re-Open"/>
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_delete"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="50dp"
                     app:iconPadding="20dp"

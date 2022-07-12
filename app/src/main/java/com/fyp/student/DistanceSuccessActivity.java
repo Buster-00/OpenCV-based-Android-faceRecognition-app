@@ -42,8 +42,8 @@ public class DistanceSuccessActivity extends AppCompatActivity {
         });
 
         //set TextView
-        double distance = getIntent().getDoubleExtra("DISTANCE", 0);
-        tv_distance.setText("your distance is: " + (int)distance + " meters");
+//        double distance = getIntent().getDoubleExtra("DISTANCE", 0);
+//        tv_distance.setText("your distance is: " + (int)distance + " meters");
 
         //Initiate JavaCV
         Loader.load(opencv_java.class);

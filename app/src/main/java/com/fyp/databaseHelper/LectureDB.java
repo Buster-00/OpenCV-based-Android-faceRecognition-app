@@ -83,6 +83,15 @@ public class LectureDB {
         }
     }
 
+    public boolean delete(String ID){
+        if(isConnect){
+            return mariaLecture.delete(ID);
+        }
+        else{
+            return false;
+        }
+    }
+
     class SQLiteLectureDB extends SQLiteOpenHelper{
 
         private static final int version = 2;
@@ -262,6 +271,42 @@ public class LectureDB {
             }
 
             return lectureVector;
+        }
+
+        public boolean delete(String id) {
+            final boolean[] isSuccess = {false};
+
+            Thread thread = new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        Connection mariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement= mariaCon.createStatement();
+
+                        String query = String.format("DELETE FROM %s WHERE %s='%s'",
+                                TABLE_NAME, COLUMN_1, id);
+                        long rs = statement.executeUpdate(query);
+                        mariaCon.close();
+                        if(rs==1){
+                            isSuccess[0] = true;
+                        }
+                        else {
+                            isSuccess[0] = false;
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return isSuccess[0];
         }
     }
 }

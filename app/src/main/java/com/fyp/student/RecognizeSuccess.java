@@ -49,7 +49,7 @@ public class RecognizeSuccess extends AppCompatActivity {
         String lecturerID = info.getLecturerID();
         String studentName = UserManager.getCurrentUser().getName();
 
-        tv_recognize_success.setText("Attend " + LectureID + " " + LectureName + "Success!");
+        tv_recognize_success.setText("Attend " + LectureID + " " + LectureName + " Success!");
 
 
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.dinuscxj.refresh.RecyclerRefreshLayout;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -83,6 +84,7 @@ public class LecturerAttendRecord extends Fragment {
 
         //Widget
         RecyclerView recyclerView = view.findViewById(R.id.recycle_view);
+        RecyclerRefreshLayout refreshLayout = view.findViewById(R.id.refresh_layout);
 
         //Initialize recyclerView
         LectureDB DB = new LectureDB(getActivity());
@@ -100,6 +102,7 @@ public class LecturerAttendRecord extends Fragment {
                 holder.setText(R.id.tv_venue, record.getVenue());
                 Button btn_viewDetail = holder.getView(R.id.btn_click);
                 Button btn_addStudent = holder.getView(R.id.btn_addStudent);
+                Button btn_delete = holder.getView(R.id.btn_delete);
 
                 btn_viewDetail.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -138,6 +141,15 @@ public class LecturerAttendRecord extends Fragment {
                     }
                 });
 
+                btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        data.remove(record);
+                        DB.delete(record.getLectureID());
+                        notifyDataSetChanged();
+                    }
+                });
+
                 foldingCell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -147,6 +159,93 @@ public class LecturerAttendRecord extends Fragment {
             }
         });
 
+        //set refresh
+        refreshLayout.setOnRefreshListener(new RecyclerRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setRefreshing(true);
+                //Initialize recyclerView
+                LectureDB DB = new LectureDB(getActivity());
+                Vector<Lecture> data = DB.getLectureByID(UserManager.getCurrentUser().getID());
+
+                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(new CommonAdapter<Lecture>(getActivity(), R.layout.listview_carditem, data) {
+                    @Override
+                    protected void convert(ViewHolder holder, Lecture record, int position) {
+                        FoldingCell foldingCell = holder.getView(R.id.folding_cell);
+                        holder.setText(R.id.tv_lectureName, record.getLectureName());
+                        holder.setText(R.id.tv_lectureID,record.getLectureID());
+                        holder.setText(R.id.tv_date, record.getDate());
+                        holder.setText(R.id.tv_venue, record.getVenue());
+                        Button btn_viewDetail = holder.getView(R.id.btn_click);
+                        Button btn_addStudent = holder.getView(R.id.btn_addStudent);
+                        Button btn_delete = holder.getView(R.id.btn_delete);
+
+                        btn_viewDetail.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(getActivity(), AttendanceSheetActivity.class);
+                                intent.putExtra("LectureID", record.getLectureID());
+                                startActivity(intent);
+                            }
+                        });
+
+                        btn_addStudent.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(getActivity(), LecturerQRCodeActivity.class);
+
+                                //set info
+                                QRCodeHelper.QRInformation info = new QRCodeHelper.QRInformation();
+                                info.setDate(record.getDate());
+                                info.setLectureID(record.getLectureID());
+                                info.setLecturer(UserManager.getCurrentUser().getName());
+                                info.setLecturerID(record.getLectureID());
+                                info.setLectureName(record.getLectureName());
+                                info.setVenue(record.getVenue());
+                                info.setLatitude(UserManager.location.getLatitude());
+                                info.setLongitude(UserManager.location.getLongitude());
+                                ObjectMapper mapper = new JsonMapper();
+                                String json = new String();
+                                try {
+                                    json = mapper.writeValueAsString(info);
+                                } catch (JsonProcessingException e) {
+                                    e.printStackTrace();
+                                }
+
+                                intent.putExtra("INFO", json);
+                                startActivity(intent);
+                            }
+                        });
+
+                        btn_delete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                data.remove(record);
+                                DB.delete(record.getLectureID());
+                                notifyDataSetChanged();
+                            }
+                        });
+
+                        foldingCell.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                foldingCell.toggle(false);
+                            }
+                        });
+                    }
+                });
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 }

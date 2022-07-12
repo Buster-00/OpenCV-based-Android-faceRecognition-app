@@ -78,7 +78,7 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                date[0] = year + "-" + month + "-" + day;
+                date[0] = year + "-" + month+1 + "-" + day;
 
             }
         });
@@ -112,9 +112,9 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
         String lectureID = et_LectureID.getText().toString();
         String lectureName = et_LectureName.getText().toString();
         String venue = et_Venue.getText().toString();
-        Toast.makeText(CreateAttendanceSheetActivity.this,
-                lectureID + "-" + lectureName + "-" + venue + "\n" + date[0],
-                Toast.LENGTH_LONG).show();
+//        Toast.makeText(CreateAttendanceSheetActivity.this,
+//                lectureID + "-" + lectureName + "-" + venue + "\n" + date[0],
+//                Toast.LENGTH_LONG).show();
 
         //Create Json
         //get location

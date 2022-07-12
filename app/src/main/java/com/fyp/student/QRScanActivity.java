@@ -187,8 +187,8 @@ public class QRScanActivity extends AppCompatActivity {
                     info = mapper.readValue(json, QRCodeHelper.QRInformation.class);
                     Location location = getLocation();
                     double distance = GetDistanceUtils.distanceInMi(info.getLatitude(), info.getLongitude(), location.getLatitude(), location.getLongitude());
-                    Log.e("distance", " "+ info.getLatitude() + " "+ info.getLongitude() + " " +location.getLatitude() + " " + location.getLongitude());
-                    Toast.makeText(this, "Scanned: " + distance, Toast.LENGTH_LONG).show();
+                    //Log.e("distance", " "+ info.getLatitude() + " "+ info.getLongitude() + " " +location.getLatitude() + " " + location.getLongitude());
+                    //Toast.makeText(this, "Scanned: " + distance, Toast.LENGTH_LONG).show();
 
                     //if distance more than certain value
                     if(distance >= MAX_DISTANCE){
