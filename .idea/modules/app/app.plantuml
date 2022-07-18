@@ -1,0 +1,522 @@
+@startuml
+
+title __FYP.APP's Class Diagram__\n
+
+  namespace com.fyp {
+    class com.fyp.BuildConfig {
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.FaceRecognitionActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.FaceRegisterActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragemnt_attedance_record {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_course_list {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_home {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_profile {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.Fragment_student_course_list {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace Frgament {
+      class com.fyp.Frgament.myAdapter {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.MainActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.NameRegisterActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.RecognizeFailureActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.RegisterSuccessActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.ResetPasswordActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.TrainActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.ViewPagerActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.AttendanceDB {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.Lecture {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LectureDB {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.LecturerDB {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.MariaDBconnector {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.MariaStudent {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.SQLiteStudent {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.StudentDB {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.StudentLectureDB {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.UserManager {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace databaseHelper {
+      class com.fyp.databaseHelper.okHttpHelper {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace face {
+      class com.fyp.face.FaceDetection {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace face {
+      class com.fyp.face.Labels {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace face {
+      class com.fyp.face.PersonRecognizer {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace helper {
+      class com.fyp.helper.FaceDetectorHelper {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace helper {
+      class com.fyp.helper.FrameFlipHelper {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace helper {
+      class com.fyp.helper.GetDistanceUtils {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace helper {
+      class com.fyp.helper.LocationHelper {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace helper {
+      class com.fyp.helper.QRCodeHelper {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace invariable {
+      class com.fyp.invariable.InVar {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace lecturer {
+      class com.fyp.lecturer.AttendanceSheetActivity {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace lecturer {
+      class com.fyp.lecturer.CreateAttendanceSheetActivity {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace lecturer {
+      class com.fyp.lecturer.LecturerQRCodeActivity {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace lecturer {
+      class com.fyp.lecturer.Lecturer_MainActivity {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace lecturer {
+      namespace fragment {
+        class com.fyp.lecturer.fragment.LecturerAttendRecord {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace lecturer {
+      namespace fragment {
+        class com.fyp.lecturer.fragment.LecturerHomeFragment {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace lecturer {
+      namespace fragment {
+        class com.fyp.lecturer.fragment.lecturerViewPagerAdapter {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace login {
+      class com.fyp.login.MTLogin {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace login {
+      class com.fyp.login.MTLoginLecturer {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace login {
+      class com.fyp.login.MTRegister {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace login {
+      class com.fyp.login.MTRegisterLecturer {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace login {
+      class com.fyp.login.SignAsActivity {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.personalPorfileActivity {
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace student {
+      class com.fyp.student.DistanceFailedActivity {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace student {
+      class com.fyp.student.DistanceSuccessActivity {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace student {
+      class com.fyp.student.RecognizeSuccess {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace student {
+      class com.fyp.student.Student_MainActivity {
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace student {
+      namespace fragment {
+        class com.fyp.student.fragment.StudentAttendRecordFragment {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace student {
+      namespace fragment {
+        class com.fyp.student.fragment.StudentHomeFragment {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace student {
+      namespace fragment {
+        class com.fyp.student.fragment.studentViewPagerAdapter {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.fyp {
+    namespace student {
+      class com.fyp.student.locationActivity {
+      }
+    }
+  }
+  
+
+  com.fyp.FaceRecognitionActivity .up.|> org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2
+  com.fyp.FaceRecognitionActivity -up-|> org.opencv.android.CameraActivity
+  com.fyp.FaceRecognitionActivity o-- com.fyp.databaseHelper.StudentDB : DB
+  com.fyp.FaceRecognitionActivity o-- org.opencv.android.JavaCamera2View : javaCameraView
+  com.fyp.FaceRegisterActivity .up.|> org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2
+  com.fyp.FaceRegisterActivity -up-|> org.opencv.android.CameraActivity
+  com.fyp.FaceRegisterActivity o-- com.fyp.FaceRegisterActivity.FACE_DETECT : DETECT_METHOD
+  com.fyp.FaceRegisterActivity o-- org.opencv.android.JavaCamera2View : javaCameraView
+  com.fyp.Frgament.Fragemnt_attedance_record -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_course_list -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_home -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_profile -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_student_course_list -up-|> androidx.fragment.app.Fragment
+  com.fyp.Frgament.Fragment_student_course_list o-- com.fyp.databaseHelper.LectureDB : lectureDB
+  com.fyp.Frgament.Fragment_student_course_list o-- com.fyp.databaseHelper.StudentLectureDB : studentLectureDB
+  com.fyp.Frgament.myAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+  com.fyp.MainActivity -up-|> com.heinrichreimersoftware.materialdrawer.DrawerActivity
+  com.fyp.NameRegisterActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.RecognizeFailureActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.RegisterSuccessActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.ResetPasswordActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.TrainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.ViewPagerActivity -up-|> androidx.fragment.app.FragmentActivity
+  com.fyp.databaseHelper.AttendanceDB o-- com.fyp.databaseHelper.AttendanceDB.MariaAttendance : mariaAttendance
+  com.fyp.databaseHelper.AttendanceDB o-- com.fyp.databaseHelper.AttendanceDB.SQLiteAttendance : sqLiteAttendance
+  com.fyp.databaseHelper.LectureDB o-- com.fyp.databaseHelper.LectureDB.MariaLecture : mariaLecture
+  com.fyp.databaseHelper.LectureDB o-- com.fyp.databaseHelper.LectureDB.SQLiteLectureDB : sqLiteLectureDB
+  com.fyp.databaseHelper.LecturerDB o-- com.fyp.databaseHelper.LecturerDB.MariaLecturer : mariaLecturer
+  com.fyp.databaseHelper.LecturerDB o-- com.fyp.databaseHelper.LecturerDB.SQLiteLecturerDB : sqLiteLecturerDB
+  com.fyp.databaseHelper.MariaStudent o-- com.fyp.databaseHelper.MariaDBconnector : connector
+  com.fyp.databaseHelper.SQLiteStudent -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.fyp.databaseHelper.StudentDB o-- com.fyp.databaseHelper.MariaStudent : mariaStudent
+  com.fyp.databaseHelper.StudentDB o-- com.fyp.databaseHelper.SQLiteStudent : sqLiteStudent
+  com.fyp.databaseHelper.StudentLectureDB o-- com.fyp.databaseHelper.StudentLectureDB.SQLiteStudentLectureDB : sqLiteStudentLectureDB
+  com.fyp.face.PersonRecognizer o-- com.fyp.face.Labels : labelsFile
+  com.fyp.lecturer.AttendanceSheetActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.lecturer.CreateAttendanceSheetActivity .up.|> com.mobsandgeeks.saripaar.Validator.ValidationListener
+  com.fyp.lecturer.CreateAttendanceSheetActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.lecturer.LecturerQRCodeActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.lecturer.LecturerQRCodeActivity o-- com.fyp.helper.QRCodeHelper.QRInformation : info
+  com.fyp.lecturer.Lecturer_MainActivity -up-|> com.heinrichreimersoftware.materialdrawer.DrawerActivity
+  com.fyp.lecturer.fragment.LecturerAttendRecord -up-|> androidx.fragment.app.Fragment
+  com.fyp.lecturer.fragment.LecturerHomeFragment -up-|> androidx.fragment.app.Fragment
+  com.fyp.lecturer.fragment.lecturerViewPagerAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+  com.fyp.login.MTLogin .up.|> com.mobsandgeeks.saripaar.Validator.ValidationListener
+  com.fyp.login.MTLogin -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.login.MTLoginLecturer .up.|> com.mobsandgeeks.saripaar.Validator.ValidationListener
+  com.fyp.login.MTLoginLecturer -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.login.MTRegister .up.|> com.mobsandgeeks.saripaar.Validator.ValidationListener
+  com.fyp.login.MTRegister -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.login.MTRegisterLecturer .up.|> com.mobsandgeeks.saripaar.Validator.ValidationListener
+  com.fyp.login.MTRegisterLecturer -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.login.SignAsActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.personalPorfileActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.student.DistanceFailedActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.student.DistanceSuccessActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.student.RecognizeSuccess -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.student.Student_MainActivity -up-|> com.heinrichreimersoftware.materialdrawer.DrawerActivity
+  com.fyp.student.fragment.StudentAttendRecordFragment -up-|> androidx.fragment.app.Fragment
+  com.fyp.student.fragment.StudentHomeFragment -up-|> androidx.fragment.app.Fragment
+  com.fyp.student.fragment.studentViewPagerAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+  com.fyp.student.locationActivity -up-|> androidx.appcompat.app.AppCompatActivity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

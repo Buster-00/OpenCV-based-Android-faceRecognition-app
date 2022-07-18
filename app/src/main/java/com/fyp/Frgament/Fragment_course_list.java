@@ -83,8 +83,8 @@ public class Fragment_course_list extends Fragment {
             CourseData data = new CourseData();
             data.courseID = lecture.getLectureID();
             data.courseName = lecture.getLectureName();
-            data.lecturer = lecture.getLecturer();
-            data.time = lecture.getTime();
+            data.lecturer = lecture.getLectureName();
+            data.time = lecture.getDate();
             mDatas.add(data);
         }
 
@@ -139,8 +139,8 @@ public class Fragment_course_list extends Fragment {
                     CourseData data = new CourseData();
                     data.courseID = lecture.getLectureID();
                     data.courseName = lecture.getLectureName();
-                    data.lecturer = lecture.getLecturer();
-                    data.time = lecture.getTime();
+                    data.lecturer = lecture.getLectureName();
+                    data.time = lecture.getDate();
 
                     if(!mDatas.contains(data)){
                         mDatas.add(data);

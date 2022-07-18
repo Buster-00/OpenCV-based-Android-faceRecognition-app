@@ -1,0 +1,181 @@
+@startuml
+
+title __FYP's Class Diagram__\n
+
+  namespace com.fyp {
+    class com.fyp.FaceRecognitionActivity {
+        ~ baseLoaderCallback : BaseLoaderCallback
+        ~ counter : int
+        ~ failure_counter : int
+        ~ mPath : String
+        ~ mapLabelName : HashMap<Integer, String>
+        ~ matVector : Vector<Mat>
+        {static} - SUCCESS_TIMES : int
+        - faceDetector : CascadeClassifier
+        - faceRecognizer : FaceRecognizer
+        + onCameraFrame()
+        + onCameraViewStarted()
+        + onCameraViewStopped()
+        + onResume()
+        # getCameraViewList()
+        # onCreate()
+        - RecognizeFace()
+        - initOpenCV()
+        - loadMap()
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.FaceRegisterActivity {
+        ~ detect_counter : int
+        ~ faceDescription : String
+        ~ mPath : String
+        {static} - FACE_RECT_COLOR : Scalar
+        {static} - TAG : String
+        - baseLoaderCallback : BaseLoaderCallback
+        - faceDetector : CascadeClassifier
+        - faceDetectorYN : FaceDetectorYN
+        + onCameraFrame()
+        + onCameraViewStarted()
+        + onCameraViewStopped()
+        + onPause()
+        + onResume()
+        # getCameraViewList()
+        # onCreate()
+        - CascadeFaceDetect()
+        - SaveFace()
+        - YNFaceDetect()
+        - initOpenCV()
+    }
+  }
+  
+
+  namespace com.fyp {
+    enum FACE_DETECT {
+      CASCADE_DETECT
+      YN_DETECT
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.MainActivity {
+        ~ mNavigationController : NavigationController
+        ~ testColors : int[]
+        ~ viewPager : ViewPager
+        {static} - IS_SAVE_ACCOUNT : boolean
+        - mHandler : Handler
+        # onActivityResult()
+        # onCreate()
+        # setBtn_train()
+        - initMaterialDrawer()
+        - updateTrainFile()
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.NameRegisterActivity {
+        ~ btn_next : Button
+        ~ tv_ID : EditText
+        ~ tv_name : EditText
+        # onCreate()
+        - btn_next_click()
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.RecognizeFailureActivity {
+        # onCreate()
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.RegisterSuccessActivity {
+        ~ btn_confirm : Button
+        ~ dialog : MaterialDialog
+        ~ faceRecognizer : FaceRecognizer
+        ~ img_capturedFace : ImageView
+        ~ mPath : String
+        ~ tv_labels : TextView
+        ~ tv_success : TextView
+        - mapLabelName : HashMap<Integer, String>
+        - matVector : Vector<Mat>
+        # onCreate()
+        # setBtn_confirm()
+        - train()
+        - train_single()
+        - uploadTrainFile()
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.ResetPasswordActivity {
+        # onCreate()
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.TrainActivity {
+        ~ btn_test : Button
+        ~ faceRecognizer : FaceRecognizer
+        ~ linearLayout : LinearLayoutCompat
+        ~ mPath : String
+        ~ matOfLabels : Mat
+        ~ matVector : Vector<Mat>
+        - mLoaderCallback : BaseLoaderCallback
+        # onCreate()
+        # onResume()
+        ~ train()
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.ViewPagerActivity {
+        ~ pagerAdapter : FragmentStateAdapter
+        ~ viewPager : ViewPager2
+        # onCreate()
+    }
+  }
+  
+
+  namespace com.fyp {
+    class com.fyp.personalPorfileActivity {
+        # onCreate()
+    }
+  }
+  
+
+  com.fyp.FaceRecognitionActivity .up.|> org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2
+  com.fyp.FaceRecognitionActivity -up-|> org.opencv.android.CameraActivity
+  com.fyp.FaceRecognitionActivity o-- com.fyp.databaseHelper.StudentDB : DB
+  com.fyp.FaceRecognitionActivity o-- org.opencv.android.JavaCamera2View : javaCameraView
+  com.fyp.FaceRegisterActivity .up.|> org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2
+  com.fyp.FaceRegisterActivity -up-|> org.opencv.android.CameraActivity
+  com.fyp.FaceRegisterActivity o-- com.fyp.FaceRegisterActivity.FACE_DETECT : DETECT_METHOD
+  com.fyp.FaceRegisterActivity o-- org.opencv.android.JavaCamera2View : javaCameraView
+  com.fyp.FaceRegisterActivity +-down- com.fyp.FaceRegisterActivity.FACE_DETECT
+  com.fyp.MainActivity -up-|> com.heinrichreimersoftware.materialdrawer.DrawerActivity
+  com.fyp.NameRegisterActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.RecognizeFailureActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.RegisterSuccessActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.ResetPasswordActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.TrainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.fyp.ViewPagerActivity -up-|> androidx.fragment.app.FragmentActivity
+  com.fyp.personalPorfileActivity -up-|> androidx.appcompat.app.AppCompatActivity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

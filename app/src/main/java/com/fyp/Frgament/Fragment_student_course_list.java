@@ -125,7 +125,8 @@ public class Fragment_student_course_list extends Fragment {
         Vector<Lecture> lectureVector = new Vector<>();
 
         for(String ID : IDs){
-            Lecture lecture = lectureDB.getLectureByID(ID);
+            //Lecture lecture = lectureDB.getLectureByID(ID);
+            Lecture lecture = null;
             lectureVector.add(lecture);
         }
 
@@ -148,7 +149,8 @@ public class Fragment_student_course_list extends Fragment {
                 Vector<Lecture> lectureVector = new Vector<>();
 
                 for(String ID : IDs){
-                    Lecture lecture = lectureDB.getLectureByID(ID);
+                    //Lecture lecture = lectureDB.getLectureByID(ID);
+                    Lecture lecture = null;
                     lectureVector.add(lecture);
                 }
 
@@ -215,7 +217,6 @@ public class Fragment_student_course_list extends Fragment {
                 viewHolder = new ViewHolder();
                 viewHolder.calendarView = view.findViewById(R.id.calendar_view);
                 viewHolder.fc = view.findViewById(R.id.folding_cell);
-                viewHolder.tvCardItem = view.findViewById(R.id.tv_cardText);
                 viewHolder.tk = view.findViewById(R.id.tick_view);
                 viewHolder.btn_click = view.findViewById(R.id.btn_click);
                 viewHolder.tv_lectureID = view.findViewById(R.id.tv_lectureID);

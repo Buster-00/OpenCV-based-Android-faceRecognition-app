@@ -22,6 +22,7 @@ import com.fyp.MainActivity;
 import com.fyp.R;
 import com.fyp.ResetPasswordActivity;
 import com.fyp.databaseHelper.StudentDB;
+import com.fyp.student.Student_MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -178,7 +179,8 @@ public class MTLogin extends AppCompatActivity implements Validator.ValidationLi
             Explode explode = new Explode();
             explode.setDuration(500);
 
-            Intent i2 = new Intent(MTLogin.this, MainActivity.class);
+            //turn to new activity after login successfully
+            Intent i2 = new Intent(MTLogin.this, Student_MainActivity.class);
             i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i2);
         }

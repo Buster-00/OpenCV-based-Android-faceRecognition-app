@@ -2,6 +2,7 @@ package com.fyp.databaseHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -11,8 +12,13 @@ import androidx.annotation.Nullable;
 
 import com.fyp.invariable.InVar;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Vector;
 
 public class AttendanceDB {
@@ -25,9 +31,17 @@ public class AttendanceDB {
     public static final String COLUMN_1 = "lectureID";
     public static final String COLUMN_2 = "studentID";
     public static final String COLUMN_3 = "date";
+    public static final String COLUMN_4 = "lecturerName";
+    public static final String COLUMN_5 = "venue";
+    public static final String COLUMN_6 = "lecturerID";
+    public static final String COLUMN_7 = "lectureName";
+    public static final String COLUMN_8 = "studentName";
 
     //local database
     SQLiteAttendance sqLiteAttendance;
+
+    //Remote database
+    MariaAttendance mariaAttendance;
 
     public AttendanceDB(Context context){
 
@@ -36,20 +50,20 @@ public class AttendanceDB {
             sqLiteAttendance = new SQLiteAttendance(context);
         }
         else{
-            //TODO using remote database
+            mariaAttendance = new MariaAttendance();
         }
 
     }
 
-    public boolean insert(String col_1, String col_2, String col_3){
+    //Param
+    public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7, String col_8){
 
         //using local database
         if(!InVar.IS_CONNECT_TO_MARIA_DB){
-            return sqLiteAttendance.insert(col_1, col_2, col_3);
+            return sqLiteAttendance.insert(col_1, col_2, col_3, col_4, col_5, col_6, col_7, col_8);
         }
         else{
-            //TODO Remote server
-            return false;
+            return mariaAttendance.insert(col_1, col_2, col_3, col_4, col_5, col_6, col_7, col_8);
         }
     }
 
@@ -59,8 +73,17 @@ public class AttendanceDB {
             return sqLiteAttendance.getAttendanceByStudentID(studentID);
         }
         else{
-            //TODO Remote server
+            return mariaAttendance.getAttendanceByStudentID(studentID);
+        }
+    }
+
+    public Vector<AttendanceRecord> getAttendanceByLecturerID(String lecturerID){
+        //using local database
+        if(!InVar.IS_CONNECT_TO_MARIA_DB){
             return null;
+        }
+        else{
+            return mariaAttendance.getAttendanceByLecturerID(lecturerID);
         }
     }
 
@@ -75,7 +98,8 @@ public class AttendanceDB {
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL("CREATE TABLE " + TABLE_NAME +
-                    "(lectureID TEXT , studentID TEXT, date TEXT)");
+                    "(lectureID TEXT , studentID TEXT, date TEXT, lecturerName TEXT, venue TEXT," +
+                    " UNIQUE(lectureID, studentID, date, lecturerName, venue))");
         }
 
         @Override
@@ -87,10 +111,11 @@ public class AttendanceDB {
         public void onOpen(SQLiteDatabase db) {
             super.onOpen(db);
             db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
-                    "(lectureID TEXT , studentID TEXT, date TEXT)");
+                    "(lectureID TEXT , studentID TEXT, date TEXT, lecturerName TEXT, venue TEXT," +
+                    " UNIQUE(lectureID, studentID, date, lecturerName, venue))");
         }
 
-        public boolean insert(String col_1, String col_2, String col_3){
+        public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7, String col_8){
 
             //get database reference
             SQLiteDatabase DB = getWritableDatabase();
@@ -98,6 +123,11 @@ public class AttendanceDB {
             contentValues.put(COLUMN_1, col_1);
             contentValues.put(COLUMN_2, col_2);
             contentValues.put(COLUMN_3, col_3);
+            contentValues.put(COLUMN_4, col_4);
+            contentValues.put(COLUMN_5, col_5);
+            contentValues.put(COLUMN_6, col_6);
+            contentValues.put(COLUMN_7, col_7);
+            contentValues.put(COLUMN_8, col_8);
 
             //insert data into database
             long result = DB.insert(TABLE_NAME, null, contentValues);
@@ -122,48 +152,245 @@ public class AttendanceDB {
             //get data
             Cursor cursor = sqLiteDatabase.rawQuery("SELECT lectureID, studentID, date FROM attendance WHERE studentID=?", new String[]{studentID});
             while (cursor.moveToNext()){
-                AttendanceRecord record = new AttendanceRecord(cursor.getString(cursor.getColumnIndex(COLUMN_1)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_2)), cursor.getString(cursor.getColumnIndex(COLUMN_3)));
+                AttendanceRecord record = new AttendanceRecord(
+                        cursor.getString(cursor.getColumnIndex(COLUMN_1)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_2)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_3)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_4)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_5)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_6)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_7)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_8)));
                 data.add(record);
             }
 
+            Log.e("AttendanceDB", "data");
             return data;
         }
     }
 
-    public class AttendanceRecord{
-        String LectureID;
-        String StudentID;
-        String Date;
+    class MariaAttendance{
 
-        public AttendanceRecord(String lectureID, String studentID, String date) {
-            LectureID = lectureID;
-            StudentID = studentID;
-            Date = date;
+        public boolean insert(String col_1, String col_2, String col_3, String col_4, String col_5, String col_6, String col_7, String col_8){
+
+            final boolean[] isSuccess = {false};
+
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = MariaCon.createStatement();
+
+                        //Insert new attendance record into statement
+                        String query = String.format("INSERT INTO %s(%s, %s, %s, %s, %s, %s, %s, %s) VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                                TABLE_NAME, COLUMN_1, COLUMN_2, COLUMN_3, COLUMN_4, COLUMN_5, COLUMN_6, COLUMN_7, COLUMN_8, col_1, col_2, col_3, col_4, col_5, col_6, col_7, col_8);
+                        int rs = statement.executeUpdate(query);
+                        if(rs > 0){
+                            isSuccess[0] = true;
+                        }
+                        else{
+                            isSuccess[0] = false;
+                        }
+
+                        //close connection
+                        MariaCon.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return isSuccess[0];
+        }
+
+        public Vector<AttendanceRecord> getAttendanceByStudentID(String studentID){
+
+            Vector<AttendanceRecord> records = new Vector<>();
+
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = MariaCon.createStatement();
+
+                        //Retrieve by student ID
+                        String query = String.format("SELECT * FROM %s WHERE %s='%s'",
+                                TABLE_NAME, COLUMN_2, studentID);
+                        ResultSet rs = statement.executeQuery(query);
+                        while(rs.next()){
+                            AttendanceRecord record = new AttendanceRecord(
+                                    rs.getString(COLUMN_1),
+                                    rs.getString(COLUMN_2),
+                                    rs.getString(COLUMN_3),
+                                    rs.getString(COLUMN_4),
+                                    rs.getString(COLUMN_5),
+                                    rs.getString(COLUMN_6),
+                                    rs.getString(COLUMN_7),
+                                    rs.getString(COLUMN_8));
+
+                            records.add(record);
+                        }
+
+                        MariaCon.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Log.e("size", ""+records.size());
+            return records;
+        }
+
+        public Vector<AttendanceRecord> getAttendanceByLecturerID(String lecturerID){
+
+            Vector<AttendanceRecord> records = new Vector<>();
+
+            Thread thread = new Thread(){
+                public void run(){
+                    try {
+                        Connection MariaCon = new MariaDBconnector().getConnection(new Properties());
+                        Statement statement = MariaCon.createStatement();
+
+                        //Retrieve by student ID
+                        String query = String.format("SELECT * FROM %s WHERE %s='%s'",
+                                TABLE_NAME, COLUMN_1, lecturerID);
+                        ResultSet rs = statement.executeQuery(query);
+                        while(rs.next()){
+                            AttendanceRecord record = new AttendanceRecord(
+                                    rs.getString(COLUMN_1),
+                                    rs.getString(COLUMN_2),
+                                    rs.getString(COLUMN_3),
+                                    rs.getString(COLUMN_4),
+                                    rs.getString(COLUMN_5),
+                                    rs.getString(COLUMN_6),
+                                    rs.getString(COLUMN_7),
+                                    rs.getString(COLUMN_8));
+
+                            records.add(record);
+                        }
+
+                        MariaCon.close();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                }
+            };
+
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Log.e("size", ""+records.size());
+            return records;
+        }
+
+    }
+
+    public static class AttendanceRecord{
+
+        String lectureID;
+        String studentID;
+        String date;
+        String lecturerName;
+        String venue;
+        String lecturerID;
+        String lectureName;
+        String studentName;
+
+        public AttendanceRecord(String lectureID, String studentID, String date, String lecturerName, String venue, String lecturerID, String lectureName, String studentName) {
+            this.lectureID = lectureID;
+            this.studentID = studentID;
+            this.date = date;
+            this.lecturerName = lecturerName;
+            this.venue = venue;
+            this.lecturerID = lecturerID;
+            this.lectureName = lectureName;
+            this.studentName = studentName;
+        }
+
+        public String getStudentName() {
+            return studentName;
+        }
+
+        public void setStudentName(String studentName) {
+            this.studentName = studentName;
+        }
+
+        public String getLectureName() {
+            return lectureName;
+        }
+
+        public void setLectureName(String lectureName) {
+            this.lectureName = lectureName;
+        }
+
+        public String getLecturerID() {
+            return lecturerID;
+        }
+
+        public void setLecturerID(String lecturerID) {
+            this.lecturerID = lecturerID;
+        }
+
+        public String getLecturerName() {
+            return lecturerName;
+        }
+
+        public void setLecturerName(String lecturerName) {
+            this.lecturerName = lecturerName;
+        }
+
+        public String getVenue() {
+            return venue;
+        }
+
+        public void setVenue(String venue) {
+            this.venue = venue;
         }
 
         public String getLectureID() {
-            return LectureID;
+            return lectureID;
         }
 
         public void setLectureID(String lectureID) {
-            LectureID = lectureID;
+            lectureID = lectureID;
         }
 
         public String getStudentID() {
-            return StudentID;
+            return studentID;
         }
 
         public void setStudentID(String studentID) {
-            StudentID = studentID;
+            studentID = studentID;
         }
 
         public String getDate() {
-            return Date;
+            return date;
         }
 
         public void setDate(String date) {
-            Date = date;
+            date = date;
         }
     }
 }

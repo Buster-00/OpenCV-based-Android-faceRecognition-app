@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.fyp.databaseHelper.StudentDB;
 import com.fyp.face.Labels;
+import com.fyp.student.Student_MainActivity;
 
 import org.bytedeco.javacpp.Loader;
 import org.bytedeco.opencv.opencv_java;
@@ -46,7 +47,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SuccessActivity extends AppCompatActivity {
+public class RegisterSuccessActivity extends AppCompatActivity {
 
     //Widget
     Button btn_confirm;
@@ -78,6 +79,7 @@ public class SuccessActivity extends AppCompatActivity {
         tv_success = findViewById(R.id.tv_success);
         tv_labels = findViewById(R.id.tv_labels);
         img_capturedFace = findViewById(R.id.img_capturedFace);
+        Button btn_register_again = findViewById(R.id.btn_register_again);
 
         //Initialize widget
         tv_success.setText("The face is captured successfully");
@@ -89,6 +91,14 @@ public class SuccessActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setBtn_confirm();
+            }
+        });
+
+        btn_register_again.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegisterSuccessActivity.this, FaceRegisterActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -131,7 +141,7 @@ public class SuccessActivity extends AppCompatActivity {
         labels.Save();
 
         //display
-        tv_labels.setText(labels.display());
+        //tv_labels.setText(labels.display());
 
         //
         Loader.load(opencv_java.class);
@@ -157,7 +167,7 @@ public class SuccessActivity extends AppCompatActivity {
             uploadTrainFile(mPath + "train.xml");
         }
 
-        Intent intent = new Intent(SuccessActivity.this, MainActivity.class);
+        Intent intent = new Intent(RegisterSuccessActivity.this, Student_MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
@@ -197,7 +207,7 @@ public class SuccessActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         dialog.dismiss();
-                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
+                        dialog = new MaterialDialog.Builder(RegisterSuccessActivity.this)
                                 .title("Message")
                                 .positiveText("Confirm")
                                 .content("Upload failure")
@@ -212,12 +222,12 @@ public class SuccessActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        dialog.dismiss();
-                        dialog = new MaterialDialog.Builder(SuccessActivity.this)
-                                .title("Message")
-                                .positiveText("Confirm")
-                                .content("Upload success")
-                                .show();
+//                        dialog.dismiss();
+//                        dialog = new MaterialDialog.Builder(RegisterSuccessActivity.this)
+//                                .title("Message")
+//                                .positiveText("Confirm")
+//                                .content("Upload success")
+//                                .show();
                     }
                 });
             }
@@ -260,7 +270,7 @@ public class SuccessActivity extends AppCompatActivity {
 
         //Generate mat of labels
         int[] labels = new int[1];
-        labels[0] = 1;
+        labels[0] = getCurrentUser().getLabel();
         Mat matOfLabels = new MatOfInt(labels);
 
         //LBPH train

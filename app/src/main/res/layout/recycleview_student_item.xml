@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        android:elevation="20dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:cardCornerRadius="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_baseline_account_box_24" />
+
+            <TextView
+                android:id="@+id/tv_studentID"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/img_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="studentID"/>
+
+            <TextView
+                android:id="@+id/tv_studentName"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/tv_studentID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="studentName"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

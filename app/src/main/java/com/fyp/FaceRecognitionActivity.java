@@ -6,8 +6,12 @@ import android.util.Log;
 import android.view.SurfaceView;
 
 import com.fyp.databaseHelper.StudentDB;
-import com.fyp.helper.FaceDetectorHelper;
+import com.fyp.invariable.InVar;
+import com.fyp.utilities.FaceDetectorHelper;
+import com.fyp.student.RecognizeSuccess;
 
+import org.bytedeco.javacpp.Loader;
+import org.bytedeco.opencv.opencv_java;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraActivity;
 import org.opencv.android.CameraBridgeViewBase;
@@ -32,8 +36,8 @@ import java.util.Vector;
 
 
 import static com.fyp.databaseHelper.UserManager.getCurrentUser;
-import static com.fyp.helper.FaceDetectorHelper.loadClassifier;
-import static com.fyp.helper.FrameFlipHelper.FlipRotateFrameHorizental;
+import static com.fyp.utilities.FaceDetectorHelper.loadClassifier;
+import static com.fyp.utilities.FrameFlipHelper.FlipRotateFrameHorizental;
 import static org.opencv.imgproc.Imgproc.FONT_HERSHEY_COMPLEX;
 import static org.opencv.imgproc.Imgproc.putText;
 import static org.opencv.imgproc.Imgproc.rectangle;
@@ -42,6 +46,8 @@ import static org.opencv.imgproc.Imgproc.rectangle;
 public class FaceRecognitionActivity extends CameraActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     private static final int SUCCESS_TIMES = 10;
+    private static final int FAILURE_TIMES = 10;
+    private static final int CONFIDENCE_SUCCESS = 60;
 
     //Hash map of label and name
     HashMap<Integer, String> mapLabelName;
@@ -89,6 +95,12 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_face_recognition);
+
+        //Initiate JavaCV
+        if(InVar.DEBUG){
+            Loader.load(opencv_java.class);
+        }
+
 
         //initialize camera view
         javaCameraView = (JavaCamera2View)findViewById(R.id.javaCameraView_recognition);
@@ -195,41 +207,46 @@ public class FaceRecognitionActivity extends CameraActivity implements CameraBri
 
             //Render image
             if(label[0] != -1){
-                Log.e("The label is ", String.valueOf(label[0]));
-                if(label[0] == getCurrentUser().getLabel()){
+                Log.e("The confidence is ", String.valueOf(confidence[0]));
+                Log.e("The predict label is ", String.valueOf(label[0]));
+                Log.e("The user label is ", String.valueOf(getCurrentUser().getLabel()));
+                if(label[0] == getCurrentUser().getLabel() && confidence[0] < CONFIDENCE_SUCCESS){
                     counter++;
+                    putText(flippedFrame, getCurrentUser().getName(), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
                 }
-                putText(flippedFrame, getCurrentUser().getName(), new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
-            }else{
-                putText(flippedFrame, "unregister face", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2,  FaceDetectorHelper.FONT_COLOR);
-                failure_counter++;
+                else {
+                    failure_counter++;
+                    putText(flippedFrame, " Unknown face", new Point(flippedFrame.width() - faceArray[i].x, faceArray[i].y), FONT_HERSHEY_COMPLEX, 2, FaceDetectorHelper.FONT_COLOR);
+                }
+
 
             }
             Log.e("Rendering", faceArray[i].tl().toString() + faceArray[i].br().toString() + flippedFrame.rows() + flippedFrame.cols());
         }
 
         //If recognize face correctly more than 10 times, success to next step
-        if(counter > 10){
+        if(counter > SUCCESS_TIMES){
             // Intent intent = new Intent(this, RecognizeSuccess.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            String LectureID = getIntent().getStringExtra("LectureID");
-            String LectureName = getIntent().getStringExtra("LectureName");
-            String date = getIntent().getStringExtra("Date");
+//            String LectureID = getIntent().getStringExtra("LectureID");
+//            String LectureName = getIntent().getStringExtra("LectureName");
+//            String date = getIntent().getStringExtra("Date");
             Intent intent = new Intent(this, RecognizeSuccess.class);
-            intent.putExtra("LectureID", LectureID);
-            intent.putExtra("LectureName", LectureName);
-            intent.putExtra("Date", date);
+//            intent.putExtra("LectureID", LectureID);
+//            intent.putExtra("LectureName", LectureName);
+//            intent.putExtra("Date", date);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtras(getIntent());
             startActivity(intent);
-            this.setResult(RESULT_OK, intent);
-            counter = 0;
-            this.finish();
+            counter = -10;
             Log.e("debug", "still running");
         }
         else if(failure_counter > 10){
             Intent intent = new Intent(this, RecognizeFailureActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
+            failure_counter = -10;
         }
 
         //Final frame;

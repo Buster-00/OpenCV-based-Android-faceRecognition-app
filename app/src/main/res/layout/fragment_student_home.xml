@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".student.fragment.StudentHomeFragment">
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/card_view"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:text="Welcome,"
+                android:paddingTop="10dp"
+                android:paddingLeft="20dp"
+                android:textSize="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/tv_userName"
+                android:textSize="40dp"
+                android:paddingLeft="20dp"
+                android:text="UserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:elevation="20dp"
+                    app:cardCornerRadius="5dp"
+                    android:layout_margin="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_height="wrap_content"
+                        android:layout_width="100dp">
+
+                        <TextClock
+                            android:id="@+id/tv_month"
+                            android:textAlignment="center"
+                            android:background="@color/purple_700"
+                            android:paddingHorizontal="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:format12Hour="MMM"
+                            android:textColor="@color/white"
+                            android:textSize="20dp" />
+
+                        <TextClock
+                            android:layout_below="@+id/tv_month"
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="0dp"
+                            android:format12Hour ="dd"
+                            android:textColor="@color/black"
+                            android:textSize="70dp" />
+
+                        <TextClock
+                            android:background="@color/purple_700"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tv_time"
+                            android:paddingBottom="5dp"
+                            android:format12Hour="yyyy"
+                            android:textColor="@color/white"
+                            android:textAlignment="center" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Existing Attendance records"/>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:textSize="70dp"
+                        android:textColor="@color/green"
+                        android:id="@+id/tv_records"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <com.google.android.material.button.MaterialButton
+        app:icon="@drawable/ic_baseline_face_24"
+        app:iconTint="@color/black"
+        app:iconGravity="textStart"
+        android:layout_below="@id/card_view"
+        android:id="@+id/btn_face_register"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/myButton_height"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Face Register"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_location"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/myButton_height"
+        android:layout_below="@id/btn_face_register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="@dimen/myButton_marginTOP"
+        android:text="Scan &amp; attendance"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        app:iconGravity="textStart"
+        app:iconTint="@color/black" />
+
+    <com.google.android.material.button.MaterialButton
+        app:icon="@drawable/ic_baseline_receipt_24"
+        app:iconTint="@color/black"
+        app:iconGravity="textStart"
+        android:layout_below="@id/btn_location"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        android:id="@+id/btn_record"
+        android:layout_marginTop="@dimen/myButton_marginTOP"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/myButton_height"
+        android:text="record"/>
+
+</RelativeLayout>

@@ -1,0 +1,414 @@
+@startuml
+
+title __FYP's Class Diagram__\n
+
+  namespace android.arch.lifecycle {
+    class android.arch.lifecycle.R {
+    }
+  }
+  
+
+  namespace android.arch.lifecycle {
+    class android.arch.lifecycle.R {
+    }
+  }
+  
+
+  namespace android.support.compat {
+    class android.support.compat.R {
+    }
+  }
+  
+
+  namespace android.support.compat {
+    class android.support.compat.R {
+    }
+  }
+  
+
+  namespace android.support.constraint {
+    class android.support.constraint.R {
+    }
+  }
+  
+
+  namespace android.support.coreui {
+    class android.support.coreui.R {
+    }
+  }
+  
+
+  namespace android.support.coreui {
+    class android.support.coreui.R {
+    }
+  }
+  
+
+  namespace android.support.coreutils {
+    class android.support.coreutils.R {
+    }
+  }
+  
+
+  namespace android.support.coreutils {
+    class android.support.coreutils.R {
+    }
+  }
+  
+
+  namespace android.support.design {
+    class android.support.design.R {
+    }
+  }
+  
+
+  namespace android.support.design {
+    class android.support.design.R {
+    }
+  }
+  
+
+  namespace android.support.fragment {
+    class android.support.fragment.R {
+    }
+  }
+  
+
+  namespace android.support.fragment {
+    class android.support.fragment.R {
+    }
+  }
+  
+
+  namespace android.support.graphics.drawable {
+    class android.support.graphics.drawable.R {
+    }
+  }
+  
+
+  namespace android.support.graphics.drawable {
+    class android.support.graphics.drawable.R {
+    }
+  }
+  
+
+  namespace android.support.graphics.drawable {
+    namespace animated {
+      class android.support.graphics.drawable.animated.R {
+      }
+    }
+  }
+  
+
+  namespace android.support.graphics.drawable {
+    namespace animated {
+      class android.support.graphics.drawable.animated.R {
+      }
+    }
+  }
+  
+
+  namespace android.support.mediacompat {
+    class android.support.mediacompat.R {
+    }
+  }
+  
+
+  namespace android.support.mediacompat {
+    class android.support.mediacompat.R {
+    }
+  }
+  
+
+  namespace android.support.transition {
+    class android.support.transition.R {
+    }
+  }
+  
+
+  namespace android.support.transition {
+    class android.support.transition.R {
+    }
+  }
+  
+
+  namespace android.support.v4 {
+    class android.support.v4.R {
+    }
+  }
+  
+
+  namespace android.support.v7.appcompat {
+    class android.support.v7.appcompat.R {
+    }
+  }
+  
+
+  namespace android.support.v7.appcompat {
+    class android.support.v7.appcompat.R {
+    }
+  }
+  
+
+  namespace android.support.v7.cardview {
+    class android.support.v7.cardview.R {
+    }
+  }
+  
+
+  namespace android.support.v7.cardview {
+    class android.support.v7.cardview.R {
+    }
+  }
+  
+
+  namespace android.support.v7.recyclerview {
+    class android.support.v7.recyclerview.R {
+    }
+  }
+  
+
+  namespace android.support.v7.recyclerview {
+    class android.support.v7.recyclerview.R {
+    }
+  }
+  
+
+  namespace androidx.constraintlayout {
+    class androidx.constraintlayout.R {
+    }
+  }
+  
+
+  namespace androidx.core {
+    class androidx.core.R {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.ApplicationTest {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.ApplicationTest {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.BuildConfig {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.BuildConfig {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.BuildConfig {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.BuildConfig {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.BuildConfig {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.ExampleUnitTest {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.ExampleUnitTest {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.MainActivity {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.MainActivity {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.MainActivity {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.MainActivity {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.MainActivity {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.R {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    class cn.fanrunqi.materiallogin.R {
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityOne {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityOne {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityOne {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityOne {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityOne {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityThree {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityThree {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityThree {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityThree {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityThree {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityTwo {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityTwo {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityTwo {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityTwo {
+      }
+    }
+  }
+  
+
+  namespace cn.fanrunqi.materiallogin {
+    namespace a {
+      class cn.fanrunqi.materiallogin.a.AActivityTwo {
+      }
+    }
+  }
+  
+
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

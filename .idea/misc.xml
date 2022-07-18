@@ -4,26 +4,41 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/FYP-Project/app/src/main/res/drawable-anydpi/ic_log_out.xml" value="0.4085" />
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable-v24/bt_shape.xml" value="0.2585" />
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable-v24/bt_shape_2.xml" value="0.2585" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.4085" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_audiotrack_black_24dp.xml" value="0.2325" />
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_baseline_account_box_24.xml" value="0.5215" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_first_item.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.4085" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/ic_second_item.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_avatar.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/profile_cover.xml" value="0.277" />
         <entry key="..\:/FYP-Project/app/src/main/res/drawable/radius_shape.xml" value="0.2615" />
+        <entry key="..\:/FYP-Project/app/src/main/res/drawable/special_tab_round_bg.xml" value="0.258" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_attendance_sheet.xml" value="0.32971014492753625" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_create_attendance_sheet.xml" value="0.32971014492753625" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_distance_failed.xml" value="0.33016304347826086" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_distance_success.xml" value="0.33" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_face_detection.xml" value="0.34444444444444444" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_face_recognition.xml" value="0.2547008547008547" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_lecturer_login.xml" value="0.3388888888888889" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_lecturer_main.xml" value="0.32971014492753625" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_lecturer_qrcode.xml" value="0.25" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_lecturer_register.xml" value="0.33016304347826086" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_location.xml" value="0.3388888888888889" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_login.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_main_1.xml" value="0.2299145299145299" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_material_login.xml" value="0.5" />
-        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_material_register.xml" value="0.1875" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_material_register.xml" value="0.67" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_personal_porfile.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_recognize_failure.xml" value="0.45427350427350427" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_recognize_success.xml" value="0.33" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_register.xml" value="0.2299145299145299" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_reset_password.xml" value="0.2311965811965812" />
-        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_sign_as.xml" value="0.5" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_sign_as.xml" value="0.25" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_student_main.xml" value="0.45427350427350427" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_success.xml" value="0.3388888888888889" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_train.xml" value="0.2299145299145299" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/activity_view_pager.xml" value="0.2547008547008547" />
@@ -34,13 +49,18 @@
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_course_list_2.xml" value="0.30512820512820515" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_frgament_1.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_home.xml" value="0.2547008547008547" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_lecturer_attend_record.xml" value="0.33" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_lecturer_home.xml" value="0.5" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_profile.xml" value="0.45427350427350427" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_student_attend_record.xml" value="0.45427350427350427" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_student_course_list.xml" value="0.307518115942029" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/fragment_student_home.xml" value="0.5" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/header_logo.xml" value="0.2547008547008547" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/listview_attedance_record.xml" value="0.5" />
-        <entry key="..\:/FYP-Project/app/src/main/res/layout/listview_carditem.xml" value="0.5" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/listview_carditem.xml" value="0.4588477366255144" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/listview_item.xml" value="0.3384615384615385" />
         <entry key="..\:/FYP-Project/app/src/main/res/layout/recycleview_carditem.xml" value="0.5561277033985582" />
+        <entry key="..\:/FYP-Project/app/src/main/res/layout/recycleview_student_item.xml" value="0.3547008547008547" />
       </map>
     </option>
   </component>

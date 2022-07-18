@@ -105,6 +105,7 @@ public class StudentDB {
 
         if(IS_CONNECT_TO_MARIA_DB){
             //using online Maria database
+            label = mariaStudent.getLabelByID(studentID);
         }
         else{
             //using local SQLite database
