@@ -222,12 +222,12 @@ public class RegisterSuccessActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        dialog.dismiss();
-                        dialog = new MaterialDialog.Builder(RegisterSuccessActivity.this)
-                                .title("Message")
-                                .positiveText("Confirm")
-                                .content("Upload success")
-                                .show();
+//                        dialog.dismiss();
+//                        dialog = new MaterialDialog.Builder(RegisterSuccessActivity.this)
+//                                .title("Message")
+//                                .positiveText("Confirm")
+//                                .content("Upload success")
+//                                .show();
                     }
                 });
             }

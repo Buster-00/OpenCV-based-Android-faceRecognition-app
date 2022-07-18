@@ -78,7 +78,8 @@ public class CreateAttendanceSheetActivity extends AppCompatActivity implements 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
-                date[0] = year + "-" + month+1 + "-" + day;
+                int newMonth = month + 1;
+                date[0] = year + "-" + newMonth + "-" + day;
 
             }
         });

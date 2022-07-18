@@ -321,7 +321,7 @@ public class FaceRegisterActivity extends CameraActivity implements CameraBridge
         FileOutputStream os;
         try{
             //store the bitmap as JPEG file
-            os = new FileOutputStream(mPath + description + ".jpg", true);
+            os = new FileOutputStream(mPath + description + ".jpg", false);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
             os.close();
         } catch (FileNotFoundException e) {
